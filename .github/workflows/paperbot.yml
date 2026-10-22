@@ -1,0 +1,59 @@
+name: paperbot
+
+on:
+  schedule:
+    # GitHub-Cron ist UTC. Je zwei Zeiten wegen Sommer-/Winterzeit; der Guard-Schritt laesst nur die passende laufen.
+    - cron: "20 13 * * 1-5"   # 9:20 NY (Sommerzeit)
+    - cron: "20 14 * * 1-5"   # 9:20 NY (Winterzeit)
+    - cron: "45 19 * * 1-5"   # 15:45 NY (Sommerzeit) -> glattstellen
+    - cron: "45 20 * * 1-5"   # 15:45 NY (Winterzeit) -> glattstellen
+  workflow_dispatch:
+    inputs:
+      cmd:
+        description: "status | flat | run"
+        default: "status"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: paperbot
+  cancel-in-progress: false
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+      APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Was ist zu tun?
+        id: pick
+        run: |
+          H=$(TZ=America/New_York date +%H)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "cmd=${{ inputs.cmd }}" >> $GITHUB_OUTPUT
+          elif [ "$H" = "09" ]; then echo "cmd=run" >> $GITHUB_OUTPUT
+          elif [ "$H" = "15" ]; then echo "cmd=flat" >> $GITHUB_OUTPUT
+          else echo "cmd=skip" >> $GITHUB_OUTPUT; fi
+          echo "NY-Stunde $H"
+      - name: Einstiege (bis 11:05 NY)
+        if: steps.pick.outputs.cmd == 'run'
+        run: python paperbot.py run --until 11:05
+      - name: Glattstellen
+        if: steps.pick.outputs.cmd == 'flat'
+        run: python paperbot.py flat
+      - name: Status
+        if: steps.pick.outputs.cmd != 'skip'
+        run: python paperbot.py status
+      - name: Kontostand speichern
+        if: steps.pick.outputs.cmd == 'run' || steps.pick.outputs.cmd == 'flat'
+        run: |
+          git config user.name "paperbot"
+          git config user.email "paperbot@users.noreply.github.com"
+          git add paperbot_state.json
+          git diff --cached --quiet || (git commit -m "paperbot: Stand $(date -u +%F)" && git push)
