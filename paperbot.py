@@ -318,6 +318,31 @@ def cmd_flat(a):
     s["flat_day"] = str(now.date()); save(s)
     print("%s NY: Alpaca-Paper glattgestellt." % now.strftime("%H:%M"))
 
+def ny_now():
+    u = dt.datetime.utcnow(); return u + dt.timedelta(hours=ny_offset(u))
+
+def cmd_auto(a):
+    """Fuer GitHub Actions: startet zu beliebiger Zeit, entscheidet selbst, wartet selbst.
+    Jeder Teil laeuft hoechstens einmal pro Tag (run_day / flat_day im Kontostand)."""
+    s = load(); now = ny_now(); today = str(now.date())
+    print("auto: NY %s" % now.strftime("%a %Y-%m-%d %H:%M"))
+    if now.weekday() >= 5:
+        print("Wochenende."); return
+    if now.time() < dt.time(11, 5) and s.get("run_day") != today:
+        if alpaca_on() and now.time() < dt.time(9, 30) and (alpaca("GET", "/v2/positions") or []):
+            print("Alte Positionen vom Vortag -> schliessen."); alpaca("DELETE", "/v2/orders"); alpaca("DELETE", "/v2/positions")
+        a.until, a.once = "11:05", False
+        cmd_run(a)
+        s = load(); s["run_day"] = today; save(s); return
+    if now.time() < dt.time(16, 0) and s.get("flat_day") != today:
+        while ny_now().time() < dt.time(15, 45):
+            time.sleep(60)
+        a.force = True; cmd_flat(a); return
+    if s.get("flat_day") != today and alpaca_on() and (alpaca("GET", "/v2/positions") or []):
+        print("Glattstellen verpasst -> Positionen schliessen (fuehrt evtl. erst zur naechsten Eroeffnung aus).")
+        alpaca("DELETE", "/v2/orders"); alpaca("DELETE", "/v2/positions"); s["flat_day"] = today; save(s); return
+    print("Heute nichts mehr zu tun.")
+
 def cmd_status(a):
     report(load())
     if alpaca_on():
@@ -333,9 +358,9 @@ def main():
     r = sp.add_parser("run"); r.add_argument("--once", action="store_true")
     r.add_argument("--until", help="beenden um diese NY-Zeit (HH:MM)")
     f = sp.add_parser("flat"); f.add_argument("--force", action="store_true")
-    sp.add_parser("status")
+    sp.add_parser("status"); sp.add_parser("auto")
     a = ap.parse_args()
-    {"backtest": cmd_backtest, "run": cmd_run, "flat": cmd_flat, "status": cmd_status}[a.cmd](a)
+    {"backtest": cmd_backtest, "run": cmd_run, "flat": cmd_flat, "status": cmd_status, "auto": cmd_auto}[a.cmd](a)
 
 if __name__ == "__main__":
     main()
