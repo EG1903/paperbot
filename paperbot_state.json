@@ -2,5 +2,6 @@
   "cash": 10000.0,
   "trades": [],
   "open": {},
-  "mode": "live-paper"
+  "mode": "live-paper",
+  "flat_day": "2026-10-26"
 }
