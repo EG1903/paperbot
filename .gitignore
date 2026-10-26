@@ -2,3 +2,4 @@ data_cache.pkl
 paperbot_backtest.json
 optimize_results.json
 __pycache__/
+daily_cache.pkl
