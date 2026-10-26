@@ -3,3 +3,4 @@ paperbot_backtest.json
 optimize_results.json
 __pycache__/
 daily_cache.pkl
+stocks_cache.pkl
