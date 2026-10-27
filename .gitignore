@@ -4,3 +4,7 @@ optimize_results.json
 __pycache__/
 daily_cache.pkl
 stocks_cache.pkl
+lab_daily.pkl
+lab_hourly.pkl
+lab_results.json
+lab_log.txt
