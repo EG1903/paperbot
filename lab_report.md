@@ -11,8 +11,8 @@ SPY halten im Test (2020-heute): 15.0 % p.a., Sharpe 0.66, max. Verlust -34.0 %.
 | 1 | VAA (Keller) | TAA | set=G4, top=2, breite=1 | 0.96 | 0.99 | **0.26** | 5.2 % | -20.5 % | 0.18 |
 | 2 | Risk-Parity | MULTI | n=126, trend=200 | 0.90 | 0.92 | **0.39** | 5.0 % | -10.1 % | 0.36 |
 | 3 | Hebel + Trendfilter | HEBEL-QQQ | L=1.0, regel=vola-regime, ausweich=IEF | 0.89 | 1.15 | **1.06** | 22.2 % | -21.6 % | 1.02 |
-| 4 | Williams-%R | AKTIEN | n=5, x=-95, trend=0 | 0.84 | 0.85 | **0.40** | 6.1 % | -19.4 % | 0.27 |
-| 5 | DAA (Keller) | TAA | top=6, breite=1 | 0.84 | 0.91 | **0.42** | 6.8 % | -17.7 % | 0.33 |
+| 4 | DAA (Keller) | TAA | top=6, breite=1 | 0.84 | 0.91 | **0.42** | 6.8 % | -17.7 % | 0.33 |
+| 5 | Williams-%R | AKTIEN | n=5, x=-95, trend=0 | 0.83 | 0.85 | **0.40** | 6.1 % | -19.4 % | 0.27 |
 | 6 | Dual-Momentum GEM | MULTI | L=63, risk=SPY/QQQ/EFA | 0.81 | 0.91 | **0.46** | 10.3 % | -29.1 % | 0.43 |
 | 7 | Williams-%R | SPY | n=10, x=-90, trend=200 | 0.92 | 0.81 | **0.26** | 5.4 % | -31.1 % | 0.19 |
 | 8 | PAA (Keller) | TAA | L=126, schutz=1, top=6, anleihe=IEF | 0.91 | 0.81 | **0.45** | 7.1 % | -21.0 % | 0.40 |
@@ -62,12 +62,12 @@ SPY halten im Test (2020-heute): 15.0 % p.a., Sharpe 0.66, max. Verlust -34.0 %.
 
 ## Intraday (Stundenkurse, ~2 Jahre)
 
-- Noise-Area (1h) QQQ (n=21, mult=1.5, seite=long-short, exit=tagesende): Sharpe Auswahl 0.87, Test 0.50, Rendite Test 3.8 %
-- Noise-Area (1h) QQQ (n=14, mult=1.0, seite=nur-long, exit=tagesende): Sharpe Auswahl 0.85, Test -0.19, Rendite Test -1.4 %
-- Noise-Area (1h) QQQ (n=7, mult=1.5, seite=long-short, exit=band-zurueck): Sharpe Auswahl 0.78, Test -1.49, Rendite Test -10.7 %
-- Noise-Area (1h) QQQ (n=14, mult=1.5, seite=long-short, exit=tagesende): Sharpe Auswahl 0.71, Test -0.37, Rendite Test -3.3 %
-- Noise-Area (1h) QQQ (n=21, mult=1.25, seite=long-short, exit=tagesende): Sharpe Auswahl 0.67, Test 0.36, Rendite Test 2.8 %
-- Kaufen & Halten SPY: Rendite Test 30.4 %
-- Kaufen & Halten QQQ: Rendite Test 38.7 %
-- Kaufen & Halten IWM: Rendite Test 32.6 %
-- Kaufen & Halten DIA: Rendite Test 22.9 %
+- Noise-Area (1h) QQQ (n=14, mult=1.0, seite=nur-long, exit=tagesende): Sharpe Auswahl 0.80, Test -0.12, Rendite Test -0.9 %
+- Noise-Area (1h) QQQ (n=21, mult=1.5, seite=long-short, exit=tagesende): Sharpe Auswahl 0.72, Test 0.66, Rendite Test 5.0 %
+- Noise-Area (1h) QQQ (n=7, mult=1.5, seite=long-short, exit=band-zurueck): Sharpe Auswahl 0.68, Test -1.31, Rendite Test -9.3 %
+- Noise-Area (1h) QQQ (n=21, mult=1.25, seite=nur-long, exit=tagesende): Sharpe Auswahl 0.65, Test 0.97, Rendite Test 4.7 %
+- Noise-Area (1h) QQQ (n=14, mult=1.25, seite=long-short, exit=tagesende): Sharpe Auswahl 0.62, Test -0.10, Rendite Test -1.1 %
+- Kaufen & Halten SPY: Rendite Test 34.7 %
+- Kaufen & Halten QQQ: Rendite Test 44.3 %
+- Kaufen & Halten IWM: Rendite Test 37.3 %
+- Kaufen & Halten DIA: Rendite Test 26.4 %
