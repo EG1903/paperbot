@@ -128,6 +128,7 @@ MONTH, MON, YEAR, WD, POS_START, POS_END, PREHOL = [], [], [], [], [], [], []
 REB_M, REB_W, REB_Y, REB_ALL, OPEXW, AFTER_OPEX = [], [], [], [], [], []
 PI, SLOTS, U_START, MKT, EVENTS = {}, {}, {}, {}, {}
 LIVE_I0 = None                             # erster Handelstag des Papier-Tests (Index in DATES)
+SEC_STATUS = "nicht geprueft"
 
 
 # ======================= Daten =======================
@@ -263,11 +264,14 @@ def _sec_get(url, ua):
 def load_events(refresh=False):
     """Termine der Quartalszahlen = Datum der 8-K-Meldungen mit Item 2.02 (Results of Operations).
     Gespeichert in lab_events.json (nur oeffentliche Meldedaten, keine Kontaktdaten)."""
+    global SEC_STATUS
     old = read_json(EVENTS_FILE, {}) or {}
     if old and not refresh:
+        SEC_STATUS = "gespeicherte Termine (nicht neu geladen)"
         return old
     ua = sec_user_agent()
     if not ua:
+        SEC_STATUS = "kein SEC-Kontakt eingetragen"
         print("  Kein SEC-Kontakt eingetragen (SEC_USER_AGENT oder lab_config.json) -> gespeicherte Termine: %d Werte" % len(old))
         return old
     out = dict(old)
@@ -275,6 +279,7 @@ def load_events(refresh=False):
         tick = _sec_get("https://www.sec.gov/files/company_tickers.json", ua)
     except Exception as e:
         print("  SEC nicht erreichbar (%s) -> gespeicherte Termine: %d Werte" % (e, len(old)))
+        SEC_STATUS = "SEC nicht erreichbar: %s" % e
         return old
     cik = {v["ticker"].upper(): int(v["cik_str"]) for v in tick.values()}
     for s in STOCKS:
@@ -300,6 +305,7 @@ def load_events(refresh=False):
             print("  %-6s SEC-Fehler: %s" % (s, e))
     with open(EVENTS_FILE, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=0, sort_keys=True)
+    SEC_STATUS = "ok, neu geladen (%d Firmen)" % len(out)
     return out
 
 
@@ -2759,7 +2765,7 @@ def main():
     lab_excel.build_excel(rows, ana, info, a.xlsx)
     with open(STAND_FILE, "w", encoding="utf-8") as f:
         json.dump({"datum": DATES[-1], "erstellt": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-                   "varianten": len(rows), "live_start": live_start,
+                   "varianten": len(rows), "live_start": live_start, "sec": SEC_STATUS,
                    "live_tage": max(0, T - LIVE_I0) if LIVE_I0 is not None else 0}, f, indent=1)
     print("\nFertig in %.0f s. Excel: %s, Bericht: lab_report.md" % (time.time() - t0, a.xlsx), flush=True)
 
