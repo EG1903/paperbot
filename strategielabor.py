@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Strategie-Labor: testet tausende Varianten von Handelsstrategien und sucht die robustesten.
+"""Strategie-Labor v2: testet rund 10.000 Varianten von Handelsstrategien und schreibt alles in eine Excel-Datei.
 
-    python strategielabor.py               # alles (Daten laden + einige Minuten rechnen)
-    python strategielabor.py --refresh     # Kursdaten neu laden
+    python strategielabor.py               # alles: Daten laden, rechnen, Strategie-Labor.xlsx schreiben
+    python strategielabor.py --refresh     # Kurs- und SEC-Daten neu laden
     python strategielabor.py --quick       # kurzer Probelauf
     python strategielabor.py --workers 4
 
@@ -11,21 +11,21 @@ Methode (damit oben keine Zufallstreffer stehen):
     C = 2020-heute ist der TEST und wird fuer die Auswahl nie benutzt.
   * Rangfolge nach min(Sharpe A, Sharpe B): eine Strategie muss in beiden Phasen taugen.
   * Signal zum Tagesschluss -> Order zur NAECHSTEN Eroeffnung (kein Blick in die Zukunft).
-    Ausnahmen: Tageshandel-Strategien entscheiden zur Eroeffnung, Kalender-Strategien
-    handeln zum Schluss (Termine stehen vorher fest), Overnight kauft zum Schluss.
-  * Kosten 0,03 % je Order, Gegencheck mit 0,10 %. Cash bekommt den T-Bill-Zins (^IRX).
-  * Sharpe = Ueberrendite ueber T-Bill geteilt durch Volatilitaet, annualisiert.
-Universen: SPY, QQQ, 13 Aktien-ETFs, 14 Multi-Asset-ETFs, ~50 groesste US-Aktien von 2004
-(spaetere Pleiten wie Lehman fehlen bei Yahoo -> Aktien-Ergebnisse eher zu gut).
-Zusaetzlich: Intraday-Studie (Noise-Area, ORB, Intraday-Momentum) auf Stundenkursen (~2 Jahre).
-Ergebnisse: lab_report.md, lab_results.csv, lab_results.json
+    Ausnahmen: Tageshandel entscheidet zur Eroeffnung, Kalender handelt zum Schluss
+    (Termine stehen vorher fest), Overnight kauft zum Schluss.
+  * Kosten je Order 0,03 % (Aktien/ETFs) bis 0,20 % (Krypto); Gegencheck mit 3,3-fachen Kosten.
+    Leerverkauf: 0,5 % Leihgebuehr p.a. Cash bekommt den T-Bill-Zins (^IRX).
+  * Hebel-ETFs simuliert: Tagesrendite x Hebel - Finanzierung (T-Bill) - 0,95 % Gebuehr p.a.
+Daten: Yahoo Finance (Tageskurse, Dividenden, CBOE-Optionsindizes), SEC EDGAR (Termine der Quartalszahlen).
+Ergebnisse: Strategie-Labor.xlsx, lab_report.md, lab_results.json
 """
-import argparse, collections, datetime as dt, itertools, json, math, os, pickle, sys, time
+import argparse, bisect, collections, datetime as dt, heapq, itertools, json, math, os, pickle, sys, time
 import urllib.parse, urllib.request, warnings
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 warnings.filterwarnings("ignore")
 
+# ======================= Werte, Maerkte, Kosten =======================
 ETF_EQ = ["SPY", "QQQ", "IWM", "DIA", "XLK", "XLF", "XLE", "XLV", "XLY", "XLP", "XLI", "XLU", "XLB"]
 MULTI = ["SPY", "QQQ", "IWM", "EFA", "EEM", "TLT", "IEF", "LQD", "HYG", "GLD", "SLV", "DBC", "VNQ", "AGG"]
 STOCKS = ["MSFT", "GE", "XOM", "PFE", "C", "WMT", "INTC", "AIG", "CSCO", "IBM", "JNJ", "BAC", "PG", "KO",
@@ -35,20 +35,82 @@ STOCKS = ["MSFT", "GE", "XOM", "PFE", "C", "WMT", "INTC", "AIG", "CSCO", "IBM", 
 # Fannie Mae / Freddie Mac (FNMA, FMCC) bewusst NICHT dabei: seit 2010 ausserboerslich gehandelte
 # Pennystocks mit Spruengen von mehreren 100 %, mit 0,03 % Kosten nicht realistisch handelbar.
 # Sie haben Umkehr- und Momentum-Ergebnisse stark verfaelscht (Umkehr 2005-2012: 18,6 % statt 0,3 % p.a.).
+TAA_SET = ["SPY", "IWM", "QQQ", "VGK", "EWJ", "EEM", "VNQ", "DBC", "GLD", "TLT", "HYG", "LQD", "IEF", "SHY", "BIL",
+           "AGG", "EFA", "TIP"]
+FX = ["FXA", "FXB", "FXC", "FXE", "FXF", "FXY", "UUP"]
+CMDTY = ["DBC", "GLD", "SLV", "USO", "UNG", "DBA", "DBB"]
+ALLCLS = ["SPY", "QQQ", "IWM", "EFA", "EEM", "TLT", "IEF", "LQD", "HYG", "VNQ", "GLD", "SLV", "DBC", "USO", "UNG",
+          "DBA", "FXA", "FXE", "FXY", "UUP"]
+PAIRS = [("KO", "PEP"), ("XOM", "CVX"), ("HD", "LOW"), ("GS", "MS"), ("JPM", "BAC"), ("WMT", "TGT"), ("UPS", "FDX"),
+         ("EWA", "EWC"), ("CAT", "DE"), ("MCD", "YUM"), ("PG", "CL"), ("MRK", "PFE"), ("GLD", "GDX")]
+PAIR_SYMS = sorted({s for pr in PAIRS for s in pr})
+OPT_IDX = {"OPT-BXM": "^BXM", "OPT-PUT": "^PUT", "OPT-BXMD": "^BXMD", "OPT-CNDR": "^CNDR", "OPT-CLL": "^CLL",
+           "OPT-PPUT": "^PPUT"}
+VOLP = {"VOL-SVXY": "SVXY", "VOL-VIXY": "VIXY"}
+CRYPTO = ["BTC-USD", "ETH-USD"]
 EXTRA = ["^VIX", "^VIX3M", "^IRX"]
-UNIVERSES = {"SPY": ["SPY"], "QQQ": ["QQQ"], "SEKTOREN": ETF_EQ, "MULTI": MULTI, "AKTIEN": STOCKS}
-ALL_UNIS = list(UNIVERSES)
+LEVS = [("SPY", 1.5), ("SPY", 2.0), ("SPY", 3.0), ("QQQ", 1.5), ("QQQ", 2.0), ("QQQ", 3.0)]
+LEV_FEE, BORROW = 0.0095, 0.005
+
+
+def levname(base, L):
+    return base if L == 1 else "%sx%.1f" % (base, L)
+
+
+SYNTH = {levname(b, L) for b, L in LEVS}
+UNIVERSES = {"SPY": ["SPY"], "QQQ": ["QQQ"], "IWM": ["IWM"], "SEKTOREN": ETF_EQ, "MULTI": MULTI, "AKTIEN": STOCKS,
+             "ALLE-KLASSEN": ALLCLS, "DEVISEN": FX, "ROHSTOFFE": CMDTY, "KRYPTO": CRYPTO, "TAA": TAA_SET,
+             "HEBEL-SPY": ["SPY"] + [levname("SPY", L) for L in (1.5, 2.0, 3.0)] + ["IEF"],
+             "HEBEL-QQQ": ["QQQ"] + [levname("QQQ", L) for L in (1.5, 2.0, 3.0)] + ["IEF"],
+             "PAARE": PAIR_SYMS}
+UNIVERSES.update({u: [s] for u, s in OPT_IDX.items()})
+UNIVERSES.update({u: [s] for u, s in VOLP.items()})
+CORE = ["SPY", "QQQ", "IWM", "SEKTOREN", "MULTI", "AKTIEN", "ALLE-KLASSEN", "DEVISEN", "ROHSTOFFE", "KRYPTO"]
+EQ_UNIS = ["SPY", "QQQ", "IWM", "SEKTOREN", "AKTIEN"]
+OPT_UNIS, VOL_UNIS = list(OPT_IDX), list(VOLP)
+UNI_INFO = {
+    "SPY": "S&P 500 (SPY)", "QQQ": "Nasdaq-100 (QQQ)", "IWM": "Russell 2000 Nebenwerte (IWM)",
+    "SEKTOREN": "13 US-Aktien-ETFs (Indizes + Sektoren)",
+    "MULTI": "14 ETFs: Aktien, Anleihen, Gold, Rohstoffe, Immobilien",
+    "AKTIEN": "49 große US-Aktien (Liste von 2004)",
+    "ALLE-KLASSEN": "20 ETFs aller Anlageklassen inkl. Devisen",
+    "DEVISEN": "7 Währungs-ETFs (AUD, GBP, CAD, EUR, CHF, JPY, USD)",
+    "ROHSTOFFE": "7 Rohstoff-ETFs (breit, Gold, Silber, Öl, Gas, Agrar, Metalle)",
+    "KRYPTO": "Bitcoin + Ethereum", "TAA": "18 ETFs für taktische Asset-Allokation",
+    "HEBEL-SPY": "S&P 500 mit 1- bis 3-fachem Hebel (simuliert)",
+    "HEBEL-QQQ": "Nasdaq-100 mit 1- bis 3-fachem Hebel (simuliert)",
+    "PAARE": "13 Paare verwandter Aktien/ETFs",
+    "OPT-BXM": "Optionen: Covered Call auf S&P 500 (CBOE BXM)",
+    "OPT-PUT": "Optionen: Puts verkaufen auf S&P 500 (CBOE PUT)",
+    "OPT-BXMD": "Optionen: Covered Call 30-Delta (CBOE BXMD)",
+    "OPT-CNDR": "Optionen: Iron Condor (CBOE CNDR)",
+    "OPT-CLL": "Optionen: Collar (CBOE CLL)",
+    "OPT-PPUT": "Optionen: Protective Put (CBOE PPUT)",
+    "VOL-SVXY": "Volatilität: Short-VIX-ETF (SVXY)",
+    "VOL-VIXY": "Volatilität: Long-VIX-ETF (VIXY)",
+}
+COST = 0.0003
+COST_BY_UNI = {"KRYPTO": 0.0020, "DEVISEN": 0.0005, "ROHSTOFFE": 0.0005, "ALLE-KLASSEN": 0.0004, "PAARE": 0.0005,
+               "VOL-SVXY": 0.0005, "VOL-VIXY": 0.0005, "HEBEL-SPY": 0.0004, "HEBEL-QQQ": 0.0004}
+HIGH_COST_X = 10.0 / 3.0
+
+
+def uni_cost(u):
+    return COST_BY_UNI.get(u, COST)
+
+
 PERIODS = [("A", "2005-01-01", "2013-01-01"), ("B", "2013-01-01", "2020-01-01"),
            ("C", "2020-01-01", "2100-01-01"), ("AB", "2005-01-01", "2020-01-01"),
            ("G", "2005-01-01", "2100-01-01")]
-COST, COST_HIGH = 0.0003, 0.0010
-DAILY_CACHE, HOURLY_CACHE = "lab_daily.pkl", "lab_hourly.pkl"
+DAILY_CACHE, HOURLY_CACHE, EVENTS_CACHE = "lab_daily.pkl", "lab_hourly.pkl", "lab_events.pkl"
+SEC_UA = "paperbot-research github.com/EG1903/paperbot paperbot@users.noreply.github.com"
 NAN = float("nan")
 
 # werden von setup() gefuellt
-DATES, T, RAW, RF = [], 0, {}, []
-MONTH, WD, POS_START, POS_END, PREHOL, REB_M, REB_W = [], [], [], [], [], [], []
-PI, SLOTS, MKT = {}, {}, {}
+DATES, T, RAW, RF, SPYR = [], 0, {}, [], []
+MONTH, MON, YEAR, WD, POS_START, POS_END, PREHOL = [], [], [], [], [], [], []
+REB_M, REB_W, REB_Y, REB_ALL, OPEXW, AFTER_OPEX = [], [], [], [], [], []
+PI, SLOTS, U_START, MKT, EVENTS = {}, {}, {}, {}, {}
 
 
 # ======================= Daten =======================
@@ -72,7 +134,8 @@ def fetch_daily(sym):
                "&interval=1d&events=div%%2Csplit" % (urllib.parse.quote(sym), int(time.time())))
     q = res["indicators"]["quote"][0]
     adj = ((res["indicators"].get("adjclose") or [{}])[0].get("adjclose")) or q["close"]
-    out = {}
+    off = (res.get("meta") or {}).get("gmtoffset") or 0
+    rows, divs = {}, {}
     for i, ts in enumerate(res.get("timestamp") or []):
         o, h, l, c, a = q["open"][i], q["high"][i], q["low"][i], q["close"][i], adj[i]
         if c is None or a is None or c <= 0 or a <= 0:
@@ -81,53 +144,152 @@ def fetch_daily(sym):
         h = max(h if h and h > 0 else c, o, c)
         l = min(l if l and l > 0 else c, o, c)
         f = a / c
-        d = (dt.datetime.fromtimestamp(ts, dt.timezone.utc) - dt.timedelta(hours=5)).strftime("%Y-%m-%d")
-        out[d] = (o * f, h * f, l * f, a)
-    return out
+        d = dt.datetime.fromtimestamp(ts + off, dt.timezone.utc).strftime("%Y-%m-%d")
+        rows[d] = (o * f, h * f, l * f, a, c)
+    for ev in ((res.get("events") or {}).get("dividends") or {}).values():
+        try:
+            d = dt.datetime.fromtimestamp(int(ev["date"]) + off, dt.timezone.utc).strftime("%Y-%m-%d")
+            divs[d] = divs.get(d, 0.0) + float(ev["amount"])
+        except Exception:
+            pass
+    return rows, divs
+
+
+CBOE_SYMS = set(OPT_IDX.values())
+
+
+def fetch_cboe(sym):
+    """CBOE-Strategieindizes (BXM, PUT, ...) als Tagesschlusskurse direkt von cboe.com."""
+    url = "https://cdn.cboe.com/api/global/us_indices/daily_prices/%s_History.csv" % sym.lstrip("^")
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 strategielabor"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        text = r.read().decode("utf-8", "replace")
+    rows = {}
+    for line in text.splitlines()[1:]:
+        parts = line.strip().split(",")
+        try:
+            m, d, y = parts[0].split("/")
+            v = float(parts[1])
+        except (ValueError, IndexError):
+            continue
+        if v > 0:
+            rows["%s-%s-%s" % (y, m.zfill(2), d.zfill(2))] = (v, v, v, v, v)
+    return rows, {}
+
+
+def all_symbols():
+    out = []
+    for lst in UNIVERSES.values():
+        out += [s for s in lst if s not in SYNTH]
+    return list(dict.fromkeys(out + EXTRA))
 
 
 def load_daily(refresh=False):
+    need = all_symbols()
     if os.path.exists(DAILY_CACHE) and not refresh:
         with open(DAILY_CACHE, "rb") as f:
-            return pickle.load(f)
-    syms = list(dict.fromkeys(ETF_EQ + MULTI + STOCKS + EXTRA))
-    raw = {}
-    for i, s in enumerate(syms):
+            data = pickle.load(f)
+        if data.get("version") == 2 and all(s in data["assets"] or s in data["missing"] for s in need):
+            return data
+    raw, divs, missing = {}, {}, []
+    for i, s in enumerate(need):
         try:
-            raw[s] = fetch_daily(s)
-            print("  [%2d/%d] %-7s %5d Tage ab %s" % (i + 1, len(syms), s, len(raw[s]), min(raw[s])), flush=True)
+            rows, dv = fetch_cboe(s) if s in CBOE_SYMS else fetch_daily(s)
+            if len(rows) < 50:
+                raise ValueError("zu wenige Kurse")
+            raw[s], divs[s] = rows, dv
+            print("  [%3d/%d] %-8s %5d Tage ab %s" % (i + 1, len(need), s, len(rows), min(rows)), flush=True)
         except Exception as e:
-            print("  [%2d/%d] %-7s FEHLT: %s" % (i + 1, len(syms), s, e), flush=True)
+            missing.append(s)
+            print("  [%3d/%d] %-8s FEHLT: %s" % (i + 1, len(need), s, e), flush=True)
         time.sleep(0.3)
     today = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
     dates = sorted(d for d in raw["SPY"] if d < today)
-    data = {"dates": dates, "assets": {}}
     n = len(dates)
+    data = {"version": 2, "dates": dates, "assets": {}, "missing": missing}
     for s, rows in raw.items():
-        O, H, L, C = [NAN] * n, [NAN] * n, [NAN] * n, [NAN] * n
+        O, H, L, C, RC = [NAN] * n, [NAN] * n, [NAN] * n, [NAN] * n, [NAN] * n
         start, last = None, None
         for t, d in enumerate(dates):
             r = rows.get(d)
             if r is not None:
-                o, h, l, c = r
-                last = c
+                o, h, l, c, rc = r
+                last = (c, rc)
                 if start is None:
                     start = t
             elif last is not None:
-                o = h = l = c = last          # fehlender Tag: Kurs unveraendert
+                o = h = l = c = last[0]          # fehlender Tag: Kurs unveraendert
+                rc = last[1]
             else:
                 continue
-            O[t], H[t], L[t], C[t] = o, h, l, c
-        if start is not None:
-            data["assets"][s] = {"O": O, "H": H, "L": L, "C": C, "start": start}
+            O[t], H[t], L[t], C[t], RC[t] = o, h, l, c, rc
+        if start is None:
+            missing.append(s)
+            continue
+        D = [0.0] * n
+        for d, amt in divs.get(s, {}).items():
+            t = bisect.bisect_left(dates, d)
+            if t < n:
+                D[t] += amt
+        data["assets"][s] = {"O": O, "H": H, "L": L, "C": C, "RAWC": RC, "DIV": D, "start": start}
     with open(DAILY_CACHE, "wb") as f:
         pickle.dump(data, f)
     return data
 
 
+def _sec_get(url):
+    req = urllib.request.Request(url, headers={"User-Agent": SEC_UA})
+    with urllib.request.urlopen(req, timeout=40) as r:
+        return json.loads(r.read())
+
+
+def load_events(refresh=False):
+    """Termine der Quartalszahlen = Datum der 8-K-Meldungen mit Item 2.02 (Results of Operations)."""
+    if os.path.exists(EVENTS_CACHE) and not refresh:
+        with open(EVENTS_CACHE, "rb") as f:
+            return pickle.load(f)
+    out = {}
+    try:
+        tick = _sec_get("https://www.sec.gov/files/company_tickers.json")
+    except Exception as e:
+        print("  SEC nicht erreichbar (%s) -> Quartalszahlen-Strategien entfallen" % e)
+        return {}
+    cik = {v["ticker"].upper(): int(v["cik_str"]) for v in tick.values()}
+    for s in STOCKS:
+        c = cik.get(s.upper()) or cik.get(s.replace("-", ".").upper())
+        if not c:
+            print("  %-6s keine CIK gefunden" % s)
+            continue
+        try:
+            sub = _sec_get("https://data.sec.gov/submissions/CIK%010d.json" % c)
+            time.sleep(0.15)
+            blocks = [sub["filings"]["recent"]]
+            for fl in sub["filings"].get("files", []):
+                blocks.append(_sec_get("https://data.sec.gov/submissions/" + fl["name"]))
+                time.sleep(0.15)
+            ds = set()
+            for b in blocks:
+                for form, fd, items in zip(b.get("form", []), b.get("filingDate", []), b.get("items", [])):
+                    if form == "8-K" and items and "2.02" in str(items).split(","):
+                        ds.add(fd)
+            out[s] = sorted(ds)
+            print("  %-6s %3d Quartalsmeldungen ab %s" % (s, len(ds), min(ds) if ds else "-"), flush=True)
+        except Exception as e:
+            print("  %-6s SEC-Fehler: %s" % (s, e))
+    with open(EVENTS_CACHE, "wb") as f:
+        pickle.dump(out, f)
+    return out
+
+
+def third_friday(y, m):
+    d = dt.date(y, m, 1)
+    return d + dt.timedelta(days=(4 - d.weekday()) % 7 + 14)
+
+
 def setup(data):
-    global DATES, T, RAW, RF, MONTH, WD, POS_START, POS_END, PREHOL, REB_M, REB_W, PI, SLOTS
-    DATES, RAW = data["dates"], data["assets"]
+    global DATES, T, RAW, RF, SPYR, MONTH, MON, YEAR, WD, POS_START, POS_END, PREHOL
+    global REB_M, REB_W, REB_Y, REB_ALL, OPEXW, AFTER_OPEX, PI, SLOTS, U_START, EVENTS
+    DATES, RAW = data["dates"], dict(data["assets"])
     T = len(DATES)
     RF = [0.0] * T
     irx = RAW.get("^IRX")
@@ -136,8 +298,12 @@ def setup(data):
             v = irx["C"][t - 1]
             if v == v and v > 0:
                 RF[t] = v / 100.0 / 252.0
+    spc = RAW["SPY"]["C"]
+    SPYR = [0.0] + [spc[t] / spc[t - 1] - 1.0 for t in range(1, T)]
     dd = [dt.date.fromisoformat(d) for d in DATES]
     MONTH = [d.year * 12 + d.month for d in dd]
+    MON = [d.month for d in dd]
+    YEAR = [d.year for d in dd]
     WD = [d.weekday() for d in dd]
     POS_START, POS_END = [0] * T, [0] * T
     groups = collections.defaultdict(list)
@@ -153,14 +319,45 @@ def setup(data):
             PREHOL[t] = 1
     REB_M = [1 if t == T - 1 or MONTH[t + 1] != MONTH[t] else 0 for t in range(T)]
     REB_W = [1 if t == T - 1 or WD[t + 1] <= WD[t] or (dd[t + 1] - dd[t]).days > 4 else 0 for t in range(T)]
+    REB_Y = [1 if t == T - 1 or YEAR[t + 1] != YEAR[t] else 0 for t in range(T)]
+    REB_ALL = [1] * T
+    OPEXW, AFTER_OPEX = [0] * T, [0] * T
+    for t, d in enumerate(dd):
+        tf = third_friday(d.year, d.month)
+        if tf - dt.timedelta(days=4) <= d <= tf:
+            OPEXW[t] = 1
+        prev = tf if d > tf else third_friday(d.year - (d.month == 1), 12 if d.month == 1 else d.month - 1)
+        if prev + dt.timedelta(days=3) <= d <= prev + dt.timedelta(days=7):
+            AFTER_OPEX[t] = 1
     PI = {}
     for name, a, b in PERIODS:
         i0 = next(t for t, d in enumerate(DATES) if d >= a)
         i1 = next((t for t, d in enumerate(DATES) if d >= b), T)
         PI[name] = (i0, i1)
-    SLOTS = {}
+    # simulierte Hebel-ETFs: Tagesrendite x Hebel - Finanzierung - Gebuehr
+    for b, L in LEVS:
+        src = RAW.get(b)
+        if not src:
+            continue
+        O0, C0, s0 = src["O"], src["C"], src["start"]
+        O, C = [NAN] * T, [NAN] * T
+        O[s0] = C[s0] = 100.0
+        fee = LEV_FEE / 252.0
+        for t in range(s0 + 1, T):
+            rcc, ron = C0[t] / C0[t - 1] - 1.0, O0[t] / C0[t - 1] - 1.0
+            C[t] = max(1e-6, C[t - 1] * (1.0 + L * rcc - (L - 1) * RF[t] - fee))
+            O[t] = max(1e-6, C[t - 1] * (1.0 + L * ron))
+        H = [max(o, c) if o == o else NAN for o, c in zip(O, C)]
+        Lw = [min(o, c) if o == o else NAN for o, c in zip(O, C)]
+        RAW[levname(b, L)] = {"O": O, "H": H, "L": Lw, "C": C, "RAWC": C, "DIV": [0.0] * T, "start": s0}
+    EVENTS = {}
+    for s, ds in (data.get("events") or {}).items():
+        idx = sorted({bisect.bisect_left(DATES, d) for d in ds})
+        EVENTS[s] = [t for t in idx if t < T]
+    SLOTS, U_START = {}, {}
     for u, syms in UNIVERSES.items():
         starts = [RAW[s]["start"] for s in syms if s in RAW]
+        U_START[u] = min(starts) if starts else None
         cnt = [0] * T
         for s0 in starts:
             for t in range(s0, T):
@@ -170,7 +367,11 @@ def setup(data):
 
 def init_worker():
     with open(DAILY_CACHE, "rb") as f:
-        setup(pickle.load(f))
+        data = pickle.load(f)
+    if os.path.exists(EVENTS_CACHE):
+        with open(EVENTS_CACHE, "rb") as f:
+            data["events"] = pickle.load(f)
+    setup(data)
 
 
 # ======================= Indikatoren =======================
@@ -299,6 +500,12 @@ def i_ret(a):
 def i_vol(a, n):
     f = math.sqrt(252)
     return [v * f for v in roll_std(a.ind("ret"), n, a.s0 + 1)]
+
+
+def i_volavg(a, n, m):
+    v = a.ind("vol", n)
+    s1 = first_valid(v, a.s0)
+    return roll_mean(v, m, s1) if s1 < T else [NAN] * T
 
 
 def i_atr(a, n):
@@ -468,13 +675,141 @@ def i_crsi(a):
     return [(r3[t] + rs[t] + pr[t]) / 3.0 for t in range(T)]
 
 
+def i_divttm(a):
+    D = RAW[a.sym].get("DIV") or [0.0] * T
+    out, acc = [NAN] * T, 0.0
+    for t in range(a.s0, T):
+        acc += D[t]
+        if t - a.s0 >= 252:
+            acc -= D[t - 252]
+        if t - a.s0 >= 251:
+            out[t] = acc
+    return out
+
+
+def i_feat(a):
+    """10 Merkmale fuer die ML-Modelle, alle zum Tagesschluss bekannt und grob normiert."""
+    C, s0 = a.C, a.s0
+    s50, s200, v20 = a.ind("sma", 50), a.ind("sma", 200), a.ind("vol", 20)
+    r2, ib = a.ind("rsi", 2), a.ind("ibs")
+    V = MKT.get("^VIX")
+    vs = V.ind("sma", 20) if V else None
+    X = [None] * T
+    for t in range(s0 + 201, T):
+        try:
+            vz = 0.0
+            if V is not None and V.C[t] == V.C[t] and vs[t] == vs[t] and vs[t] > 0:
+                vz = (V.C[t] / vs[t] - 1.0) / 0.15
+            f = [math.log(C[t] / C[t - 1]) / 0.01, math.log(C[t] / C[t - 5]) / 0.02,
+                 math.log(C[t] / C[t - 20]) / 0.045, math.log(C[t] / C[t - 60]) / 0.08,
+                 (C[t] / s50[t] - 1.0) / 0.04, (C[t] / s200[t] - 1.0) / 0.08, (v20[t] - 0.18) / 0.10,
+                 (r2[t] - 50.0) / 30.0, (ib[t] - 0.5) / 0.3, vz]
+        except (ZeroDivisionError, ValueError):
+            continue
+        if all(x == x for x in f):
+            X[t] = f
+    return X
+
+
+def solve(M, b):
+    n = len(b)
+    A = [row[:] + [b[i]] for i, row in enumerate(M)]
+    for c in range(n):
+        p = max(range(c, n), key=lambda r: abs(A[r][c]))
+        if abs(A[p][c]) < 1e-12:
+            return None
+        A[c], A[p] = A[p], A[c]
+        piv = A[c][c]
+        for r in range(c + 1, n):
+            f = A[r][c] / piv
+            if f:
+                rr, rc = A[r], A[c]
+                for k in range(c, n + 1):
+                    rr[k] -= f * rc[k]
+    x = [0.0] * n
+    for r in range(n - 1, -1, -1):
+        x[r] = (A[r][n] - sum(A[r][k] * x[k] for k in range(r + 1, n))) / A[r][r]
+    return x
+
+
+def i_mlpred(a, h, win):
+    """Lineares Modell (Ridge), jede Woche neu geschaetzt, nur mit Daten, deren Ergebnis schon bekannt ist."""
+    X, C = a.ind("feat"), a.C
+    nf = 11
+    XtX, Xty = [[0.0] * nf for _ in range(nf)], [0.0] * nf
+    q, n, beta, out = collections.deque(), 0, None, [NAN] * T
+    start = a.s0 + 202
+
+    def add(s, sign):
+        x = [1.0] + X[s]
+        y = C[s + h] / C[s] - 1.0
+        for i in range(nf):
+            xi = x[i] * sign
+            row = XtX[i]
+            for j in range(nf):
+                row[j] += xi * x[j]
+            Xty[i] += xi * y
+    for t in range(start, T):
+        s = t - h
+        if s >= start and X[s] is not None:
+            add(s, 1.0)
+            q.append(s)
+            n += 1
+            if win and n > win:
+                add(q.popleft(), -1.0)
+                n -= 1
+        if n >= 500 and (beta is None or REB_W[t]):
+            M = [row[:] for row in XtX]
+            for i in range(1, nf):
+                M[i][i] += 1.0
+            b = solve(M, Xty[:])
+            if b is not None:
+                beta = b
+        if beta is not None and X[t] is not None:
+            xt = X[t]
+            out[t] = beta[0] + sum(beta[i + 1] * xt[i] for i in range(nf - 1))
+    return out
+
+
+def i_knn(a, h, win):
+    """k-naechste-Nachbarn: mittlere Folgerendite der 25 bzw. 100 aehnlichsten frueheren Tage."""
+    X, C = a.ind("feat"), a.C
+    start = a.s0 + 202
+    Y = [NAN] * T
+    for s in range(start, T - h):
+        Y[s] = C[s + h] / C[s] - 1.0
+    out = [None] * T
+    for t in range(start, T):
+        xt = X[t]
+        if xt is None:
+            continue
+        hi = t - h
+        lo = max(start, hi - win)
+        if hi - lo < 250:
+            continue
+        x0, x1, x2, x3, x4, x5, x6, x7, x8, x9 = xt
+        cand = []
+        for s in range(lo, hi + 1):
+            xs = X[s]
+            if xs is None:
+                continue
+            d = ((xs[0] - x0) ** 2 + (xs[1] - x1) ** 2 + (xs[2] - x2) ** 2 + (xs[3] - x3) ** 2 + (xs[4] - x4) ** 2
+                 + (xs[5] - x5) ** 2 + (xs[6] - x6) ** 2 + (xs[7] - x7) ** 2 + (xs[8] - x8) ** 2 + (xs[9] - x9) ** 2)
+            cand.append((d, Y[s]))
+        best = heapq.nsmallest(100, cand)
+        if len(best) < 25:
+            continue
+        out[t] = (sum(y for _, y in best[:25]) / 25.0, sum(y for _, y in best) / len(best))
+    return out
+
+
 IND = {"sma": i_sma, "ema": i_ema, "std": i_std, "hh": i_hh, "ll": i_ll, "rsi": i_rsi, "ret": i_ret,
-       "vol": i_vol, "atr": i_atr, "ibs": i_ibs, "willr": i_willr, "cci": i_cci, "adx": i_adx,
-       "psar": i_psar, "ichi": i_ichi, "slope": i_slope, "macd": i_macd, "absmove": i_absmove,
-       "crsi": i_crsi}
+       "vol": i_vol, "volavg": i_volavg, "atr": i_atr, "ibs": i_ibs, "willr": i_willr, "cci": i_cci,
+       "adx": i_adx, "psar": i_psar, "ichi": i_ichi, "slope": i_slope, "macd": i_macd, "absmove": i_absmove,
+       "crsi": i_crsi, "divttm": i_divttm, "feat": i_feat, "mlpred": i_mlpred, "knn": i_knn}
 
 
-# ======================= Strategien (je Wert) =======================
+# ======================= Strategien je Wert (Timing) =======================
 def machine(a, entry, exit_, maxhold=0):
     S, inpos, held = [0.0] * T, False, 0
     for t in range(a.s0 + 1, T):
@@ -764,10 +1099,73 @@ def f_prehol(a, p):
 def f_season(a, p):
     C, tf, S = a.C, trend(a, p), [0.0] * T
     for t in range(a.s0, T):
-        mo = (MONTH[t] - 1) % 12 + 1
-        if (mo >= 11 or mo <= 4) and (tf is None or C[t] > tf[t]):
+        if (MON[t] >= 11 or MON[t] <= 4) and (tf is None or C[t] > tf[t]):
             S[t] = 1.0
     return ("pos", S)
+
+
+def f_opex(a, p):
+    mode, Hd = p["modus"], [0.0] * T
+    for t in range(a.s0 + 1, T):
+        if mode == "opex-woche":
+            v = OPEXW[t]
+        elif mode == "woche-nach-opex":
+            v = AFTER_OPEX[t]
+        else:
+            v = 0 if AFTER_OPEX[t] else 1
+        Hd[t] = float(v)
+    return ("moc", Hd)
+
+
+def f_santa(a, p):
+    mode, Hd = p["modus"], [0.0] * T
+    for t in range(a.s0 + 1, T):
+        m = MON[t]
+        if mode == "5+2-tage":
+            v = (m == 12 and POS_END[t] < 5) or (m == 1 and POS_START[t] < 2)
+        else:
+            v = m == 12
+        Hd[t] = 1.0 if v else 0.0
+    return ("moc", Hd)
+
+
+def f_janbaro(a, p):
+    C, S = a.C, [0.0] * T
+    years = collections.defaultdict(dict)
+    for t in range(T):
+        if MON[t] == 1 and POS_START[t] == 4:
+            years[YEAR[t]]["j5"] = t
+        if REB_Y[t]:
+            years[YEAR[t]]["end"] = t
+    for y, d in years.items():
+        j5, end = d.get("j5"), d.get("end")
+        if j5 is None or end is None or j5 - 5 < a.s0:
+            continue
+        if C[j5] > C[j5 - 5]:            # erste 5 Januartage positiv -> Rest des Jahres investiert
+            for t in range(j5, end):
+                S[t] = 1.0
+    return ("pos", S)
+
+
+def f_january(a, p):
+    Hd = [0.0] * T
+    for t in range(a.s0 + 1, T):
+        Hd[t] = 1.0 if MON[t] == 1 else 0.0
+    return ("moc", Hd)
+
+
+def f_election(a, p):
+    mode, Hd = p["modus"], [0.0] * T
+    for t in range(a.s0 + 1, T):
+        c = YEAR[t] % 4                   # 0 Wahljahr, 1 nach der Wahl, 2 Midterm, 3 Vorwahljahr
+        if mode == "vorwahljahr":
+            v = c == 3
+        elif mode == "ohne-midterm-jahr":
+            v = c != 2
+        else:
+            v = (c == 2 and MON[t] >= 10) or c == 3
+        Hd[t] = 1.0 if v else 0.0
+    return ("moc", Hd)
 
 
 def f_vix(a, p):
@@ -775,13 +1173,14 @@ def f_vix(a, p):
     if V is None:
         return ("pos", S)
     v, r, s0 = V.C, p["regel"], max(a.s0, V.s0)
-    if r == "vix<vix3m":
+    if r in ("vix<vix3m", "vix>vix3m"):
         V3 = MKT.get("^VIX3M")
         if V3 is None:
             return ("pos", S)
-        v3, f = V3.C, p["f"]
+        v3, f, lt = V3.C, p["f"], r == "vix<vix3m"
         for t in range(max(s0, V3.s0), T):
-            if v[t] < f * v3[t]:
+            x, y = v[t], f * v3[t]
+            if (x < y) if lt else (x > y):
                 S[t] = 1.0
     elif r == "vix<sma":
         m = V.ind("sma", p["n"])
@@ -813,59 +1212,186 @@ def f_voltarget(a, p):
 
 
 def f_volregime(a, p):
-    v = a.ind("vol", 20)
-    s1 = first_valid(v, a.s0)
-    m = roll_mean(v, 252, s1) if s1 < T else [NAN] * T
-    k = p["k"]
+    v, m, k = a.ind("vol", 20), a.ind("volavg", 20, 252), p["k"]
     return ("pos", [1.0 if v[t] < k * m[t] else 0.0 for t in range(T)])
+
+
+def f_trend_ls(a, p):
+    C, m, S = a.C, a.ind("sma", p["n"]), [0.0] * T
+    for t in range(a.s0, T):
+        x = m[t]
+        if x == x:
+            S[t] = 1.0 if C[t] > x else -1.0
+    return ("pos", S)
+
+
+def f_tsmom_ls(a, p):
+    C, n, k, S = a.C, p["n"], p["skip"], [0.0] * T
+    for t in range(a.s0 + n, T):
+        S[t] = 1.0 if C[t - k] > C[t - n] else -1.0
+    return ("pos", S)
+
+
+def f_donchian_ls(a, p):
+    C, hh, ll = a.C, a.ind("hh", p["n"], "H"), a.ind("ll", p["n"], "L")
+    S, pos = [0.0] * T, 0.0
+    for t in range(a.s0 + 1, T):
+        if C[t] > hh[t - 1]:
+            pos = 1.0
+        elif C[t] < ll[t - 1]:
+            pos = -1.0
+        S[t] = pos
+    return ("pos", S)
+
+
+def f_rsi_ls(a, p):
+    r, (lo, hi) = a.ind("rsi", p["n"]), p["grenzen"]
+    S, pos = [0.0] * T, 0.0
+    for t in range(a.s0 + 1, T):
+        v = r[t]
+        if v != v:
+            continue
+        if pos == 0.0:
+            if v < lo:
+                pos = 1.0
+            elif v > hi:
+                pos = -1.0
+        elif (pos > 0 and v > 50) or (pos < 0 and v < 50):
+            pos = 0.0
+        S[t] = pos
+    return ("pos", S)
+
+
+def f_pead(a, p):
+    """Nach den Quartalszahlen: Reaktion ueber 2 Tage (abzgl. S&P 500) -> H Tage in Reaktionsrichtung (oder dagegen)."""
+    ev, S = EVENTS.get(a.sym), [0.0] * T
+    spy = MKT.get("SPY")
+    if not ev or spy is None:
+        return ("pos", S)
+    C, x, H, r = a.C, p["x"], p["H"], p["richtung"]
+    last = -999
+    for d0 in ev:
+        if d0 - last < 20 or d0 < a.s0 + 2 or d0 + 1 >= T:
+            continue
+        last = d0
+        abn = (C[d0 + 1] / C[d0 - 1] - 1.0) - (spy.C[d0 + 1] / spy.C[d0 - 1] - 1.0)
+        if r == "gewinner":
+            sgn = 1.0 if abn > x else 0.0
+        elif r == "verlierer":
+            sgn = 1.0 if abn < -x else 0.0
+        else:
+            sgn = 1.0 if abn > x else (-1.0 if abn < -x else 0.0)
+        if sgn:
+            for t in range(d0 + 1, min(T, d0 + 1 + H)):
+                S[t] = sgn
+    return ("pos", S)
+
+
+def f_pre_earn(a, p):
+    """Vor den Quartalszahlen kaufen (Termin wird als vorab bekannt angenommen)."""
+    ev, S = EVENTS.get(a.sym), [0.0] * T
+    if not ev:
+        return ("pos", S)
+    N, mode = p["N"], p["modus"]
+    for d0 in ev:
+        lo, hi = d0 - N - 1, (d0 - 2 if mode == "vorher-raus" else d0)
+        for t in range(max(a.s0, lo), min(T, hi + 1)):
+            S[t] = 1.0
+    return ("pos", S)
+
+
+def f_ml_lin(a, p):
+    h = p["h"]
+    pred = a.ind("mlpred", h, 0 if p["fenster"] == "wachsend" else 1000)
+    thr = 0.0 if p["schwelle"] == "0" else 0.0005 * h
+    ls, S = p["seite"] == "long-short", [0.0] * T
+    for t in range(T):
+        v = pred[t]
+        if v == v:
+            if v > thr:
+                S[t] = 1.0
+            elif ls and v < -thr:
+                S[t] = -1.0
+    return ("pos", S)
+
+
+def f_ml_knn(a, p):
+    res = a.ind("knn", p["h"], 1500)
+    k = 0 if p["k"] == 25 else 1
+    ls, S = p["seite"] == "long-short", [0.0] * T
+    for t in range(T):
+        r = res[t]
+        if r is not None:
+            if r[k] > 0:
+                S[t] = 1.0
+            elif ls and r[k] < 0:
+                S[t] = -1.0
+    return ("pos", S)
 
 
 def grid(**kw):
     return [dict(zip(kw, v)) for v in itertools.product(*kw.values())]
 
 
+G_BENCH, G_TR, G_MR, G_DT, G_KAL = "Vergleich", "Trendfolge", "Rücksetzer kaufen", "Tageshandel & Overnight", "Kalender & Saison"
+G_VOL, G_ROT, G_TAA, G_LEV = "Volatilität & VIX", "Rotation & Faktoren", "Taktische Asset-Allokation", "Hebel + Trend"
+G_LS, G_PAIR, G_DIV, G_QZ, G_ML = "Long-Short", "Paarhandel", "Dividenden", "Quartalszahlen", "Maschinelles Lernen"
 TF = [0, 200]
-TIMING = [
-    ("Kaufen & Halten", f_bh, [{}]),
-    ("SMA-Trend", f_sma_trend, grid(n=[20, 50, 100, 150, 200, 250])),
-    ("SMA-Kreuz", f_ma_cross, [p for p in grid(typ=["sma"], f=[5, 10, 20, 50], s=[50, 100, 150, 200]) if p["f"] < p["s"]]),
-    ("EMA-Kreuz", f_ma_cross, [p for p in grid(typ=["ema"], f=[5, 10, 12, 20, 50], s=[26, 30, 50, 100, 200]) if p["f"] < p["s"]]),
-    ("Donchian-Ausbruch", f_donchian, [p for p in grid(n=[20, 50, 100, 200], m=[10, 20, 50]) if p["m"] < p["n"]]),
-    ("Zeitreihen-Momentum", f_tsmom, [p for p in grid(n=[21, 42, 63, 126, 189, 252], skip=[0, 21]) if p["skip"] < p["n"]]),
+VIX_P = ([dict(regel="vix<vix3m", f=f) for f in (1.0, 0.95, 0.9)] + [dict(regel="vix>vix3m", f=f) for f in (1.0, 1.05)]
+         + [dict(regel="vix<sma", n=n) for n in (10, 20, 50)] + [dict(regel="vix<niveau", n=n) for n in (15, 20, 25, 30)]
+         + [dict(regel="angst-kauf", x=x, h=h) for x in (0.1, 0.2, 0.3) for h in (5, 10, 20)])
+SPECIAL = CORE + OPT_UNIS + VOL_UNIS
+TIMING = [  # Name, Funktion, Parameter, Gruppe, Maerkte
+    ("Kaufen & Halten", f_bh, [{}], G_BENCH, SPECIAL),
+    ("SMA-Trend", f_sma_trend, grid(n=[20, 50, 100, 150, 200, 250]), G_TR, SPECIAL),
+    ("SMA-Kreuz", f_ma_cross, [p for p in grid(typ=["sma"], f=[5, 10, 20, 50], s=[50, 100, 150, 200]) if p["f"] < p["s"]], G_TR, CORE),
+    ("EMA-Kreuz", f_ma_cross, [p for p in grid(typ=["ema"], f=[5, 10, 12, 20, 50], s=[26, 30, 50, 100, 200]) if p["f"] < p["s"]], G_TR, CORE),
+    ("Donchian-Ausbruch", f_donchian, [p for p in grid(n=[20, 50, 100, 200], m=[10, 20, 50]) if p["m"] < p["n"]], G_TR, CORE),
+    ("Zeitreihen-Momentum", f_tsmom, [p for p in grid(n=[21, 42, 63, 126, 189, 252], skip=[0, 21]) if p["skip"] < p["n"]], G_TR, CORE),
     ("MACD", f_macd, [dict(f=f, s=s, g=g, regel=r) for (f, s, g) in [(12, 26, 9), (8, 17, 9), (5, 35, 5), (19, 39, 9)]
-                      for r in ("signal", "null")]),
-    ("Keltner-Ausbruch", f_keltner, grid(n=[20, 50], k=[0.5, 1, 1.5, 2])),
-    ("Chandelier-Trend", f_chandelier, grid(n=[20, 50, 100], k=[2, 3, 4])),
-    ("ADX-Trend", f_adx, grid(thr=[15, 20, 25, 30])),
-    ("Parabolic-SAR", f_psar, grid(step=[0.01, 0.02, 0.03], max=[0.1, 0.2])),
-    ("Ichimoku", f_ichi, grid(set=[(9, 26, 52), (20, 60, 120)], tk=[0, 1])),
-    ("Regressions-Trend", f_slope, grid(n=[20, 50, 100, 200])),
-    ("Bollinger-Ausbruch", f_bb_break, grid(n=[20, 50, 100], k=[0.5, 1, 1.5, 2])),
-    ("RSI-Ruecksetzer", f_rsi, grid(n=[2, 3, 4, 5, 14], x=[5, 10, 15, 20, 25, 30], exit=["sma5", "rsi50", "rsi70"], trend=TF)),
-    ("ConnorsRSI", f_crsi, grid(x=[5, 10, 15, 20, 25], exit=["crsi50", "crsi70", "sma5"], trend=TF)),
-    ("Bollinger-Ruecksetzer", f_bb_mr, grid(n=[5, 10, 20, 50], k=[1, 1.5, 2, 2.5], exit=["mitte", "sma5"], trend=TF)),
-    ("IBS-Ruecksetzer", f_ibs, grid(x=[0.1, 0.15, 0.2, 0.25, 0.3], exit=["ibs70", "ibs50", "vortageshoch", "1tag"], trend=TF)),
-    ("Abwaertstage", f_down, grid(N=[2, 3, 4, 5], exit=["plustag", "sma5"], trend=TF)),
-    ("N-Tage-Tief", f_nlow, grid(n=[5, 7, 10, 20], exit=["sma5", "nhoch", "5tage"], trend=TF)),
-    ("Williams-%R", f_willr, grid(n=[2, 5, 10, 14], x=[-80, -90, -95], trend=TF)),
-    ("CCI-Ruecksetzer", f_cci, grid(n=[10, 20], x=[-100, -150, -200], trend=TF)),
-    ("Gap-Fade (Tageshandel)", f_gapfade, grid(g=[0.0025, 0.005, 0.01, 0.015, 0.02, "unter-vortagestief"], trend=TF)),
-    ("Gap-Momentum (Tageshandel)", f_gapgo, grid(g=[0.0025, 0.005, 0.01, 0.02], trend=TF)),
-    ("Vola-Ausbruch Williams (Tageshandel)", f_volbreak, grid(k=[0.3, 0.5, 0.7, 1.0], trend=TF)),
-    ("Noise-Band (Tageshandel)", f_noise, grid(n=[7, 14, 21], mult=[0.5, 1.0, 1.5], trend=TF)),
-    ("Overnight", f_overnight, grid(bed=["immer", "trend200", "nach-minustag", "ibs<0.5", "trend+minustag"])),
-    ("Monatswechsel", f_tom, grid(letzte=[0, 1, 2, 3, 4, 5], erste=[1, 2, 3, 4, 5])),
-    ("Wochentag", f_weekday, grid(tag=[0, 1, 2, 3, 4, "ohne-montag"])),
-    ("Vor-Feiertag", f_prehol, [{}]),
-    ("Saison Nov-Apr", f_season, grid(trend=TF)),
-    ("VIX-Filter", f_vix, [dict(regel="vix<vix3m", f=f) for f in (1.0, 0.95, 0.9)]
-     + [dict(regel="vix<sma", n=n) for n in (10, 20, 50)]
-     + [dict(regel="vix<niveau", n=n) for n in (15, 20, 25, 30)]
-     + [dict(regel="angst-kauf", x=x, h=h) for x in (0.1, 0.2, 0.3) for h in (5, 10, 20)]),
-    ("Vola-Ziel", f_voltarget, grid(ziel=[0.10, 0.15, 0.20], n=[20, 60], trend=TF)),
-    ("Vola-Regime", f_volregime, grid(k=[0.8, 1.0, 1.2])),
+                      for r in ("signal", "null")], G_TR, CORE),
+    ("Keltner-Ausbruch", f_keltner, grid(n=[20, 50], k=[0.5, 1, 1.5, 2]), G_TR, CORE),
+    ("Chandelier-Trend", f_chandelier, grid(n=[20, 50, 100], k=[2, 3, 4]), G_TR, CORE),
+    ("ADX-Trend", f_adx, grid(thr=[15, 20, 25, 30]), G_TR, CORE),
+    ("Parabolic-SAR", f_psar, grid(step=[0.01, 0.02, 0.03], max=[0.1, 0.2]), G_TR, CORE),
+    ("Ichimoku", f_ichi, grid(set=[(9, 26, 52), (20, 60, 120)], tk=[0, 1]), G_TR, CORE),
+    ("Regressions-Trend", f_slope, grid(n=[20, 50, 100, 200]), G_TR, CORE),
+    ("Bollinger-Ausbruch", f_bb_break, grid(n=[20, 50, 100], k=[0.5, 1, 1.5, 2]), G_TR, CORE),
+    ("RSI-Rücksetzer", f_rsi, grid(n=[2, 3, 4, 5, 14], x=[5, 10, 15, 20, 25, 30], exit=["sma5", "rsi50", "rsi70"], trend=TF), G_MR, CORE),
+    ("ConnorsRSI", f_crsi, grid(x=[5, 10, 15, 20, 25], exit=["crsi50", "crsi70", "sma5"], trend=TF), G_MR, CORE),
+    ("Bollinger-Rücksetzer", f_bb_mr, grid(n=[5, 10, 20, 50], k=[1, 1.5, 2, 2.5], exit=["mitte", "sma5"], trend=TF), G_MR, CORE),
+    ("IBS-Rücksetzer", f_ibs, grid(x=[0.1, 0.15, 0.2, 0.25, 0.3], exit=["ibs70", "ibs50", "vortageshoch", "1tag"], trend=TF), G_MR, CORE),
+    ("Abwärtstage", f_down, grid(N=[2, 3, 4, 5], exit=["plustag", "sma5"], trend=TF), G_MR, CORE),
+    ("N-Tage-Tief", f_nlow, grid(n=[5, 7, 10, 20], exit=["sma5", "nhoch", "5tage"], trend=TF), G_MR, CORE),
+    ("Williams-%R", f_willr, grid(n=[2, 5, 10, 14], x=[-80, -90, -95], trend=TF), G_MR, CORE),
+    ("CCI-Rücksetzer", f_cci, grid(n=[10, 20], x=[-100, -150, -200], trend=TF), G_MR, CORE),
+    ("Gap-Fade (Tageshandel)", f_gapfade, grid(g=[0.0025, 0.005, 0.01, 0.015, 0.02, "unter-vortagestief"], trend=TF), G_DT, CORE),
+    ("Gap-Momentum (Tageshandel)", f_gapgo, grid(g=[0.0025, 0.005, 0.01, 0.02], trend=TF), G_DT, CORE),
+    ("Vola-Ausbruch Williams (Tageshandel)", f_volbreak, grid(k=[0.3, 0.5, 0.7, 1.0], trend=TF), G_DT, CORE),
+    ("Noise-Band (Tageshandel)", f_noise, grid(n=[7, 14, 21], mult=[0.5, 1.0, 1.5], trend=TF), G_DT, CORE),
+    ("Overnight", f_overnight, grid(bed=["immer", "trend200", "nach-minustag", "ibs<0.5", "trend+minustag"]), G_DT, CORE),
+    ("Monatswechsel", f_tom, grid(letzte=[0, 1, 2, 3, 4, 5], erste=[1, 2, 3, 4, 5]), G_KAL, EQ_UNIS),
+    ("Wochentag", f_weekday, grid(tag=[0, 1, 2, 3, 4, "ohne-montag"]), G_KAL, EQ_UNIS),
+    ("Vor-Feiertag", f_prehol, [{}], G_KAL, EQ_UNIS),
+    ("Saison Nov-Apr", f_season, grid(trend=TF), G_KAL, EQ_UNIS),
+    ("Optionsverfall", f_opex, grid(modus=["opex-woche", "woche-nach-opex", "ohne-woche-nach-opex"]), G_KAL, EQ_UNIS),
+    ("Jahresend-Rally", f_santa, grid(modus=["5+2-tage", "ganzer-dezember"]), G_KAL, EQ_UNIS),
+    ("Januar-Barometer", f_janbaro, [{}], G_KAL, EQ_UNIS),
+    ("Nur Januar", f_january, [{}], G_KAL, EQ_UNIS),
+    ("Wahlzyklus", f_election, grid(modus=["vorwahljahr", "ohne-midterm-jahr", "midterm-oktober-bis-vorwahljahr"]), G_KAL, EQ_UNIS),
+    ("VIX-Filter", f_vix, VIX_P, G_VOL, EQ_UNIS + OPT_UNIS + VOL_UNIS),
+    ("Vola-Ziel", f_voltarget, grid(ziel=[0.10, 0.15, 0.20], n=[20, 60], trend=TF), G_VOL, CORE + OPT_UNIS),
+    ("Vola-Regime", f_volregime, grid(k=[0.8, 1.0, 1.2, 1.5]), G_VOL, SPECIAL),
+    ("Trend Long-Short", f_trend_ls, grid(n=[50, 100, 150, 200, 250]), G_LS, CORE),
+    ("Zeitreihen-Momentum Long-Short", f_tsmom_ls, [p for p in grid(n=[21, 63, 126, 252], skip=[0, 21]) if p["skip"] < p["n"]], G_LS, CORE),
+    ("Donchian Long-Short", f_donchian_ls, grid(n=[20, 50, 100, 200]), G_LS, CORE),
+    ("RSI Long-Short", f_rsi_ls, grid(n=[2, 3, 14], grenzen=[(10, 90), (20, 80), (30, 70)]), G_LS, CORE),
+    ("Nach Quartalszahlen (PEAD)", f_pead, grid(richtung=["gewinner", "verlierer", "long-short"], x=[0.02, 0.04, 0.06], H=[5, 20, 60]), G_QZ, ["AKTIEN"]),
+    ("Vor Quartalszahlen", f_pre_earn, grid(N=[3, 5, 10], modus=["vorher-raus", "durch-zahlen"]), G_QZ, ["AKTIEN"]),
+    ("ML: lineares Modell", f_ml_lin, grid(h=[1, 5], schwelle=["0", "hoch"], fenster=["wachsend", "1000"], seite=["long", "long-short"]),
+     G_ML, ["SPY", "QQQ", "IWM", "SEKTOREN", "MULTI", "ALLE-KLASSEN"]),
+    ("ML: k-nächste Nachbarn", f_ml_knn, grid(h=[1, 5], k=[25, 100], seite=["long", "long-short"]), G_ML, ["SPY", "QQQ", "IWM"]),
 ]
-TIMING_UNIS = {"VIX-Filter": ["SPY", "QQQ", "SEKTOREN", "AKTIEN"]}
 
 
 # ======================= Strategien (Portfolio / Rotation) =======================
@@ -883,6 +1409,13 @@ def port_weights(assets, reb, choose):
 def spy_ok(t):
     spy = MKT["SPY"]
     return spy.C[t] > spy.ind("sma", 200)[t]
+
+
+def m13612(a, t):
+    if t - a.s0 <= 252:
+        return None
+    C = a.C
+    return 12 * (C[t] / C[t - 21] - 1) + 4 * (C[t] / C[t - 63] - 1) + 2 * (C[t] / C[t - 126] - 1) + (C[t] / C[t - 252] - 1)
 
 
 def g_mom(assets, p):
@@ -1028,33 +1561,495 @@ def g_6040(assets, p):
     return port_weights(assets, REB_M, choose)
 
 
-NS = {"SEKTOREN": [1, 2, 3, 5], "MULTI": [1, 2, 3, 5], "AKTIEN": [3, 5, 10, 15]}
-XS_UNIS = ["SEKTOREN", "MULTI", "AKTIEN"]
-PORT = [
+G12 = ["SPY", "IWM", "QQQ", "VGK", "EWJ", "EEM", "VNQ", "DBC", "GLD", "TLT", "HYG", "LQD"]
+G4 = ["SPY", "EFA", "EEM", "AGG"]
+DEFENSIV = ["LQD", "IEF", "SHY"]
+
+
+def _scores(A, syms, t, fn):
+    out = []
+    for s in syms:
+        if s in A:
+            v = fn(A[s], t)
+            if v is not None:
+                out.append((v, s))
+    return out
+
+
+def _risky_def(A, risky, cf, top, t):
+    out = {}
+    if cf < 1.0:
+        sc = sorted(_scores(A, risky, t, m13612), reverse=True)[:top]
+        for _, s in sc:
+            out[s] = out.get(s, 0.0) + (1.0 - cf) / len(sc)
+    if cf > 0.0:
+        d = _scores(A, DEFENSIV, t, m13612)
+        if d:
+            s = max(d)[1]
+            out[s] = out.get(s, 0.0) + cf
+    return out
+
+
+def g_vaa(assets, p):
+    A = {a.sym: a for a in assets}
+    risky, top, B = (G4 if p["set"] == "G4" else G12), p["top"], p["breite"]
+
+    def choose(t):
+        sc = _scores(A, risky, t, m13612)
+        if len(sc) < max(2, len(risky) // 2):
+            return {}
+        bad = sum(1 for v, _ in sc if v <= 0)
+        return _risky_def(A, risky, min(1.0, bad / B), top, t)
+    return port_weights(assets, REB_M, choose)
+
+
+def g_daa(assets, p):
+    A = {a.sym: a for a in assets}
+    top, B = p["top"], p["breite"]
+
+    def choose(t):
+        can = _scores(A, ["EEM", "AGG"], t, m13612)
+        if len(can) < 2:
+            return {}
+        bad = sum(1 for v, _ in can if v <= 0)
+        return _risky_def(A, G12, min(1.0, bad / B), top, t)
+    return port_weights(assets, REB_M, choose)
+
+
+def g_paa(assets, p):
+    A = {a.sym: a for a in assets}
+    L, prot, top, bond = p["L"], p["schutz"], p["top"], p["anleihe"]
+
+    def mom(a, t):
+        m = a.ind("sma", L)[t]
+        return a.C[t] / m - 1.0 if m == m and m > 0 else None
+
+    def choose(t):
+        sc = _scores(A, G12, t, mom)
+        N = len(sc)
+        if N < 6 or bond not in A or t < A[bond].s0:
+            return {}
+        n = sum(1 for v, _ in sc if v > 0)
+        n1 = prot * N / 4.0
+        bf = 1.0 if N - n1 <= 0 else min(1.0, max(0.0, (N - n) / (N - n1)))
+        pos = sorted([x for x in sc if x[0] > 0], reverse=True)[:top]
+        out = {}
+        if pos and bf < 1.0:
+            for _, s in pos:
+                out[s] = (1.0 - bf) / len(pos)
+        else:
+            bf = 1.0
+        out[bond] = out.get(bond, 0.0) + bf
+        return out
+    return port_weights(assets, REB_M, choose)
+
+
+HAA_OFF = ["SPY", "IWM", "EFA", "EEM", "VNQ", "DBC", "IEF", "TLT"]
+
+
+def m4(a, t):
+    if t - a.s0 <= 252:
+        return None
+    C = a.C
+    return ((C[t] / C[t - 21] - 1) + (C[t] / C[t - 63] - 1) + (C[t] / C[t - 126] - 1) + (C[t] / C[t - 252] - 1)) / 4.0
+
+
+def g_haa(assets, p):
+    A = {a.sym: a for a in assets}
+    top = p["top"]
+
+    def choose(t):
+        if "TIP" not in A:
+            return {}
+        tip = m4(A["TIP"], t)
+        if tip is None:
+            return {}
+        cash = "BIL" if "BIL" in A and t - A["BIL"].s0 > 252 else "SHY"
+        safe = _scores(A, ["IEF", cash], t, m4)
+        safe_s = max(safe)[1] if safe else None
+        out = {}
+        if tip > 0:
+            sc = sorted(_scores(A, HAA_OFF, t, m4), reverse=True)[:top]
+            for v, s in sc:
+                tgt = s if v > 0 else safe_s
+                if tgt:
+                    out[tgt] = out.get(tgt, 0.0) + 1.0 / top
+        elif safe_s:
+            out[safe_s] = 1.0
+        return out
+    return port_weights(assets, REB_M, choose)
+
+
+def g_adm(assets, p):
+    A = {a.sym: a for a in assets}
+    eq, bond = p["aktien"].split("/"), p["anleihe"]
+
+    def sc(a, t):
+        if t - a.s0 <= 126:
+            return None
+        C = a.C
+        return (C[t] / C[t - 21] - 1) + (C[t] / C[t - 63] - 1) + (C[t] / C[t - 126] - 1)
+
+    def choose(t):
+        s = _scores(A, eq, t, sc)
+        if not s:
+            return {}
+        v, best = max(s)
+        if v > 0:
+            return {best: 1.0}
+        return {bond: 1.0} if bond in A and t >= A[bond].s0 else {}
+    return port_weights(assets, REB_M, choose)
+
+
+STATIC = {"Permanent Portfolio": {"SPY": .25, "TLT": .25, "GLD": .25, "SHY": .25},
+          "All-Weather (vereinfacht)": {"SPY": .30, "TLT": .40, "IEF": .15, "GLD": .075, "DBC": .075},
+          "Golden Butterfly": {"SPY": .2, "IWM": .2, "TLT": .2, "SHY": .2, "GLD": .2},
+          "3-Fonds (US/Welt/Anleihen)": {"SPY": .4, "EFA": .2, "AGG": .4}}
+
+
+def g_static(assets, p):
+    A = {a.sym: a for a in assets}
+    mix, tr = STATIC[p["mischung"]], p["trend"]
+
+    def choose(t):
+        out = {}
+        for s, w in mix.items():
+            a = A.get(s)
+            if a is None or t < a.s0:
+                continue
+            if tr and not (a.C[t] > a.ind("sma", tr)[t]):
+                continue
+            out[s] = w
+        return out
+    return port_weights(assets, REB_M, choose)
+
+
+LEV_RULES = ["immer", "sma50", "sma100", "sma150", "sma200", "sma250", "sma200-band", "ema50/200",
+             "vola-regime", "sma200+vola-regime", "vola-ziel-20%"]
+
+
+def g_lev(assets, p):
+    A = {a.sym: a for a in assets}
+    base, L, rule = assets[0], p["L"], p["regel"]
+    name = levname(base.sym, L)
+    if name not in A:
+        return {}
+    C = base.C
+    safe = A.get("IEF") if p["ausweich"] == "IEF" else None
+    sma = {n: base.ind("sma", n) for n in (50, 100, 150, 200, 250)}
+    e50, e200 = base.ind("ema", 50), base.ind("ema", 200)
+    v20, va = base.ind("vol", 20), base.ind("volavg", 20, 252)
+    state = [False]
+
+    def sig(t):
+        if rule == "immer":
+            return 1.0
+        if rule.startswith("sma") and rule[3:].isdigit():
+            return 1.0 if C[t] > sma[int(rule[3:])][t] else 0.0
+        if rule == "sma200-band":
+            m = sma[200][t]
+            if m != m:
+                return 0.0
+            if state[0] and C[t] < 0.97 * m:
+                state[0] = False
+            elif not state[0] and C[t] > 1.03 * m:
+                state[0] = True
+            return 1.0 if state[0] else 0.0
+        if rule == "ema50/200":
+            return 1.0 if e50[t] > e200[t] else 0.0
+        vr = v20[t] < 1.2 * va[t]
+        if rule == "vola-regime":
+            return 1.0 if vr else 0.0
+        if rule == "sma200+vola-regime":
+            return 1.0 if vr and C[t] > sma[200][t] else 0.0
+        x = v20[t]
+        return min(1.0, 0.20 / (L * x)) if x == x and x > 0 else 0.0
+
+    def choose(t):
+        if t < base.s0:
+            return {}
+        w = sig(t)
+        out = {}
+        if w > 0:
+            out[name] = w
+        if safe is not None and w < 1.0 and t >= safe.s0:
+            out["IEF"] = 1.0 - w
+        return out
+    return port_weights(assets, REB_ALL, choose)
+
+
+def g_mom_ls(assets, p):
+    L, k, N = p["L"], p["skip"], p["N"]
+
+    def choose(t):
+        sc = sorted((a.C[t - k] / a.C[t - L] - 1.0, a.sym) for a in assets if t - a.s0 > L)
+        if len(sc) < 2 * N:
+            return {}
+        out = {s: -0.5 / N for _, s in sc[:N]}
+        out.update({s: 0.5 / N for _, s in sc[-N:]})
+        return out
+    return port_weights(assets, REB_M if p["reb"] == "M" else REB_W, choose)
+
+
+def g_rev_ls(assets, p):
+    L, N = p["L"], p["N"]
+
+    def choose(t):
+        sc = sorted((a.C[t] / a.C[t - L] - 1.0, a.sym) for a in assets if t - a.s0 > L)
+        if len(sc) < 2 * N:
+            return {}
+        out = {s: 0.5 / N for _, s in sc[:N]}
+        out.update({s: -0.5 / N for _, s in sc[-N:]})
+        return out
+    return port_weights(assets, REB_M if p["reb"] == "M" else REB_W, choose)
+
+
+def g_lowvol_ls(assets, p):
+    n, N = p["n"], p["N"]
+
+    def choose(t):
+        sc = []
+        for a in assets:
+            v = a.ind("vol", n)[t]
+            if v == v and v > 0:
+                sc.append((v, a.sym))
+        sc.sort()
+        if len(sc) < 2 * N:
+            return {}
+        out = {s: 0.5 / N for _, s in sc[:N]}
+        out.update({s: -0.5 / N for _, s in sc[-N:]})
+        return out
+    return port_weights(assets, REB_M, choose)
+
+
+def g_pairs(assets, p):
+    A = {a.sym: a for a in assets}
+    L, k, e, H, side = p["L"], p["z_rein"], p["z_raus"], p["max_tage"], p["seite"]
+    data = []
+    for x, y in PAIRS:
+        if x not in A or y not in A:
+            continue
+        a, b = A[x], A[y]
+        s0 = max(a.s0, b.s0)
+        sp = [NAN] * T
+        for t in range(s0, T):
+            sp[t] = math.log(a.C[t] / b.C[t])
+        data.append((x, y, s0, sp, roll_mean(sp, L, s0), roll_std(sp, L, s0)))
+    state = {d[0]: [0, 0] for d in data}
+
+    def choose(t):
+        live = [d for d in data if t >= d[2] + L]
+        out = {}
+        if not live:
+            return out
+        slot = 1.0 / len(live)
+        for x, y, _s0, sp, m, sd in live:
+            st = state[x]
+            z = (sp[t] - m[t]) / sd[t] if sd[t] == sd[t] and sd[t] > 0 else 0.0
+            pos = st[0]
+            if pos != 0:
+                st[1] += 1
+                if (pos == 1 and z >= -e) or (pos == -1 and z <= e) or st[1] >= H:
+                    pos = 0
+            if pos == 0:
+                if z > k:
+                    pos, st[1] = -1, 0
+                elif z < -k:
+                    pos, st[1] = 1, 0
+            st[0] = pos
+            if pos == 1:                       # x billig: x kaufen (y leerverkaufen)
+                out[x] = out.get(x, 0.0) + slot / 2
+                if side == "beide":
+                    out[y] = out.get(y, 0.0) - slot / 2
+            elif pos == -1:                    # y billig: y kaufen (x leerverkaufen)
+                out[y] = out.get(y, 0.0) + slot / 2
+                if side == "beide":
+                    out[x] = out.get(x, 0.0) - slot / 2
+        return out
+    return port_weights(assets, REB_ALL, choose)
+
+
+def div_yield(a, t):
+    d, c = a.ind("divttm")[t], RAW[a.sym]["RAWC"][t]
+    return d / c if d == d and c == c and c > 0 else None
+
+
+def g_divyield(assets, p):
+    N, filt = p["N"], p["filt"]
+
+    def choose(t):
+        if filt == "spy200" and not spy_ok(t):
+            return {}
+        sc = []
+        for a in assets:
+            y = div_yield(a, t)
+            if y is not None and y > 0:
+                sc.append((y, a.sym))
+        sc.sort(reverse=True)
+        return {s: 1.0 / N for _, s in sc[:N]}
+    return port_weights(assets, REB_M if p["reb"] == "M" else REB_Y, choose)
+
+
+def g_divgrowth(assets, p):
+    g, filt = p["wachstum"], p["filt"]
+
+    def choose(t):
+        if filt == "spy200" and not spy_ok(t):
+            return {}
+        picks = []
+        for a in assets:
+            d = a.ind("divttm")
+            if t - 252 < a.s0:
+                continue
+            now, before = d[t], d[t - 252]
+            if now == now and before == before and before > 0 and now >= before * (1 + g):
+                picks.append(a.sym)
+        return {s: 1.0 / len(picks) for s in picks} if picks else {}
+    return port_weights(assets, REB_M if p["reb"] == "M" else REB_Y, choose)
+
+
+def g_divlowvol(assets, p):
+    N = p["N"]
+
+    def choose(t):
+        vs = []
+        for a in assets:
+            v, y = a.ind("vol", 252)[t], div_yield(a, t)
+            if v == v and y is not None and y > 0:
+                vs.append((v, y, a.sym))
+        if len(vs) < 4:
+            return {}
+        vs.sort()
+        calm = sorted(vs[:len(vs) // 2], key=lambda x: -x[1])
+        return {s: 1.0 / N for _, _, s in calm[:N]}
+    return port_weights(assets, REB_M, choose)
+
+
+NS = {"SEKTOREN": [1, 2, 3, 5], "MULTI": [1, 2, 3, 5], "AKTIEN": [3, 5, 10, 15], "ALLE-KLASSEN": [1, 2, 3, 5],
+      "DEVISEN": [1, 2, 3], "ROHSTOFFE": [1, 2, 3]}
+XS_UNIS = ["SEKTOREN", "MULTI", "AKTIEN", "ALLE-KLASSEN", "DEVISEN", "ROHSTOFFE"]
+PORT = [  # Name, Funktion, Maerkte, Parameter je Markt, Gruppe
     ("Momentum-Rotation", g_mom, XS_UNIS,
      lambda u: [p for p in grid(L=[21, 63, 126, 189, 252], skip=[0, 21], N=NS[u], reb=["M", "W"],
-                                filt=["keiner", "spy200", "absolut"]) if p["skip"] < p["L"]]),
-    ("Momentum/Vola-Rotation", g_momvol, XS_UNIS, lambda u: grid(L=[63, 126, 252], N=NS[u], filt=["keiner", "spy200"])),
-    ("Niedrige-Vola-Auswahl", g_lowvol, XS_UNIS, lambda u: grid(n=[21, 63, 126, 252], N=NS[u], filt=["keiner", "spy200"])),
-    ("Kurzfrist-Umkehr", g_rev, XS_UNIS, lambda u: grid(L=[5, 10, 21], N=NS[u], reb=["W", "M"], filt=["keiner", "spy200"])),
-    ("52-Wochen-Hoch", g_52, XS_UNIS, lambda u: grid(N=NS[u], filt=["keiner", "spy200"])),
-    ("Risk-Parity", g_rp, ["SEKTOREN", "MULTI"], lambda u: grid(n=[21, 63, 126], trend=TF)),
-    ("GTAA (Faber)", g_gtaa, XS_UNIS, lambda u: grid(n=[100, 150, 200, 210, 250])),
-    ("Dual-Momentum GEM", g_gem, ["MULTI"], lambda u: grid(L=[63, 126, 189, 252], risk=["SPY/EFA", "SPY/QQQ/EFA"])),
-    ("60/40 SPY/AGG", g_6040, ["MULTI"], lambda u: [{}]),
+                                filt=["keiner", "spy200", "absolut"]) if p["skip"] < p["L"]], G_ROT),
+    ("Momentum/Vola-Rotation", g_momvol, XS_UNIS, lambda u: grid(L=[63, 126, 252], N=NS[u], filt=["keiner", "spy200"]), G_ROT),
+    ("Niedrige-Vola-Auswahl", g_lowvol, XS_UNIS, lambda u: grid(n=[21, 63, 126, 252], N=NS[u], filt=["keiner", "spy200"]), G_ROT),
+    ("Kurzfrist-Umkehr", g_rev, XS_UNIS, lambda u: grid(L=[5, 10, 21], N=NS[u], reb=["W", "M"], filt=["keiner", "spy200"]), G_ROT),
+    ("52-Wochen-Hoch", g_52, XS_UNIS, lambda u: grid(N=NS[u], filt=["keiner", "spy200"]), G_ROT),
+    ("Risk-Parity", g_rp, ["SEKTOREN", "MULTI", "ALLE-KLASSEN", "ROHSTOFFE"], lambda u: grid(n=[21, 63, 126], trend=TF), G_ROT),
+    ("GTAA (Faber)", g_gtaa, XS_UNIS, lambda u: grid(n=[100, 150, 200, 210, 250]), G_ROT),
+    ("Dual-Momentum GEM", g_gem, ["MULTI"], lambda u: grid(L=[63, 126, 189, 252], risk=["SPY/EFA", "SPY/QQQ/EFA"]), G_TAA),
+    ("60/40 SPY/AGG", g_6040, ["MULTI"], lambda u: [{}], G_BENCH),
+    ("VAA (Keller)", g_vaa, ["TAA"], lambda u: [p for p in grid(set=["G4", "G12"], top=[1, 2, 3, 5], breite=[1, 2, 4])
+                                                 if p["top"] <= (4 if p["set"] == "G4" else 12)], G_TAA),
+    ("DAA (Keller)", g_daa, ["TAA"], lambda u: grid(top=[2, 3, 6], breite=[1, 2]), G_TAA),
+    ("PAA (Keller)", g_paa, ["TAA"], lambda u: grid(L=[126, 252], schutz=[0, 1, 2], top=[3, 6], anleihe=["IEF", "SHY"]), G_TAA),
+    ("HAA (Keller)", g_haa, ["TAA"], lambda u: grid(top=[2, 4]), G_TAA),
+    ("Accelerating Dual Momentum", g_adm, ["TAA"], lambda u: grid(aktien=["SPY/EFA", "SPY/EFA/EEM", "SPY/QQQ/EFA"],
+                                                                  anleihe=["TLT", "IEF", "SHY"]), G_TAA),
+    ("Statische Portfolios", g_static, ["TAA"], lambda u: grid(mischung=list(STATIC), trend=TF), G_TAA),
+    ("Hebel + Trendfilter", g_lev, ["HEBEL-SPY", "HEBEL-QQQ"], lambda u: grid(L=[1.0, 1.5, 2.0, 3.0], regel=LEV_RULES,
+                                                                              ausweich=["cash", "IEF"]), G_LEV),
+    ("Momentum marktneutral", g_mom_ls, XS_UNIS, lambda u: [p for p in grid(L=[21, 63, 126, 252], skip=[0, 21], N=NS[u][:3],
+                                                                            reb=["M", "W"]) if p["skip"] < p["L"]], G_LS),
+    ("Umkehr marktneutral", g_rev_ls, XS_UNIS, lambda u: grid(L=[5, 10, 21], N=NS[u][:3], reb=["W", "M"]), G_LS),
+    ("Niedrige Vola marktneutral", g_lowvol_ls, XS_UNIS, lambda u: grid(n=[63, 252], N=NS[u][:3]), G_LS),
+    ("Paarhandel", g_pairs, ["PAARE"], lambda u: grid(L=[20, 60, 120], z_rein=[1.5, 2.0, 2.5], z_raus=[0.0, 0.5],
+                                                      max_tage=[20, 60], seite=["beide", "nur-long"]), G_PAIR),
+    ("Hohe Dividendenrendite", g_divyield, ["AKTIEN"], lambda u: grid(N=[5, 10, 15], reb=["M", "J"], filt=["keiner", "spy200"]), G_DIV),
+    ("Dividenden-Wachstum", g_divgrowth, ["AKTIEN"], lambda u: grid(wachstum=[0.0, 0.05, 0.10], reb=["M", "J"], filt=["keiner", "spy200"]), G_DIV),
+    ("Dividende + niedrige Vola", g_divlowvol, ["AKTIEN"], lambda u: grid(N=[5, 10, 15]), G_DIV),
 ]
 BENCH_FAMS = ("Kaufen & Halten", "60/40 SPY/AGG")
+
+FAMILY_DESC = {
+    "Kaufen & Halten": "Einfach kaufen und liegen lassen (Vergleichsmaßstab).",
+    "SMA-Trend": "Investiert, solange der Kurs über seinem gleitenden Durchschnitt der letzten n Tage liegt.",
+    "SMA-Kreuz": "Investiert, solange der schnelle über dem langsamen gleitenden Durchschnitt liegt.",
+    "EMA-Kreuz": "Wie SMA-Kreuz, mit exponentiell gewichteten Durchschnitten.",
+    "Donchian-Ausbruch": "Kauf bei neuem n-Tage-Hoch, Verkauf bei neuem m-Tage-Tief (Turtle-Prinzip).",
+    "Zeitreihen-Momentum": "Investiert, wenn der Kurs höher ist als vor n Tagen.",
+    "MACD": "Investiert, wenn die MACD-Linie über ihrer Signallinie bzw. über null liegt.",
+    "Keltner-Ausbruch": "Kauf, wenn der Kurs k ATR über dem Durchschnitt schließt; Verkauf unter dem Durchschnitt.",
+    "Chandelier-Trend": "Kauf bei n-Tage-Hoch, nachgezogener Stop k ATR unter dem Höchstkurs.",
+    "ADX-Trend": "Kauf bei starkem Aufwärtstrend (ADX über Schwelle und +DI über -DI).",
+    "Parabolic-SAR": "Folgt den Aufwärtsphasen des Parabolic-SAR-Indikators.",
+    "Ichimoku": "Investiert, wenn der Kurs über der Ichimoku-Wolke liegt.",
+    "Regressions-Trend": "Investiert, wenn die Regressionsgerade der letzten n Tage steigt.",
+    "Bollinger-Ausbruch": "Kauf über dem oberen Bollinger-Band, Verkauf unter dem Durchschnitt.",
+    "RSI-Rücksetzer": "Kauf nach einem Rücksetzer (RSI unter x), Verkauf bei Erholung.",
+    "ConnorsRSI": "Kauf bei sehr niedrigem ConnorsRSI (kombiniertes Überverkauft-Maß).",
+    "Bollinger-Rücksetzer": "Kauf unter dem unteren Bollinger-Band, Verkauf bei Rückkehr zur Mitte.",
+    "IBS-Rücksetzer": "Kauf, wenn der Kurs nahe dem Tagestief schließt (Internal Bar Strength).",
+    "Abwärtstage": "Kauf nach N Verlusttagen in Folge.",
+    "N-Tage-Tief": "Kauf, wenn der Kurs auf einem n-Tage-Tief schließt.",
+    "Williams-%R": "Kauf, wenn Williams-%R extrem überverkauft ist.",
+    "CCI-Rücksetzer": "Kauf bei stark negativem CCI, Verkauf über null.",
+    "Gap-Fade (Tageshandel)": "Kauf zur Eröffnung nach einer Kurslücke nach unten, Verkauf zum Schluss.",
+    "Gap-Momentum (Tageshandel)": "Kauf zur Eröffnung nach einer Kurslücke nach oben, Verkauf zum Schluss.",
+    "Vola-Ausbruch Williams (Tageshandel)": "Kauf, wenn der Kurs k-mal die Vortagesspanne über die Eröffnung steigt; Verkauf zum Schluss.",
+    "Noise-Band (Tageshandel)": "Kauf beim Ausbruch über das normale Tagesrauschen; Verkauf zum Schluss.",
+    "Overnight": "Nur über Nacht halten: Kauf zum Schluss, Verkauf zur Eröffnung.",
+    "Monatswechsel": "Nur an den letzten bzw. ersten Handelstagen des Monats investiert.",
+    "Wochentag": "Nur an bestimmten Wochentagen investiert (0 = Montag).",
+    "Vor-Feiertag": "Nur am Handelstag vor Börsenfeiertagen investiert.",
+    "Saison Nov-Apr": "Nur von November bis April investiert („Sell in May“).",
+    "Optionsverfall": "Investiert in der Woche des monatlichen Optionsverfalls, in der Woche danach oder außerhalb davon.",
+    "Jahresend-Rally": "Nur in den letzten Dezember- und ersten Januartagen bzw. im ganzen Dezember investiert.",
+    "Januar-Barometer": "Rest des Jahres investiert, wenn die ersten 5 Januartage positiv waren.",
+    "Nur Januar": "Nur im Januar investiert (Januar-Effekt).",
+    "Wahlzyklus": "Investiert nach dem US-Präsidentschafts-Wahlzyklus.",
+    "VIX-Filter": "Investiert abhängig vom Angstbarometer VIX (z. B. nur bei ruhigem Markt oder nach Panik).",
+    "Vola-Ziel": "Positionsgröße so, dass die Schwankung etwa dem Ziel entspricht.",
+    "Vola-Regime": "Investiert, solange die aktuelle Schwankung nicht deutlich über ihrem Jahresschnitt liegt.",
+    "Trend Long-Short": "Über dem gleitenden Durchschnitt kaufen, darunter leerverkaufen.",
+    "Zeitreihen-Momentum Long-Short": "Kaufen, wenn höher als vor n Tagen, sonst leerverkaufen.",
+    "Donchian Long-Short": "Kauf bei n-Tage-Hoch, Leerverkauf bei n-Tage-Tief (immer im Markt).",
+    "RSI Long-Short": "Kauf bei überverkauft, Leerverkauf bei überkauft, raus bei RSI 50.",
+    "Nach Quartalszahlen (PEAD)": "Nach starker Kursreaktion auf Quartalszahlen H Tage in Reaktionsrichtung (oder dagegen) handeln.",
+    "Vor Quartalszahlen": "N Tage vor dem Zahlentermin kaufen (Termin wird als vorab bekannt angenommen).",
+    "ML: lineares Modell": "Lineares Prognosemodell aus 10 Indikatoren, wöchentlich nur mit Vergangenheitsdaten neu geschätzt.",
+    "ML: k-nächste Nachbarn": "Sucht die 25 bzw. 100 ähnlichsten früheren Tage und folgt deren Entwicklung.",
+    "Momentum-Rotation": "Kauft monatlich bzw. wöchentlich die stärksten Werte der letzten L Tage.",
+    "Momentum/Vola-Rotation": "Wie Momentum-Rotation, aber Rendite geteilt durch Schwankung.",
+    "Niedrige-Vola-Auswahl": "Kauft die ruhigsten Werte.",
+    "Kurzfrist-Umkehr": "Kauft die größten Verlierer der letzten Tage.",
+    "52-Wochen-Hoch": "Kauft Werte nahe ihrem 52-Wochen-Hoch.",
+    "Risk-Parity": "Gewichtet alle Werte umgekehrt zu ihrer Schwankung.",
+    "GTAA (Faber)": "Jeden Wert nur über seinem gleitenden Durchschnitt halten (monatlich geprüft).",
+    "Dual-Momentum GEM": "Stärkster Aktienmarkt, wenn besser als Zinsen; sonst Anleihen.",
+    "60/40 SPY/AGG": "60 % Aktien, 40 % Anleihen, monatlich ausgeglichen (Vergleichsmaßstab).",
+    "VAA (Keller)": "Vigilant Asset Allocation: Momentum-Rotation, bei schwachen Märkten in sichere Anleihen.",
+    "DAA (Keller)": "Defensive Asset Allocation: Schwellenländer und Anleihen als Frühwarnsignal.",
+    "PAA (Keller)": "Protective Asset Allocation: Anleihenanteil steigt mit der Zahl schwacher Märkte.",
+    "HAA (Keller)": "Hybrid Asset Allocation: inflationsgeschützte Anleihen (TIP) als Frühwarnsignal.",
+    "Accelerating Dual Momentum": "Stärkster Aktienmarkt nach 1-, 3- und 6-Monats-Momentum, sonst Anleihen.",
+    "Statische Portfolios": "Feste Mischungen (Permanent Portfolio, All-Weather, Golden Butterfly, 3-Fonds), optional mit Trendfilter.",
+    "Hebel + Trendfilter": "S&P 500 bzw. Nasdaq-100 mit 1- bis 3-fachem Hebel, nur wenn Trend oder Volatilität passt.",
+    "Momentum marktneutral": "Die stärksten Werte kaufen, die schwächsten leerverkaufen.",
+    "Umkehr marktneutral": "Die Verlierer kaufen, die Gewinner leerverkaufen.",
+    "Niedrige Vola marktneutral": "Ruhige Werte kaufen, schwankungsstarke leerverkaufen.",
+    "Paarhandel": "Bei ungewöhnlichem Abstand zweier verwandter Werte den billigeren kaufen (und den teureren leerverkaufen).",
+    "Hohe Dividendenrendite": "Kauft die Aktien mit der höchsten Dividendenrendite (Dogs-of-the-Dow-Prinzip bei jährlichem Wechsel).",
+    "Dividenden-Wachstum": "Kauft Aktien, die ihre Dividende im letzten Jahr erhöht haben.",
+    "Dividende + niedrige Vola": "Höchste Dividendenrendite unter der ruhigeren Hälfte der Aktien.",
+}
 
 
 # ======================= Backtest-Motor =======================
 def add_pos(R, E, NE, a, S, slot, cost):
-    """S[t] = Zielgewicht, entschieden zum Schluss von Tag t, ausgefuehrt zur Eroeffnung t+1."""
+    """S[t] = Zielgewicht (negativ = Leerverkauf), entschieden zum Schluss von Tag t, ausgefuehrt zur Eroeffnung t+1."""
     O, C = a.O, a.C
     w2 = w1 = 0.0
+    bd = BORROW / 252.0
     for t in range(a.s0, T):
         if w1 != 0.0 or w2 != 0.0:
             R[t] += w2 * (O[t] / C[t - 1] - 1.0) + w1 * (C[t] / O[t] - 1.0) - cost * abs(w1 - w2)
-            E[t] += w1
+            if w1 < 0.0:
+                R[t] += w1 * bd
+                E[t] -= w1
+            else:
+                E[t] += w1
             if w2 == 0.0:
                 NE[t] += 1
         s = S[t]
@@ -1094,51 +2089,106 @@ def add_on(R, E, NE, a, OS, slot, cost):
 
 def metrics(R, E, NE, i0, i1):
     n = i1 - i0
-    if n < 20:
+    if n < 126:
         return None
     eq = peak = 1.0
-    mdd = s = ss = 0.0
+    mdd = s = ss = dn = 0.0
+    under = maxunder = 0
+    sm = smm = sr = srr = smr = 0.0
+    mon, mc, ex, tr = [], 1.0, 0.0, 0
     for t in range(i0, i1):
         r = R[t]
         eq *= 1.0 + r
-        if eq > peak:
-            peak = eq
-        dd = 1.0 - eq / peak
-        if dd > mdd:
-            mdd = dd
+        if eq >= peak:
+            peak, under = eq, 0
+        else:
+            under += 1
+            if under > maxunder:
+                maxunder = under
+            dd = 1.0 - eq / peak
+            if dd > mdd:
+                mdd = dd
         x = r - RF[t]
         s += x
         ss += x * x
+        if x < 0:
+            dn += x * x
+        m = SPYR[t]
+        sm += m
+        smm += m * m
+        sr += r
+        srr += r * r
+        smr += m * r
+        mc *= 1.0 + r
+        if REB_M[t] or t == i1 - 1:
+            mon.append(mc - 1.0)
+            mc = 1.0
+        ex += E[t]
+        tr += NE[t]
     mu = s / n
     var = ss / n - mu * mu
     sh = mu / math.sqrt(var) * math.sqrt(252) if var > 1e-18 else 0.0
+    so = mu / math.sqrt(dn / n) * math.sqrt(252) if dn > 1e-18 else 0.0
+    vr = srr / n - (sr / n) ** 2
+    vm = smm / n - (sm / n) ** 2
+    cov = smr / n - (sm / n) * (sr / n)
     yrs = n / 252.0
-    tr = sum(NE[i0:i1])
-    return {"sharpe": round(sh, 3), "cagr": round(100 * (eq ** (1 / yrs) - 1), 2) if eq > 0 else -100.0,
-            "mdd": round(100 * mdd, 1), "expo": round(100 * sum(E[i0:i1]) / n, 1), "trades": tr,
-            "tpj": round(tr / yrs, 1), "ende": round(eq, 3)}
+    return {"cagr": round(eq ** (1 / yrs) - 1, 4) if eq > 0 else -1.0, "total": round(eq - 1, 4),
+            "vol": round(math.sqrt(vr * 252), 4) if vr > 0 else 0.0, "sharpe": round(sh, 3), "sortino": round(so, 3),
+            "mdd": round(mdd, 4), "dd_tage": maxunder, "expo": round(ex / n, 3), "trades": tr, "tpj": round(tr / yrs, 1),
+            "beta": round(cov / vm, 3) if vm > 0 else 0.0,
+            "korr": round(cov / math.sqrt(vm * vr), 3) if vm > 0 and vr > 0 else 0.0,
+            "mon_pos": round(sum(1 for v in mon if v > 0) / len(mon), 3) if mon else None, "von": None}
 
 
-def make_row(fam, u, p, R, E, NE):
+def period_bounds(u, name):
+    i0, i1 = PI[name]
+    us = U_START.get(u)
+    if us is None:
+        return None
+    if us + 252 > i0:
+        i0 = us + 252
+    return (i0, i1) if i1 - i0 >= 252 else None
+
+
+def make_row(fam, grp, u, p, cost, R, E, NE):
     for t in range(T):
         e = E[t]
         if e < 1.0:
             R[t] += (1.0 - e) * RF[t]
-    row = {"fam": fam, "uni": u, "p": p}
+    row = {"fam": fam, "grp": grp, "uni": u, "p": p, "cost": cost}
     for name, _, _ in PERIODS:
-        i0, i1 = PI[name]
-        row[name] = metrics(R, E, NE, i0, i1)
+        b = period_bounds(u, name)
+        m = metrics(R, E, NE, b[0], b[1]) if b else None
+        if m and b[0] != PI[name][0]:
+            m["von"] = DATES[b[0]]
+        row[name] = m
+    jahre = {}
+    gb = period_bounds(u, "G")
+    if gb:
+        eq, cur = 1.0, YEAR[gb[0]]
+        for t in range(gb[0], T):
+            if YEAR[t] != cur:
+                jahre[str(cur)] = round(eq - 1, 4)
+                eq, cur = 1.0, YEAR[t]
+            eq *= 1.0 + R[t]
+        jahre[str(cur)] = round(eq - 1, 4)
+    row["jahre"] = jahre
     return row
 
 
-def run_task(task, cost=COST, only=None):
+def run_task(task, cost=None, only=None):
     global MKT
     kind, i, u = task
-    MKT = {s: Asset(s) for s in ("SPY", "^VIX", "^VIX3M") if s in RAW}
+    if cost is None:
+        cost = uni_cost(u)
+    MKT = {s: Asset(s) for s in ("SPY", "QQQ", "^VIX", "^VIX3M") if s in RAW}
     assets = [Asset(s) for s in UNIVERSES[u] if s in RAW]
     rows = []
+    if not assets:
+        return rows
     if kind == "T":
-        fam, fn, params = TIMING[i]
+        fam, fn, params, grp, _unis = TIMING[i]
         slot = SLOTS[u]
         for p in params:
             if only is not None and p != only:
@@ -1154,18 +2204,19 @@ def run_task(task, cost=COST, only=None):
                     add_moc(R, E, NE, a, res[1], slot, cost)
                 else:
                     add_on(R, E, NE, a, res[1], slot, cost)
-            rows.append(make_row(fam, u, p, R, E, NE))
+            rows.append(make_row(fam, grp, u, p, cost, R, E, NE))
     else:
-        fam, fn, _, gridf = PORT[i]
+        fam, fn, _unis, gridf, grp = PORT[i]
         for p in gridf(u):
             if only is not None and p != only:
                 continue
             R, E, NE = [0.0] * T, [0.0] * T, [0] * T
             W = fn(assets, p)
             for a in assets:
-                if any(W[a.sym]):
-                    add_pos(R, E, NE, a, W[a.sym], None, cost)
-            rows.append(make_row(fam, u, p, R, E, NE))
+                w = W.get(a.sym)
+                if w and any(w):
+                    add_pos(R, E, NE, a, w, None, cost)
+            rows.append(make_row(fam, grp, u, p, cost, R, E, NE))
     return rows
 
 
@@ -1175,18 +2226,32 @@ def task_name(task):
 
 def build_tasks(quick=False):
     tasks = []
-    for i, (fam, fn, params) in enumerate(TIMING):
-        for u in TIMING_UNIS.get(fam, ALL_UNIS):
-            tasks.append(("T", i, u, len(params)))
-    for i, (fam, fn, unis, gridf) in enumerate(PORT):
+    for i, (fam, fn, params, grp, unis) in enumerate(TIMING):
+        if grp == G_QZ and not EVENTS:
+            continue                       # ohne SEC-Termine keine Quartalszahlen-Strategien
         for u in unis:
-            tasks.append(("P", i, u, len(gridf(u))))
+            if U_START.get(u) is not None:
+                tasks.append(("T", i, u, len(params)))
+    for i, (fam, fn, unis, gridf, grp) in enumerate(PORT):
+        for u in unis:
+            if U_START.get(u) is not None:
+                tasks.append(("P", i, u, len(gridf(u))))
     if quick:
-        tasks = [t for t in tasks if t[2] in ("SPY", "SEKTOREN") and t[3] <= 40]
-    # grosse Aufgaben zuerst (bessere Auslastung)
-    weight = {"AKTIEN": 50, "MULTI": 14, "SEKTOREN": 13, "SPY": 1, "QQQ": 1}
-    tasks.sort(key=lambda t: -t[3] * weight[t[2]])
+        tasks = [t for t in tasks if t[2] in ("SPY", "SEKTOREN", "TAA", "HEBEL-QQQ", "PAARE", "OPT-PUT", "VOL-SVXY",
+                                               "KRYPTO", "AKTIEN", "DEVISEN") and t[3] <= 40]
+    weight = {u: len(s) for u, s in UNIVERSES.items()}
+    heavy = {"ML: k-nächste Nachbarn": 400, "ML: lineares Modell": 20}
+    tasks.sort(key=lambda t: -t[3] * weight[t[2]] * heavy.get(task_name(t), 1))
     return [t[:3] for t in tasks], sum(t[3] for t in tasks)
+
+
+def find_task(fam, uni):
+    for i, row in enumerate(TIMING):
+        if row[0] == fam:
+            return ("T", i, uni)
+    for i, row in enumerate(PORT):
+        if row[0] == fam:
+            return ("P", i, uni)
 
 
 # ======================= Intraday-Studie (Stundenkurse) =======================
@@ -1232,7 +2297,6 @@ def load_hourly(refresh=False):
                 continue
             days.setdefault(d, []).append((n.strftime("%H:%M"), o, h, l, c))
         out[sym] = collections.OrderedDict((d, sorted(b)) for d, b in days.items())
-        print("  %s: %d Handelstage Stundenkurse (%s .. %s)" % (sym, len(out[sym]), min(out[sym]), max(out[sym])))
         time.sleep(0.5)
     with open(HOURLY_CACHE, "wb") as f:
         pickle.dump(out, f)
@@ -1349,18 +2413,16 @@ def imetrics(res):
     rs = [r for _, r, _ in res]
     mu = sum(rs) / n
     var = sum((x - mu) ** 2 for x in rs) / n
-    eq = 1.0
-    peak, mdd = 1.0, 0.0
+    eq, peak, mdd = 1.0, 1.0, 0.0
     for x in rs:
         eq *= 1 + x
         peak = max(peak, eq)
         mdd = max(mdd, 1 - eq / peak)
     return {"sharpe": round(mu / math.sqrt(var) * math.sqrt(252), 2) if var > 0 else 0.0,
-            "rendite": round(100 * (eq - 1), 1), "mdd": round(100 * mdd, 1),
-            "trades": sum(k for _, _, k in res)}
+            "rendite": round(eq - 1, 4), "mdd": round(mdd, 4), "trades": sum(k for _, _, k in res)}
 
 
-def intraday_study(hourly, P):
+def intraday_study(hourly):
     rows = []
     for sym, days in hourly.items():
         if len(days) < 100:
@@ -1371,24 +2433,6 @@ def intraday_study(hourly, P):
             res = fn(days, p, COST)
             rows.append({"fam": fam, "sym": sym, "p": p, "train": imetrics(res[:half]), "test": imetrics(res[half:]),
                          "von": keys[0], "mitte": keys[half], "bis": keys[-1]})
-    if not rows:
-        P("Keine Stundenkurse verfuegbar.")
-        return rows
-    r0 = rows[0]
-    P("\n## Intraday-Studie (Stundenkurse, nur ~2 Jahre -> wenig aussagekraeftig)\n")
-    P("Auswahl: %s .. %s, Test: %s .. %s. %d Varianten auf %s.\n"
-      % (r0["von"], r0["mitte"], r0["mitte"], r0["bis"], len(INTRA) * len(hourly), ", ".join(hourly)))
-    cand = [r for r in rows if r["fam"] != "Kaufen & Halten" and r["train"] and r["train"]["trades"] >= 20]
-    cand.sort(key=lambda r: -r["train"]["sharpe"])
-    P("| # | Strategie | ETF | Parameter | Sharpe Auswahl | Sharpe Test | Rendite Test | Trades Test |")
-    P("|---|---|---|---|---|---|---|---|")
-    for k, r in enumerate(cand[:5], 1):
-        P("| %d | %s | %s | %s | %.2f | %.2f | %+.1f %% | %d |" % (k, r["fam"], r["sym"], fmt_p(r["p"]), r["train"]["sharpe"],
-                                                            r["test"]["sharpe"], r["test"]["rendite"], r["test"]["trades"]))
-    for r in rows:
-        if r["fam"] == "Kaufen & Halten":
-            P("| - | Kaufen & Halten | %s | - | %.2f | %.2f | %+.1f %% | - |" % (r["sym"], r["train"]["sharpe"],
-                                                                         r["test"]["sharpe"], r["test"]["rendite"]))
     return rows
 
 
@@ -1420,138 +2464,133 @@ def luck_sharpe(n, years):
     return (z - (math.log(math.log(n)) + math.log(4 * math.pi)) / (2 * z)) / math.sqrt(years)
 
 
-def find_task(fam, uni):
-    for i, (f, *_rest) in enumerate(TIMING):
-        if f == fam:
-            return ("T", i, uni)
-    for i, (f, *_rest) in enumerate(PORT):
-        if f == fam:
-            return ("P", i, uni)
+def distinct(lst, n):
+    seen, out = set(), []
+    for r in lst:
+        k = (r["fam"], r["uni"])
+        if k not in seen:
+            seen.add(k)
+            out.append(r)
+            if len(out) == n:
+                break
+    return out
 
 
-def report(rows, P):
+def analyse(rows):
+    for k, r in enumerate(rows, 1):
+        r["id"] = k
+        r["score"] = None
     bench = [r for r in rows if r["fam"] in BENCH_FAMS]
-    cand = [r for r in rows if r["fam"] not in BENCH_FAMS and r["A"] and r["B"] and r["C"]]
-    elig = [r for r in cand if r["A"]["trades"] >= 5 and r["B"]["trades"] >= 5]
+    spy = next(r for r in bench if r["fam"] == "Kaufen & Halten" and r["uni"] == "SPY")
+    spy_c = spy["C"]["sharpe"]
+    cand = [r for r in rows if r["fam"] not in BENCH_FAMS]
+    elig = [r for r in cand if r["A"] and r["B"] and r["C"] and r["A"]["trades"] >= 5 and r["B"]["trades"] >= 5]
     for r in elig:
         r["score"] = min(r["A"]["sharpe"], r["B"]["sharpe"])
     elig.sort(key=lambda r: -r["score"])
-    spy = next(r for r in bench if r["fam"] == "Kaufen & Halten" and r["uni"] == "SPY")
-    yrs_ab = (PI["AB"][1] - PI["AB"][0]) / 252.0
+    rc = sorted([r for r in elig if r["G"] and r["G"]["expo"] >= 0.3], key=lambda r: -min(r["A"]["cagr"], r["B"]["cagr"]))
+    short = sorted([r for r in cand if not r["A"] and r["B"] and r["C"] and r["B"]["trades"] >= 5],
+                   key=lambda r: -r["B"]["sharpe"])
 
-    P("# Strategie-Labor: Ergebnis\n")
-    P("Stand der Kurse: %s. Getestet: **%d Varianten** aus %d Strategie-Familien auf 5 Universen; "
-      "%d davon mit genug Trades fuer die Auswahl.\n" % (DATES[-1], len(rows), len(TIMING) + len(PORT), len(elig)))
-    P("Auswahl = Zeitraum A (2005-2012) und B (2013-2019). Test = C (2020-%s), nie zur Auswahl benutzt. "
-      "Rang = min(Sharpe A, Sharpe B). Order zur naechsten Eroeffnung, 0,03 %% Kosten je Order.\n" % DATES[-1][:4])
-
-    P("## Vergleichswerte (Kaufen & Halten)\n")
-    P("| Universum | Sharpe A | Sharpe B | Sharpe C | Rendite/J C | Max. Verlust C | Rendite/J 2005-heute |")
-    P("|---|---|---|---|---|---|---|")
-    for r in bench:
-        name = r["uni"] if r["fam"] == "Kaufen & Halten" else "60/40 SPY/Anleihen"
-        P("| %s | %.2f | %.2f | %.2f | %.1f %% | -%.0f %% | %.1f %% |" % (name, r["A"]["sharpe"], r["B"]["sharpe"], r["C"]["sharpe"],
-                                                                   r["C"]["cagr"], r["C"]["mdd"], r["G"]["cagr"]))
-
-    # Top 10, je Familie+Universum nur die beste Variante
-    seen, top = set(), []
-    for r in elig:
-        key = (r["fam"], r["uni"])
-        if key not in seen:
-            seen.add(key)
-            top.append(r)
-        if len(top) == 10:
-            break
-    for r in top:
-        hi = run_task(find_task(r["fam"], r["uni"]), cost=COST_HIGH, only=r["p"])
-        r["C_teuer"] = hi[0]["C"] if hi else None
-
-    P("\n## Die 10 robustesten Strategien (Auswahl A+B, geprueft im Test C)\n")
-    P("| # | Strategie | Universum | Parameter | Sharpe A | Sharpe B | **Sharpe C (Test)** | Rendite/J C | Max. Verlust C "
-      "| investiert | Trades/J | Sharpe C bei 0,10 % Kosten |")
-    P("|---|---|---|---|---|---|---|---|---|---|---|---|")
-    for k, r in enumerate(top, 1):
-        c = r["C"]
-        P("| %d | %s | %s | %s | %.2f | %.2f | **%.2f** | %.1f %% | -%.0f %% | %.0f %% | %.0f | %s |"
-          % (k, r["fam"], r["uni"], fmt_p(r["p"]), r["A"]["sharpe"], r["B"]["sharpe"], c["sharpe"], c["cagr"], c["mdd"],
-             c["expo"], c["tpj"], "%.2f" % r["C_teuer"]["sharpe"] if r.get("C_teuer") else "-"))
-    P("\nZum Vergleich SPY halten im Test C: Sharpe %.2f, %.1f %% pro Jahr, max. Verlust -%.0f %%."
-      % (spy["C"]["sharpe"], spy["C"]["cagr"], spy["C"]["mdd"]))
-
-    # renditestarke robuste Strategien
-    by_ret = sorted([r for r in elig if r["A"]["expo"] > 30], key=lambda r: -min(r["A"]["cagr"], r["B"]["cagr"]))
-    seen, topr = set(), []
-    for r in by_ret:
-        key = (r["fam"], r["uni"])
-        if key not in seen:
-            seen.add(key)
-            topr.append(r)
-        if len(topr) == 5:
-            break
-    P("\n## Die 5 renditestaerksten robusten Strategien (Rang = min(Rendite A, Rendite B))\n")
-    P("| # | Strategie | Universum | Parameter | Rendite/J A | Rendite/J B | **Rendite/J C** | Max. Verlust C | Sharpe C |")
-    P("|---|---|---|---|---|---|---|---|---|")
-    for k, r in enumerate(topr, 1):
-        P("| %d | %s | %s | %s | %.1f %% | %.1f %% | **%.1f %%** | -%.0f %% | %.2f |"
-          % (k, r["fam"], r["uni"], fmt_p(r["p"]), r["A"]["cagr"], r["B"]["cagr"], r["C"]["cagr"], r["C"]["mdd"], r["C"]["sharpe"]))
-
-    # Diagnose
+    def best_by(keyf):
+        groups = collections.OrderedDict()
+        for r in cand:
+            groups.setdefault(keyf(r), []).append(r)
+        out = []
+        for k, lst in groups.items():
+            el = [r for r in lst if r["score"] is not None]
+            if el:
+                best = max(el, key=lambda r: r["score"])
+            else:
+                bl = [r for r in lst if r["B"]]
+                best = max(bl, key=lambda r: r["B"]["sharpe"]) if bl else None
+            beat = sum(1 for r in lst if r["C"] and r["C"]["sharpe"] > spy_c)
+            out.append({"key": k, "n": len(lst), "best": best, "beat": beat, "nur_bc": not el})
+        return out
     sc = [r["score"] for r in elig]
     cs = [r["C"]["sharpe"] for r in elig]
-    rho = spearman(sc, cs)
-    top50 = elig[:50]
-    beat = sum(1 for r in top50 if r["C"]["sharpe"] > spy["C"]["sharpe"])
-    med = lambda v: sorted(v)[len(v) // 2]
-    P("\n## Wie verlaesslich ist das?\n")
-    P("- Zusammenhang Auswahl-Rang <-> Test-Ergebnis (Spearman): **%.2f** (0 = Auswahl sagt nichts voraus, 1 = perfekt)." % rho)
-    P("- Von den 50 besten der Auswahl schlagen im Test **%d** die Sharpe von SPY halten (%.2f)." % (beat, spy["C"]["sharpe"]))
-    P("- Median-Sharpe im Test: Top-50 der Auswahl %.2f, alle Varianten %.2f." % (med([r["C"]["sharpe"] for r in top50]), med(cs)))
-    P("- Bei %d unabhaengigen Strategien ohne echten Vorteil waere die beste Sharpe ueber %.0f Jahre allein durch Glueck etwa **%.2f**. "
-      "(Die Varianten sind stark verwandt, die echte Zahl ist kleiner.)" % (len(elig), yrs_ab, luck_sharpe(len(elig), yrs_ab)))
+    yrs_ab = (PI["AB"][1] - PI["AB"][0]) / 252.0
+    med = lambda v: sorted(v)[len(v) // 2] if v else 0.0
+    return {"spy": spy, "bench": bench, "elig": elig, "top": distinct(elig, 25), "topr": distinct(rc, 25),
+            "short": distinct(short, 40), "by_group": best_by(lambda r: r["grp"]), "by_market": best_by(lambda r: r["uni"]),
+            "rho": spearman(sc, cs) if len(elig) > 2 else 0.0,
+            "beat50": sum(1 for r in elig[:50] if r["C"]["sharpe"] > spy_c),
+            "beat_all": sum(1 for r in cand if r["C"] and r["C"]["sharpe"] > spy_c),
+            "n_cand": len(cand), "luck": luck_sharpe(len(elig), yrs_ab), "years_ab": yrs_ab,
+            "med_top50": med([r["C"]["sharpe"] for r in elig[:50]]), "med_all": med(cs)}
 
-    # Top 10 nach Test (nur Info)
-    seen, topc = set(), []
-    for r in sorted(cand, key=lambda r: -r["C"]["sharpe"]):
-        key = (r["fam"], r["uni"])
-        if key not in seen:
-            seen.add(key)
-            topc.append(r)
-        if len(topc) == 10:
-            break
-    P("\n## Nur zur Info: die 10 besten im Test C (im Nachhinein ausgesucht = NICHT ehrlich waehlbar)\n")
-    P("| # | Strategie | Universum | Parameter | Sharpe A | Sharpe B | Sharpe C | Rendite/J C |")
+
+def report(rows, ana, intra):
+    out = []
+
+    def P(s=""):
+        print(s, flush=True)
+        out.append(s)
+    spy = ana["spy"]
+    pc = lambda v: "%.1f %%" % (100 * v) if v is not None else "-"
+    P("# Strategie-Labor v2: Ergebnis\n")
+    P("Kurse bis %s. **%d Varianten**, %d davon mit Auswahl-Zeitraum A+B, %d nur mit B+C (kurze Historie).\n"
+      % (DATES[-1], len(rows), len(ana["elig"]), len([r for r in rows if not r["A"] and r["B"]])))
+    P("SPY halten im Test (2020-heute): %s p.a., Sharpe %.2f, max. Verlust -%s.\n"
+      % (pc(spy["C"]["cagr"]), spy["C"]["sharpe"], pc(spy["C"]["mdd"])))
+    P("## Top 10 robust (Rang = min(Sharpe A, Sharpe B), geprueft im Test C)\n")
+    P("| # | Strategie | Markt | Parameter | Sharpe A | Sharpe B | Sharpe C | Rendite C | Max. Verlust C | Sharpe C teuer |")
+    P("|---|---|---|---|---|---|---|---|---|---|")
+    for k, r in enumerate(ana["top"][:10], 1):
+        c, h = r["C"], r.get("C_teuer")
+        P("| %d | %s | %s | %s | %.2f | %.2f | **%.2f** | %s | -%s | %s |" % (
+            k, r["fam"], r["uni"], fmt_p(r["p"]), r["A"]["sharpe"], r["B"]["sharpe"], c["sharpe"], pc(c["cagr"]),
+            pc(c["mdd"]), "%.2f" % h["sharpe"] if h else "-"))
+    P("\n## Top 10 Rendite (Rang = min(Rendite A, Rendite B), mind. 30 % investiert)\n")
+    P("| # | Strategie | Markt | Parameter | Rendite A | Rendite B | Rendite C | Max. Verlust C | Sharpe C |")
+    P("|---|---|---|---|---|---|---|---|---|")
+    for k, r in enumerate(ana["topr"][:10], 1):
+        P("| %d | %s | %s | %s | %s | %s | **%s** | -%s | %.2f |" % (
+            k, r["fam"], r["uni"], fmt_p(r["p"]), pc(r["A"]["cagr"]), pc(r["B"]["cagr"]), pc(r["C"]["cagr"]),
+            pc(r["C"]["mdd"]), r["C"]["sharpe"]))
+    P("\n## Beste je Gruppe\n")
+    P("| Gruppe | Varianten | Beste | Markt | Sharpe C | Rendite C | Max. Verlust C | schlagen SPY (Sharpe C) |")
     P("|---|---|---|---|---|---|---|---|")
-    for k, r in enumerate(topc, 1):
-        P("| %d | %s | %s | %s | %.2f | %.2f | %.2f | %.1f %% |" % (k, r["fam"], r["uni"], fmt_p(r["p"]), r["A"]["sharpe"],
-                                                              r["B"]["sharpe"], r["C"]["sharpe"], r["C"]["cagr"]))
-    return top
-
-
-def write_csv(rows, path="lab_results.csv"):
-    def num(v):
-        return ("%s" % v).replace(".", ",")
-    cols = ["sharpe", "cagr", "mdd", "expo", "tpj"]
-    with open(path, "w", encoding="utf-8-sig") as f:
-        f.write(";".join(["Strategie", "Universum", "Parameter"] + ["%s_%s" % (p, c) for p in ("A", "B", "C", "G") for c in cols]) + "\n")
-        for r in rows:
-            vals = []
-            for p in ("A", "B", "C", "G"):
-                m = r.get(p) or {}
-                vals += [num(m.get(c, "")) for c in cols]
-            f.write(";".join([r["fam"], r["uni"], fmt_p(r["p"])] + vals) + "\n")
+    for g in ana["by_group"]:
+        b = g["best"]
+        if b and b["C"]:
+            P("| %s | %d | %s%s | %s | %.2f | %s | -%s | %d |" % (g["key"], g["n"], b["fam"], " (nur B/C)" if g["nur_bc"] else "",
+                                                               b["uni"], b["C"]["sharpe"], pc(b["C"]["cagr"]), pc(b["C"]["mdd"]), g["beat"]))
+    P("\n## Verlaesslichkeit\n")
+    P("- Zusammenhang Auswahl-Rang <-> Test (Spearman): **%.2f**" % ana["rho"])
+    P("- Von den 50 besten der Auswahl schlagen im Test %d die Sharpe von SPY (%.2f)." % (ana["beat50"], spy["C"]["sharpe"]))
+    P("- Alle Varianten: %d von %d schlagen SPY im Test (Sharpe)." % (ana["beat_all"], ana["n_cand"]))
+    P("- Median-Sharpe im Test: Top-50 der Auswahl %.2f, alle %.2f." % (ana["med_top50"], ana["med_all"]))
+    P("- Gluecks-Schwelle: bei %d Varianten waere die beste Sharpe ueber %.0f Jahre allein durch Zufall etwa %.2f."
+      % (len(ana["elig"]), ana["years_ab"], ana["luck"]))
+    if intra:
+        cand = sorted([r for r in intra if r["fam"] != "Kaufen & Halten" and r["train"] and r["train"]["trades"] >= 20],
+                      key=lambda r: -r["train"]["sharpe"])
+        P("\n## Intraday (Stundenkurse, ~2 Jahre)\n")
+        for r in cand[:5]:
+            P("- %s %s (%s): Sharpe Auswahl %.2f, Test %.2f, Rendite Test %s" % (
+                r["fam"], r["sym"], fmt_p(r["p"]), r["train"]["sharpe"], r["test"]["sharpe"], pc(r["test"]["rendite"])))
+        for r in intra:
+            if r["fam"] == "Kaufen & Halten":
+                P("- Kaufen & Halten %s: Rendite Test %s" % (r["sym"], pc(r["test"]["rendite"])))
+    return out
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Strategie-Labor")
+    ap = argparse.ArgumentParser(description="Strategie-Labor v2")
     ap.add_argument("--refresh", action="store_true")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--workers", type=int, default=os.cpu_count() or 2)
+    ap.add_argument("--xlsx", default="Strategie-Labor.xlsx")
     a = ap.parse_args()
     t0 = time.time()
     print("Lade Tageskurse ...", flush=True)
     data = load_daily(a.refresh)
+    print("Lade Termine der Quartalszahlen (SEC EDGAR) ...", flush=True)
+    data["events"] = load_events(a.refresh)
     setup(data)
-    print("%d Handelstage %s .. %s, %d Werte" % (T, DATES[0], DATES[-1], len(RAW)), flush=True)
+    print("%d Handelstage %s .. %s, %d Werte (fehlend: %s)" % (T, DATES[0], DATES[-1], len(RAW),
+                                                               ", ".join(data.get("missing", [])) or "-"), flush=True)
     tasks, nvar = build_tasks(a.quick)
     print("%d Aufgaben, %d Varianten, %d Prozesse" % (len(tasks), nvar, a.workers), flush=True)
     rows = []
@@ -1561,21 +2600,35 @@ def main():
             tk = futs[f]
             rs = f.result()
             rows.extend(rs)
-            print("[%3d/%d] %-38s %-9s %4d Varianten  %5.0fs" % (k, len(tasks), task_name(tk), tk[2], len(rs), time.time() - t0), flush=True)
+            print("[%3d/%d] %-36s %-10s %4d Varianten  %5.0fs" % (k, len(tasks), task_name(tk), tk[2], len(rs),
+                                                                 time.time() - t0), flush=True)
+    rows.sort(key=lambda r: (r["grp"], r["fam"], r["uni"], json.dumps(r["p"], sort_keys=True)))
+    ana = analyse(rows)
+    print("Gegencheck mit 3,3-fachen Kosten ...", flush=True)
+    for r in {r["id"]: r for r in ana["top"] + ana["topr"] + ana["short"]}.values():
+        res = run_task(find_task(r["fam"], r["uni"]), cost=r["cost"] * HIGH_COST_X, only=r["p"])
+        r["C_teuer"] = res[0]["C"] if res else None
+    print("Lade Stundenkurse ...", flush=True)
+    intra = intraday_study(load_hourly(a.refresh))
     with open("lab_results.json", "w", encoding="utf-8") as f:
         json.dump(rows, f)
-    write_csv(rows)
-    lines = []
-
-    def P(s=""):
-        print(s, flush=True)
-        lines.append(s)
-    report(rows, P)
-    print("\nLade Stundenkurse ...", flush=True)
-    intraday_study(load_hourly(a.refresh), P)
-    P("\nLaufzeit: %.0f Sekunden. Alle Varianten: lab_results.csv" % (time.time() - t0))
+    lines = report(rows, ana, intra)
     with open("lab_report.md", "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
+    fams = collections.OrderedDict()
+    for r in rows:
+        e = fams.setdefault(r["fam"], {"grp": r["grp"], "unis": [], "n": 0})
+        e["n"] += 1
+        if r["uni"] not in e["unis"]:
+            e["unis"].append(r["uni"])
+    info = {"datum": DATES[-1], "erster_tag": DATES[0], "g_start": DATES[PI["G"][0]], "uni_info": UNI_INFO,
+            "desc": FAMILY_DESC, "fams": fams,
+            "kosten": [(u, uni_cost(u)) for u in UNIVERSES if U_START.get(u) is not None],
+            "intraday": intra, "fehlend": data.get("missing", []), "n_tage": T,
+            "fmt_p": fmt_p, "high_x": HIGH_COST_X, "borrow": BORROW, "lev_fee": LEV_FEE}
+    import lab_excel
+    lab_excel.build_excel(rows, ana, info, a.xlsx)
+    print("\nFertig in %.0f s. Excel: %s, Bericht: lab_report.md" % (time.time() - t0, a.xlsx), flush=True)
 
 
 if __name__ == "__main__":
