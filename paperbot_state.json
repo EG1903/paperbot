@@ -3,5 +3,47 @@
   "trades": [],
   "open": {},
   "mode": "live-paper",
-  "flat_day": "2026-10-26"
+  "flat_day": "2026-10-26",
+  "swing": {
+    "vola-1x": {
+      "sym": "CASH",
+      "qty": 0,
+      "seit": "2026-10-27",
+      "start_wert": 50000.0,
+      "start": "2026-10-27"
+    },
+    "vola-2x": {
+      "sym": "QLD",
+      "qty": "559.680391495",
+      "preis": 88.89,
+      "seit": "2026-10-27",
+      "start_wert": 50000.0,
+      "start": "2026-10-27"
+    }
+  },
+  "swing_log": [
+    {
+      "tag": "2026-10-27",
+      "teil": "vola-2x",
+      "von": "Cash",
+      "nach": "QLD",
+      "qty": "559.680391495",
+      "preis": 88.89,
+      "signal": {
+        "datum": "2026-10-26",
+        "vola20": 0.1841,
+        "schnitt252": 0.1879,
+        "grenze": 0.2254,
+        "ruhig": true
+      }
+    }
+  ],
+  "swing_signal": {
+    "datum": "2026-10-26",
+    "vola20": 0.1841,
+    "schnitt252": 0.1879,
+    "grenze": 0.2254,
+    "ruhig": true
+  },
+  "run_day": "2026-10-27"
 }
