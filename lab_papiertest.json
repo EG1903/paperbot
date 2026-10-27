@@ -1,0 +1,559 @@
+{
+ "start": "2026-10-27",
+ "eingefroren": "2026-10-27 02:29",
+ "strategien": [
+  {
+   "liste": "robust",
+   "rang": 1,
+   "fam": "VAA (Keller)",
+   "uni": "TAA",
+   "p": {
+    "set": "G4",
+    "top": 2,
+    "breite": 1
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 2,
+   "fam": "Risk-Parity",
+   "uni": "MULTI",
+   "p": {
+    "n": 126,
+    "trend": 200
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 3,
+   "fam": "Hebel + Trendfilter",
+   "uni": "HEBEL-QQQ",
+   "p": {
+    "L": 1.0,
+    "regel": "vola-regime",
+    "ausweich": "IEF"
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 4,
+   "fam": "Williams-%R",
+   "uni": "AKTIEN",
+   "p": {
+    "n": 5,
+    "x": -95,
+    "trend": 0
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 5,
+   "fam": "DAA (Keller)",
+   "uni": "TAA",
+   "p": {
+    "top": 6,
+    "breite": 1
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 6,
+   "fam": "Dual-Momentum GEM",
+   "uni": "MULTI",
+   "p": {
+    "L": 63,
+    "risk": "SPY/QQQ/EFA"
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 7,
+   "fam": "Williams-%R",
+   "uni": "SPY",
+   "p": {
+    "n": 10,
+    "x": -90,
+    "trend": 200
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 8,
+   "fam": "PAA (Keller)",
+   "uni": "TAA",
+   "p": {
+    "L": 126,
+    "schutz": 1,
+    "top": 6,
+    "anleihe": "IEF"
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 9,
+   "fam": "Niedrige-Vola-Auswahl",
+   "uni": "AKTIEN",
+   "p": {
+    "n": 21,
+    "N": 15,
+    "filt": "spy200"
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 10,
+   "fam": "Niedrige-Vola-Auswahl",
+   "uni": "MULTI",
+   "p": {
+    "n": 126,
+    "N": 5,
+    "filt": "keiner"
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 11,
+   "fam": "VIX-Filter",
+   "uni": "QQQ",
+   "p": {
+    "regel": "vix<vix3m",
+    "f": 0.95
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 12,
+   "fam": "Statische Portfolios",
+   "uni": "TAA",
+   "p": {
+    "mischung": "All-Weather (vereinfacht)",
+    "trend": 200
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 13,
+   "fam": "Williams-%R",
+   "uni": "SEKTOREN",
+   "p": {
+    "n": 5,
+    "x": -95,
+    "trend": 0
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 14,
+   "fam": "IBS-Rücksetzer",
+   "uni": "SPY",
+   "p": {
+    "x": 0.15,
+    "exit": "vortageshoch",
+    "trend": 0
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 15,
+   "fam": "Williams-%R",
+   "uni": "IWM",
+   "p": {
+    "n": 5,
+    "x": -90,
+    "trend": 0
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 16,
+   "fam": "GTAA (Faber)",
+   "uni": "MULTI",
+   "p": {
+    "n": 150
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 17,
+   "fam": "Niedrige-Vola-Auswahl",
+   "uni": "ALLE-KLASSEN",
+   "p": {
+    "n": 63,
+    "N": 5,
+    "filt": "keiner"
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 18,
+   "fam": "Vola-Regime",
+   "uni": "QQQ",
+   "p": {
+    "k": 1.2
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 19,
+   "fam": "SMA-Kreuz",
+   "uni": "MULTI",
+   "p": {
+    "typ": "sma",
+    "f": 50,
+    "s": 150
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 20,
+   "fam": "ConnorsRSI",
+   "uni": "AKTIEN",
+   "p": {
+    "x": 5,
+    "exit": "sma5",
+    "trend": 200
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 21,
+   "fam": "HAA (Keller)",
+   "uni": "TAA",
+   "p": {
+    "top": 4
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 22,
+   "fam": "ConnorsRSI",
+   "uni": "QQQ",
+   "p": {
+    "x": 10,
+    "exit": "sma5",
+    "trend": 0
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 23,
+   "fam": "Hebel + Trendfilter",
+   "uni": "HEBEL-SPY",
+   "p": {
+    "L": 1.0,
+    "regel": "sma100",
+    "ausweich": "IEF"
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 24,
+   "fam": "RSI-Rücksetzer",
+   "uni": "AKTIEN",
+   "p": {
+    "n": 3,
+    "x": 15,
+    "exit": "rsi50",
+    "trend": 200
+   }
+  },
+  {
+   "liste": "robust",
+   "rang": 25,
+   "fam": "Accelerating Dual Momentum",
+   "uni": "TAA",
+   "p": {
+    "aktien": "SPY/EFA",
+    "anleihe": "TLT"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 1,
+   "fam": "Hebel + Trendfilter",
+   "uni": "HEBEL-QQQ",
+   "p": {
+    "L": 3.0,
+    "regel": "vola-regime",
+    "ausweich": "IEF"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 2,
+   "fam": "Hebel + Trendfilter",
+   "uni": "HEBEL-SPY",
+   "p": {
+    "L": 3.0,
+    "regel": "sma200-band",
+    "ausweich": "IEF"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 3,
+   "fam": "Kurzfrist-Umkehr",
+   "uni": "AKTIEN",
+   "p": {
+    "L": 5,
+    "N": 15,
+    "reb": "W",
+    "filt": "keiner"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 4,
+   "fam": "Vola-Regime",
+   "uni": "QQQ",
+   "p": {
+    "k": 1.2
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 5,
+   "fam": "Dual-Momentum GEM",
+   "uni": "MULTI",
+   "p": {
+    "L": 63,
+    "risk": "SPY/QQQ/EFA"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 6,
+   "fam": "Dividende + niedrige Vola",
+   "uni": "AKTIEN",
+   "p": {
+    "N": 5
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 7,
+   "fam": "Januar-Barometer",
+   "uni": "QQQ",
+   "p": {}
+  },
+  {
+   "liste": "rendite",
+   "rang": 8,
+   "fam": "Kurzfrist-Umkehr",
+   "uni": "SEKTOREN",
+   "p": {
+    "L": 5,
+    "N": 1,
+    "reb": "M",
+    "filt": "keiner"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 9,
+   "fam": "VIX-Filter",
+   "uni": "QQQ",
+   "p": {
+    "regel": "vix<vix3m",
+    "f": 0.95
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 10,
+   "fam": "Momentum-Rotation",
+   "uni": "AKTIEN",
+   "p": {
+    "L": 189,
+    "skip": 21,
+    "N": 5,
+    "reb": "M",
+    "filt": "spy200"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 11,
+   "fam": "Momentum-Rotation",
+   "uni": "SEKTOREN",
+   "p": {
+    "L": 252,
+    "skip": 21,
+    "N": 1,
+    "reb": "W",
+    "filt": "keiner"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 12,
+   "fam": "Hohe Dividendenrendite",
+   "uni": "AKTIEN",
+   "p": {
+    "N": 10,
+    "reb": "M",
+    "filt": "keiner"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 13,
+   "fam": "Momentum-Rotation",
+   "uni": "MULTI",
+   "p": {
+    "L": 189,
+    "skip": 21,
+    "N": 5,
+    "reb": "M",
+    "filt": "keiner"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 14,
+   "fam": "Vola-Regime",
+   "uni": "IWM",
+   "p": {
+    "k": 1.5
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 15,
+   "fam": "IBS-Rücksetzer",
+   "uni": "QQQ",
+   "p": {
+    "x": 0.2,
+    "exit": "vortageshoch",
+    "trend": 0
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 16,
+   "fam": "Kurzfrist-Umkehr",
+   "uni": "MULTI",
+   "p": {
+    "L": 10,
+    "N": 1,
+    "reb": "M",
+    "filt": "keiner"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 17,
+   "fam": "Accelerating Dual Momentum",
+   "uni": "TAA",
+   "p": {
+    "aktien": "SPY/EFA",
+    "anleihe": "TLT"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 18,
+   "fam": "Abwärtstage",
+   "uni": "QQQ",
+   "p": {
+    "N": 2,
+    "exit": "sma5",
+    "trend": 0
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 19,
+   "fam": "Niedrige-Vola-Auswahl",
+   "uni": "AKTIEN",
+   "p": {
+    "n": 21,
+    "N": 3,
+    "filt": "spy200"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 20,
+   "fam": "Momentum-Rotation",
+   "uni": "ALLE-KLASSEN",
+   "p": {
+    "L": 252,
+    "skip": 21,
+    "N": 1,
+    "reb": "W",
+    "filt": "spy200"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 21,
+   "fam": "RSI-Rücksetzer",
+   "uni": "QQQ",
+   "p": {
+    "n": 2,
+    "x": 30,
+    "exit": "rsi70",
+    "trend": 0
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 22,
+   "fam": "Dividenden-Wachstum",
+   "uni": "AKTIEN",
+   "p": {
+    "wachstum": 0.0,
+    "reb": "M",
+    "filt": "spy200"
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 23,
+   "fam": "Januar-Barometer",
+   "uni": "SPY",
+   "p": {}
+  },
+  {
+   "liste": "rendite",
+   "rang": 24,
+   "fam": "Vola-Regime",
+   "uni": "SEKTOREN",
+   "p": {
+    "k": 1.5
+   }
+  },
+  {
+   "liste": "rendite",
+   "rang": 25,
+   "fam": "Zeitreihen-Momentum",
+   "uni": "QQQ",
+   "p": {
+    "n": 21,
+    "skip": 0
+   }
+  },
+  {
+   "liste": "vergleich",
+   "rang": 1,
+   "fam": "60/40 SPY/AGG",
+   "uni": "MULTI",
+   "p": {}
+  },
+  {
+   "liste": "vergleich",
+   "rang": 2,
+   "fam": "Kaufen & Halten",
+   "uni": "QQQ",
+   "p": {}
+  },
+  {
+   "liste": "vergleich",
+   "rang": 3,
+   "fam": "Kaufen & Halten",
+   "uni": "SPY",
+   "p": {}
+  }
+ ]
+}

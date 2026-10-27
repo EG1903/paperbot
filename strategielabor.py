@@ -102,15 +102,32 @@ def uni_cost(u):
 PERIODS = [("A", "2005-01-01", "2013-01-01"), ("B", "2013-01-01", "2020-01-01"),
            ("C", "2020-01-01", "2100-01-01"), ("AB", "2005-01-01", "2020-01-01"),
            ("G", "2005-01-01", "2100-01-01")]
-DAILY_CACHE, HOURLY_CACHE, EVENTS_CACHE = "lab_daily.pkl", "lab_hourly.pkl", "lab_events.pkl"
-SEC_UA = "paperbot-research github.com/EG1903/paperbot paperbot@users.noreply.github.com"
+DAILY_CACHE, HOURLY_CACHE, EVENTS_FILE = "lab_daily.pkl", "lab_hourly.pkl", "lab_events.json"
+CONFIG_FILE = "lab_config.json"            # lokal, NICHT im Repo: {"sec_user_agent": "Name email@..."}
+SETTINGS_FILE = "lab_settings.json"        # im Repo: {"live_start": "JJJJ-MM-TT"}
+PAPER_FILE = "lab_papiertest.json"         # im Repo: am Start eingefrorene Liste fuer den Papier-Test
+STAND_FILE = "lab_stand.json"
 NAN = float("nan")
+
+
+def read_json(path, default=None):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return default
+
+
+def sec_user_agent():
+    """Die SEC verlangt eine Kontaktadresse im User-Agent (Umgebungsvariable oder lokale lab_config.json)."""
+    return os.environ.get("SEC_USER_AGENT") or (read_json(CONFIG_FILE, {}) or {}).get("sec_user_agent")
 
 # werden von setup() gefuellt
 DATES, T, RAW, RF, SPYR = [], 0, {}, [], []
 MONTH, MON, YEAR, WD, POS_START, POS_END, PREHOL = [], [], [], [], [], [], []
 REB_M, REB_W, REB_Y, REB_ALL, OPEXW, AFTER_OPEX = [], [], [], [], [], []
 PI, SLOTS, U_START, MKT, EVENTS = {}, {}, {}, {}, {}
+LIVE_I0 = None                             # erster Handelstag des Papier-Tests (Index in DATES)
 
 
 # ======================= Daten =======================
@@ -237,23 +254,28 @@ def load_daily(refresh=False):
     return data
 
 
-def _sec_get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": SEC_UA})
+def _sec_get(url, ua):
+    req = urllib.request.Request(url, headers={"User-Agent": ua})
     with urllib.request.urlopen(req, timeout=40) as r:
         return json.loads(r.read())
 
 
 def load_events(refresh=False):
-    """Termine der Quartalszahlen = Datum der 8-K-Meldungen mit Item 2.02 (Results of Operations)."""
-    if os.path.exists(EVENTS_CACHE) and not refresh:
-        with open(EVENTS_CACHE, "rb") as f:
-            return pickle.load(f)
-    out = {}
+    """Termine der Quartalszahlen = Datum der 8-K-Meldungen mit Item 2.02 (Results of Operations).
+    Gespeichert in lab_events.json (nur oeffentliche Meldedaten, keine Kontaktdaten)."""
+    old = read_json(EVENTS_FILE, {}) or {}
+    if old and not refresh:
+        return old
+    ua = sec_user_agent()
+    if not ua:
+        print("  Kein SEC-Kontakt eingetragen (SEC_USER_AGENT oder lab_config.json) -> gespeicherte Termine: %d Werte" % len(old))
+        return old
+    out = dict(old)
     try:
-        tick = _sec_get("https://www.sec.gov/files/company_tickers.json")
+        tick = _sec_get("https://www.sec.gov/files/company_tickers.json", ua)
     except Exception as e:
-        print("  SEC nicht erreichbar (%s) -> Quartalszahlen-Strategien entfallen" % e)
-        return {}
+        print("  SEC nicht erreichbar (%s) -> gespeicherte Termine: %d Werte" % (e, len(old)))
+        return old
     cik = {v["ticker"].upper(): int(v["cik_str"]) for v in tick.values()}
     for s in STOCKS:
         c = cik.get(s.upper()) or cik.get(s.replace("-", ".").upper())
@@ -261,11 +283,11 @@ def load_events(refresh=False):
             print("  %-6s keine CIK gefunden" % s)
             continue
         try:
-            sub = _sec_get("https://data.sec.gov/submissions/CIK%010d.json" % c)
+            sub = _sec_get("https://data.sec.gov/submissions/CIK%010d.json" % c, ua)
             time.sleep(0.15)
             blocks = [sub["filings"]["recent"]]
             for fl in sub["filings"].get("files", []):
-                blocks.append(_sec_get("https://data.sec.gov/submissions/" + fl["name"]))
+                blocks.append(_sec_get("https://data.sec.gov/submissions/" + fl["name"], ua))
                 time.sleep(0.15)
             ds = set()
             for b in blocks:
@@ -276,8 +298,8 @@ def load_events(refresh=False):
             print("  %-6s %3d Quartalsmeldungen ab %s" % (s, len(ds), min(ds) if ds else "-"), flush=True)
         except Exception as e:
             print("  %-6s SEC-Fehler: %s" % (s, e))
-    with open(EVENTS_CACHE, "wb") as f:
-        pickle.dump(out, f)
+    with open(EVENTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(out, f, indent=0, sort_keys=True)
     return out
 
 
@@ -288,9 +310,11 @@ def third_friday(y, m):
 
 def setup(data):
     global DATES, T, RAW, RF, SPYR, MONTH, MON, YEAR, WD, POS_START, POS_END, PREHOL
-    global REB_M, REB_W, REB_Y, REB_ALL, OPEXW, AFTER_OPEX, PI, SLOTS, U_START, EVENTS
+    global REB_M, REB_W, REB_Y, REB_ALL, OPEXW, AFTER_OPEX, PI, SLOTS, U_START, EVENTS, LIVE_I0
     DATES, RAW = data["dates"], dict(data["assets"])
     T = len(DATES)
+    ls = data.get("live_start")
+    LIVE_I0 = bisect.bisect_left(DATES, ls) if ls else None
     RF = [0.0] * T
     irx = RAW.get("^IRX")
     if irx:
@@ -365,12 +389,11 @@ def setup(data):
         SLOTS[u] = [1.0 / c if c else 0.0 for c in cnt]
 
 
-def init_worker():
+def init_worker(live_start=None):
     with open(DAILY_CACHE, "rb") as f:
         data = pickle.load(f)
-    if os.path.exists(EVENTS_CACHE):
-        with open(EVENTS_CACHE, "rb") as f:
-            data["events"] = pickle.load(f)
+    data["events"] = read_json(EVENTS_FILE, {}) or {}
+    data["live_start"] = live_start
     setup(data)
 
 
@@ -2141,6 +2164,35 @@ def metrics(R, E, NE, i0, i1):
             "mon_pos": round(sum(1 for v in mon if v > 0) / len(mon), 3) if mon else None, "von": None}
 
 
+def live_metrics(R, E, NE, i0, i1):
+    """Papier-Test: Ergebnis seit dem Start (Schlusskurs vor dem ersten Live-Tag) - ohne Mindestlaenge."""
+    n = i1 - i0
+    if n <= 0:
+        return None
+    eq = peak = 1.0
+    mdd = s = ss = ex = 0.0
+    tr = 0
+    for t in range(i0, i1):
+        r = R[t]
+        eq *= 1.0 + r
+        if eq > peak:
+            peak = eq
+        dd = 1.0 - eq / peak
+        if dd > mdd:
+            mdd = dd
+        x = r - RF[t]
+        s += x
+        ss += x * x
+        ex += E[t]
+        tr += NE[t]
+    sh = None
+    if n >= 20:
+        mu, var = s / n, ss / n - (s / n) ** 2
+        sh = round(mu / math.sqrt(var) * math.sqrt(252), 3) if var > 1e-18 else 0.0
+    return {"tage": n, "rendite": round(eq - 1, 5), "mdd": round(mdd, 4), "sharpe": sh, "expo": round(ex / n, 3),
+            "trades": tr, "von": DATES[i0], "bis": DATES[i1 - 1]}
+
+
 def period_bounds(u, name):
     i0, i1 = PI[name]
     us = U_START.get(u)
@@ -2174,6 +2226,7 @@ def make_row(fam, grp, u, p, cost, R, E, NE):
             eq *= 1.0 + R[t]
         jahre[str(cur)] = round(eq - 1, 4)
     row["jahre"] = jahre
+    row["LIVE"] = live_metrics(R, E, NE, LIVE_I0, T) if LIVE_I0 is not None else None
     return row
 
 
@@ -2576,25 +2629,94 @@ def report(rows, ana, intra):
     return out
 
 
+def pkey(fam, uni, p):
+    return "%s|%s|%s" % (fam, uni, json.dumps(p, sort_keys=True))
+
+
+def paper_list(rows, ana, live_start):
+    """Papier-Test-Liste: am Start eingefroren (lab_papiertest.json) und danach nie mehr veraendert,
+    damit spaeter niemand im Nachhinein die Gewinner aussucht."""
+    data = read_json(PAPER_FILE)
+    if not data or data.get("start") != live_start:
+        def pick(r):
+            return {"fam": r["fam"], "uni": r["uni"], "p": r["p"]}
+        items = [dict(liste="robust", rang=k + 1, **pick(r)) for k, r in enumerate(ana["top"])]
+        items += [dict(liste="rendite", rang=k + 1, **pick(r)) for k, r in enumerate(ana["topr"])]
+        bench = [r for r in ana["bench"] if r["uni"] in ("SPY", "QQQ") or r["fam"] != "Kaufen & Halten"]
+        items += [dict(liste="vergleich", rang=k + 1, **pick(r)) for k, r in enumerate(bench)]
+        data = {"start": live_start, "eingefroren": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "strategien": items}
+        with open(PAPER_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=1, ensure_ascii=False)
+    idx = {pkey(r["fam"], r["uni"], r["p"]): r for r in rows}
+    return data, [(it, idx.get(pkey(it["fam"], it["uni"], it["p"]))) for it in data["strategien"]]
+
+
+def live_report(rows, ana, paper, live_start):
+    out = ["# Papier-Test aller Strategien", ""]
+    spy = ana["spy"].get("LIVE")
+    if not spy:
+        out.append("Start: %s. Noch keine Handelstage seit dem Start - erste Ergebnisse nach dem ersten Handelstag." % live_start)
+        return out
+    pc = lambda v: "%+.2f %%" % (100 * v)
+    live = [r for r in rows if r.get("LIVE") and r["fam"] not in BENCH_FAMS]
+    beat = sum(1 for r in live if r["LIVE"]["rendite"] > spy["rendite"])
+    out += ["Start %s (gerechnet ab Schlusskurs des Vortags), Stand %s: **%d Handelstage**. Gleiche Regeln, Kosten und "
+            "Ausfuehrung wie im Backtest, nur mit neuen Kursen." % (spy["von"], spy["bis"], spy["tage"]), "",
+            "- S&P 500 halten seit Start: **%s**" % pc(spy["rendite"]),
+            "- Varianten mit mehr Rendite als SPY seit Start: %d von %d" % (beat, len(live)), "",
+            "## Eingefrorene Liste (am Start festgelegt)", "",
+            "| Liste | Rang | Strategie | Markt | Parameter | Rendite seit Start | Max. Verlust | besser als SPY |",
+            "|---|---|---|---|---|---|---|---|"]
+    for it, r in paper:
+        L = r.get("LIVE") if r else None
+        out.append("| %s | %d | %s | %s | %s | %s | %s | %s |" % (
+            it["liste"], it["rang"], it["fam"], it["uni"], fmt_p(it["p"]), pc(L["rendite"]) if L else "-",
+            ("-%.1f %%" % (100 * L["mdd"])) if L else "-", ("ja" if L["rendite"] > spy["rendite"] else "nein") if L else "-"))
+    out += ["", "## Nach Gruppe", "", "| Gruppe | Varianten | Median-Rendite seit Start | besser als SPY |", "|---|---|---|---|"]
+    groups = collections.defaultdict(list)
+    for r in live:
+        groups[r["grp"]].append(r["LIVE"]["rendite"])
+    for g, v in sorted(groups.items()):
+        v.sort()
+        out.append("| %s | %d | %s | %d |" % (g, len(v), pc(v[len(v) // 2]), sum(1 for x in v if x > spy["rendite"])))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description="Strategie-Labor v2")
-    ap.add_argument("--refresh", action="store_true")
-    ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--refresh", action="store_true", help="Kurs- und SEC-Daten neu laden")
+    ap.add_argument("--quick", action="store_true", help="kurzer Probelauf")
     ap.add_argument("--workers", type=int, default=os.cpu_count() or 2)
     ap.add_argument("--xlsx", default="Strategie-Labor.xlsx")
+    ap.add_argument("--ohne-intraday", action="store_true", help="Stundenkurs-Studie auslassen")
+    ap.add_argument("--nur-wenn-neu", action="store_true", help="nur rechnen, wenn es neue Tageskurse gibt")
     a = ap.parse_args()
     t0 = time.time()
+    live_start = (read_json(SETTINGS_FILE, {}) or {}).get("live_start")
+    if a.nur_wenn_neu:
+        stand = read_json(STAND_FILE, {}) or {}
+        try:
+            spy_rows, _ = fetch_daily("SPY")
+            today = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
+            latest = max(d for d in spy_rows if d < today)
+        except Exception as e:
+            print("SPY-Pruefung fehlgeschlagen (%s) -> rechne trotzdem" % e, flush=True)
+            latest = None
+        if latest and stand.get("datum") and latest <= stand["datum"]:
+            print("Keine neuen Tageskurse seit %s - nichts zu tun." % stand["datum"], flush=True)
+            return
     print("Lade Tageskurse ...", flush=True)
     data = load_daily(a.refresh)
     print("Lade Termine der Quartalszahlen (SEC EDGAR) ...", flush=True)
     data["events"] = load_events(a.refresh)
+    data["live_start"] = live_start
     setup(data)
     print("%d Handelstage %s .. %s, %d Werte (fehlend: %s)" % (T, DATES[0], DATES[-1], len(RAW),
                                                                ", ".join(data.get("missing", [])) or "-"), flush=True)
     tasks, nvar = build_tasks(a.quick)
     print("%d Aufgaben, %d Varianten, %d Prozesse" % (len(tasks), nvar, a.workers), flush=True)
     rows = []
-    with ProcessPoolExecutor(max_workers=a.workers, initializer=init_worker) as ex:
+    with ProcessPoolExecutor(max_workers=a.workers, initializer=init_worker, initargs=(live_start,)) as ex:
         futs = {ex.submit(run_task, tk): tk for tk in tasks}
         for k, f in enumerate(as_completed(futs), 1):
             tk = futs[f]
@@ -2608,13 +2730,20 @@ def main():
     for r in {r["id"]: r for r in ana["top"] + ana["topr"] + ana["short"]}.values():
         res = run_task(find_task(r["fam"], r["uni"]), cost=r["cost"] * HIGH_COST_X, only=r["p"])
         r["C_teuer"] = res[0]["C"] if res else None
-    print("Lade Stundenkurse ...", flush=True)
-    intra = intraday_study(load_hourly(a.refresh))
+    pdata, paper = paper_list(rows, ana, live_start) if live_start else (None, [])
+    ana["paper"], ana["paper_meta"] = paper, pdata
+    intra = []
+    if not a.ohne_intraday:
+        print("Lade Stundenkurse ...", flush=True)
+        intra = intraday_study(load_hourly(a.refresh))
     with open("lab_results.json", "w", encoding="utf-8") as f:
         json.dump(rows, f)
     lines = report(rows, ana, intra)
     with open("lab_report.md", "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
+    if live_start:
+        with open("lab_live.md", "w", encoding="utf-8") as f:
+            f.write("\n".join(live_report(rows, ana, paper, live_start)) + "\n")
     fams = collections.OrderedDict()
     for r in rows:
         e = fams.setdefault(r["fam"], {"grp": r["grp"], "unis": [], "n": 0})
@@ -2625,9 +2754,13 @@ def main():
             "desc": FAMILY_DESC, "fams": fams,
             "kosten": [(u, uni_cost(u)) for u in UNIVERSES if U_START.get(u) is not None],
             "intraday": intra, "fehlend": data.get("missing", []), "n_tage": T,
-            "fmt_p": fmt_p, "high_x": HIGH_COST_X, "borrow": BORROW, "lev_fee": LEV_FEE}
+            "fmt_p": fmt_p, "high_x": HIGH_COST_X, "borrow": BORROW, "lev_fee": LEV_FEE, "live_start": live_start}
     import lab_excel
     lab_excel.build_excel(rows, ana, info, a.xlsx)
+    with open(STAND_FILE, "w", encoding="utf-8") as f:
+        json.dump({"datum": DATES[-1], "erstellt": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+                   "varianten": len(rows), "live_start": live_start,
+                   "live_tage": max(0, T - LIVE_I0) if LIVE_I0 is not None else 0}, f, indent=1)
     print("\nFertig in %.0f s. Excel: %s, Bericht: lab_report.md" % (time.time() - t0, a.xlsx), flush=True)
 
 

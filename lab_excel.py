@@ -11,6 +11,8 @@ import xlsx_mini as X
 Q = X.sheet_ref
 UEB, TOP, TOPR, GRP, MKT, SHORT = "Übersicht", "Top 25 robust", "Top 25 Rendite", "Beste je Gruppe", "Beste je Markt", "Kurze Historie"
 YRS, VGL, ALLE, INTRA, LEX, METH = "Jahresrenditen", "Vergleich", "Alle Strategien", "Intraday (1h)", "Lexikon", "Methodik"
+PAPER = "Papier-Test (live)"
+LISTE = {"robust": "Top 25 robust", "rendite": "Top 25 Rendite", "vergleich": "Vergleich"}
 
 
 def gv(m, k):
@@ -98,7 +100,8 @@ def build_excel(rows, ana, info, path):
              ("Calmar (Rendite / Max. Verlust)", 10, "dec"), ("Längste Verlustphase (Monate)", 10, "one"),
              ("Investiert (Anteil der Zeit)", 10, "pct"), ("Trades pro Jahr", 8, "one"), ("Beta zu SPY", 8, "dec"),
              ("Korrelation zu SPY", 9, "dec"), ("Gewinnmonate", 9, "pct"), ("Bestes Jahr", 9, "pct"),
-             ("Schlechtestes Jahr", 10, "pct"), ("Kosten je Order", 8, "pct2"), ("Schlägt SPY im Test (Sharpe)?", 10, "text")]
+             ("Schlechtestes Jahr", 10, "pct"), ("Kosten je Order", 8, "pct2"), ("Schlägt SPY im Test (Sharpe)?", 10, "text"),
+             ("Papier-Test: Rendite seit Start", 11, "pct"), ("Papier-Test: Max. Verlust seit Start", 11, "pct")]
     put_header(al, 0, acols, 62)
 
     def xl_score(r):
@@ -128,11 +131,69 @@ def build_excel(rows, ana, info, path):
             (cal, 'IF(AND(ISNUMBER(R%d),ISNUMBER(W%d)),IF(W%d<0,R%d/ABS(W%d),""),"")' % ((rr,) * 5)),
             G_["dd_tage"] / 21.0 if G_ else None, gv(G_, "expo"), gv(G_, "tpj"), gv(G_, "beta"), gv(G_, "korr"),
             gv(G_, "mon_pos"), max(ys) if ys else None, min(ys) if ys else None, r["cost"],
-            (beat, 'IF(ISNUMBER(P%d),IF(P%d>%s,"ja","nein"),"")' % (rr, rr, spy_sh))])
+            (beat, 'IF(ISNUMBER(P%d),IF(P%d>%s,"ja","nein"),"")' % (rr, rr, spy_sh)),
+            gv(r.get("LIVE"), "rendite"), ng(r.get("LIVE"), "mdd")])
     al.freeze = (1, 5)
     al.filter = (0, 0, last - 1, len(acols) - 1)
     for c in (14, 15, 16, 17, 20, 22, 23):
         al.scale(1, c, last - 1, c)
+
+    # ---------------- Papier-Test (live) ----------------
+    pt = X.Sheet(PAPER)
+    spl = spy.get("LIVE")
+    live_start = info.get("live_start") or "-"
+    if spl:
+        note = ("Start %s (gerechnet ab Schlusskurs des Vortags), Stand %s: %d Handelstage. Jede Strategie läuft mit echten neuen "
+                "Kursen weiter, mit denselben Regeln, Kosten und Ausführung wie im Backtest. Die Liste unten wurde am Start "
+                "eingefroren; alle übrigen Varianten stehen mit ihren Live-Werten im Blatt '%s' (letzte Spalten)."
+                % (spl["von"], spl["bis"], spl["tage"], ALLE))
+    else:
+        note = ("Start %s: noch keine Handelstage seit dem Start. Die ersten Ergebnisse erscheinen nach dem ersten Handelstag; "
+                "die Datei wird jeden Börsentag automatisch neu berechnet." % live_start)
+    title(pt, "Papier-Test: Strategien mit echten neuen Kursen", note)
+    pt.heights[1] = 42
+    pt.merge(1, 0, 1, 11)
+    pt.set(2, 0, "S&P 500 halten seit Start", "key")
+    pt.set(2, 1, spl["rendite"] if spl else None, "keypct")
+    pcols = [("Liste", 16, "text"), ("Rang in der Liste", 8, "int"), ("Gruppe", 20, "text"), ("Strategie", 30, "text"),
+             ("Markt", 34, "text"), ("Parameter", 38, "text"), ("Handelstage", 9, "int"), ("Rendite seit Start", 10, "pct"),
+             ("Max. Verlust seit Start", 10, "pct"), ("Investiert", 9, "pct"), ("Trades", 8, "int"),
+             ("Besser als SPY seit Start?", 10, "text"), ("Backtest: Rendite p.a. C (Test)", 11, "pct"),
+             ("Backtest: Sharpe C (Test)", 10, "dec")]
+    put_header(pt, 4, pcols, 48)
+    paper = ana.get("paper") or []
+    for k, (it, r) in enumerate(paper):
+        rr, L = 6 + k, (r.get("LIVE") if r else None)
+        better = ("ja" if L["rendite"] > spl["rendite"] else "nein") if (L and spl) else ""
+        put_row(pt, 5 + k, pcols, [LISTE.get(it["liste"], it["liste"]), it["rang"], r["grp"] if r else "", it["fam"],
+                                   mk(it["uni"]), fp(it["p"]), gv(L, "tage"), gv(L, "rendite"), ng(L, "mdd"), gv(L, "expo"),
+                                   gv(L, "trades"),
+                                   (better, 'IF(AND(ISNUMBER(H%d),ISNUMBER($B$3)),IF(H%d>$B$3,"ja","nein"),"")' % (rr, rr)),
+                                   gv(r["C"], "cagr") if r else None, gv(r["C"], "sharpe") if r else None],
+                hl=(it["liste"] == "vergleich"))
+    n_paper_beat = sum(1 for it, r in paper if it["liste"] != "vergleich" and r and r.get("LIVE") and spl
+                       and r["LIVE"]["rendite"] > spl["rendite"])
+    if paper:
+        pt.scale(5, 7, 4 + len(paper), 7)
+    rg = 6 + len(paper)
+    pt.set(rg, 0, "Alle Varianten nach Gruppe", "h2")
+    gcols = [("Gruppe", 16, "text"), ("Varianten", 8, "int"), ("Median-Rendite seit Start", 20, "pct"),
+             ("Besser als SPY seit Start", 30, "int")]
+    for c, (name, _w, _s) in enumerate(gcols):
+        pt.set(rg + 1, c, name, "head")
+    groups = {}
+    for r in rows:
+        if r.get("LIVE") and r["grp"] != "Vergleich":
+            groups.setdefault(r["grp"], []).append(r["LIVE"]["rendite"])
+    for k, (g, v) in enumerate(sorted(groups.items())):
+        v.sort()
+        pt.set(rg + 2 + k, 0, g, "text")
+        pt.set(rg + 2 + k, 1, len(v), "int")
+        pt.set(rg + 2 + k, 2, v[len(v) // 2], "pct")
+        pt.set(rg + 2 + k, 3, sum(1 for x in v if spl and x > spl["rendite"]), "int")
+    if not groups:
+        pt.set(rg + 2, 0, "noch keine Live-Daten", "note")
+    pt.freeze = (5, 4)
 
     # ---------------- Top 25 robust ----------------
     tp = X.Sheet(TOP)
@@ -369,7 +430,12 @@ def build_excel(rows, ana, info, path):
            (ana["beat_all"], 'COUNTIFS(%s!$AH:$AH,"ja",%s!$B:$B,"<>Vergleich")' % (Q(ALLE), Q(ALLE))), "keyint"),
           ("Anteil an allen Varianten", (ana["beat_all"] / ana["n_cand"] if ana["n_cand"] else 0, "B12/B5"), "keypct"),
           ("Zusammenhang Auswahl-Rang und Test (Spearman, 1 = perfekt)", ana["rho"], "keydec"),
-          ("Glücks-Schwelle: beste Sharpe allein durch Zufall", ana["luck"], "keydec")]
+          ("Glücks-Schwelle: beste Sharpe allein durch Zufall", ana["luck"], "keydec"),
+          ("Papier-Test läuft seit", live_start, "keyval"),
+          ("Papier-Test: Handelstage bisher", spl["tage"] if spl else 0, "keyint"),
+          ("Papier-Test: S&P 500 seit Start", (spl["rendite"], "%s!$B$3" % Q(PAPER)) if spl else "-", "keypct"),
+          ("Papier-Test: Strategien der Liste mit mehr Rendite als SPY",
+           (n_paper_beat, 'COUNTIFS(%s!$L:$L,"ja",%s!$A:$A,"<>Vergleich")' % (Q(PAPER), Q(PAPER))), "keyint")]
     for k, (a, b, st) in enumerate(kv):
         ue.set(4 + k, 0, a, "key")
         if isinstance(b, tuple):
@@ -419,7 +485,8 @@ def build_excel(rows, ana, info, path):
         put_row(ue, r + 2 + k, ocols, [(cached[c], "%s!%s%d" % (Q(TOP), col, tr_)) for c, (col, _) in enumerate(src)])
     r = r + 13
     ue.set(r, 0, "Blätter in dieser Datei", "h2")
-    sheets_info = [(TOP, "Die 25 robustesten Strategien (Auswahl 2005-2019) und wie sie im Test 2020-heute abgeschnitten haben."),
+    sheets_info = [(PAPER, "Papier-Test: wie sich die Strategien seit dem Start mit echten neuen Kursen schlagen (täglich aktualisiert)."),
+                   (TOP, "Die 25 robustesten Strategien (Auswahl 2005-2019) und wie sie im Test 2020-heute abgeschnitten haben."),
                    (TOPR, "Die 25 renditestärksten robusten Strategien."),
                    (GRP, "Beste Strategie je Gruppe (Trendfolge, Rücksetzer, Hebel, Optionen ...)."),
                    (MKT, "Beste Strategie je Markt (S&P 500, Nasdaq, Aktien, Krypto, Devisen ...)."),
@@ -435,5 +502,5 @@ def build_excel(rows, ana, info, path):
         ue.set(r + 1 + k, 1, b, "text")
         ue.merge(r + 1 + k, 1, r + 1 + k, 7)
 
-    X.save([ue, tp, tr, gs, ms, sh_s, yr, vg, al, it, lx, me], path, title="Strategie-Labor", author="strategielabor.py")
+    X.save([ue, pt, tp, tr, gs, ms, sh_s, yr, vg, al, it, lx, me], path, title="Strategie-Labor", author="strategielabor.py")
     return path

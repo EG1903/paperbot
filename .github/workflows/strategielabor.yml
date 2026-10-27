@@ -1,0 +1,53 @@
+name: strategielabor-papiertest
+
+on:
+  schedule:
+    # Nach US-Boersenschluss (UTC). Mehrere Termine, weil GitHub geplante Laeufe oft ausfallen;
+    # --nur-wenn-neu rechnet nur, wenn es neue Tageskurse gibt.
+    - cron: "23 1,4,7,10 * * 2-6"
+  workflow_dispatch:
+  push:
+    paths:
+      - "lab_settings.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: strategielabor
+  cancel-in-progress: false
+
+jobs:
+  labor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Strategie-Labor rechnen (alle Strategien + Papier-Test)
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python strategielabor.py --refresh --nur-wenn-neu
+          else
+            python strategielabor.py --refresh
+          fi
+      - name: Excel als Download bereitstellen
+        if: hashFiles('Strategie-Labor.xlsx') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: Strategie-Labor
+          path: Strategie-Labor.xlsx
+          retention-days: 30
+      - name: Ergebnisse speichern
+        run: |
+          git config user.name "paperbot"
+          git config user.email "paperbot@users.noreply.github.com"
+          for f in lab_live.md lab_report.md lab_stand.json lab_events.json lab_papiertest.json; do
+            [ -f "$f" ] && git add "$f"
+          done
+          git diff --cached --quiet || (git commit -m "Papier-Test: Stand $(date -u +%F)" && git pull --rebase && git push)

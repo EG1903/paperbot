@@ -1,12 +1,15 @@
+Strategie-Labor.xlsx
 __pycache__/
 daily_cache.pkl
 data_cache.pkl
+lab_config.json
 lab_daily.pkl
 lab_events.pkl
 lab_hourly.pkl
 lab_log.txt
 lab_quick.log
 lab_report_mit_fnma.md
+lab_results.csv
 lab_results.json
 optimize_results.json
 paperbot_backtest.json
