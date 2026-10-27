@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
-"""Paper-Trading-Bot: Opening-Range-Breakout (gleiche Regeln wie die trader-* Skills).
+"""Paper-Trading-Bot (nur Alpaca-PAPER-Konto, nie echtes Geld).
 
+Aktive Strategie: Vola-Regime (aus dem Strategie-Labor, robusteste Strategie mit hoher Rendite):
+  Nasdaq-100 halten, solange die Schwankung der letzten 20 Tage unter dem 1,2-fachen ihres
+  Jahresschnitts liegt, sonst Anleihen (IEF). Signal aus dem Tagesschluss, Order am naechsten
+  Handelstag kurz nach Eroeffnung. Konto je zur Haelfte:
+    vola-1x: QQQ  <-> IEF      (Nasdaq-100 ohne Hebel)
+    vola-2x: QLD  <-> IEF      (Nasdaq-100 mit 2-fachem Hebel)
+    python paperbot.py swing --dry     # Signal + geplante Orders anzeigen, nichts handeln
+    python paperbot.py swing           # jetzt pruefen und bei Bedarf umschichten (nur bei offener Boerse)
+
+Aeltere Strategie (abgeschaltet, orb_aktiv=False): Opening-Range-Breakout im Tageshandel.
 Handelt NUR auf Papier (simuliertes Konto, kein Broker, kein echtes Geld).
 Er prüft laufend ein "Profitabilitäts-Gate". Auch wenn es bestanden ist,
 handelt der Bot NICHT live – er meldet es nur. Live gehen entscheidest du.
@@ -37,6 +47,11 @@ CFG = {
     "min_volume_x": 0.0,       # Trigger-Bar-Volumen vs. Range-Durchschnitt (0 = aus)
     "trend_filter": False,     # nur wenn Range-Hoch > Vortagesschluss
     "max_range_pct": 1.0,      # Range-Breite max. in % vom Preis (1.0 = aus)
+    "orb_aktiv": False,        # Daytrading (Opening-Range-Breakout): im Strategie-Labor durchgefallen -> aus
+    "swing": {                 # Vola-Regime: aktiv
+        "aktiv": True, "signal": "QQQ", "k": 1.2, "vol_n": 20, "avg_n": 252, "ausweich": "IEF",
+        "teile": {"vola-1x": {"anteil": 0.5, "ruhig": "QQQ"}, "vola-2x": {"anteil": 0.5, "ruhig": "QLD"}},
+    },
     # Profitabilitäts-Gate
     "gate_min_trades": 50,
     "gate_min_profit_factor": 1.3,
@@ -300,7 +315,7 @@ def cmd_run(a):
             s["open"].pop(sym, None); done_today.add(key)
             time.sleep(0.3)
         if alpaca_on() and now.time() >= hhmm(CFG["flat_by"]) and s.get("flat_day") != today:
-            alpaca("DELETE", "/v2/orders"); alpaca("DELETE", "/v2/positions")
+            flat_orb()
             s["flat_day"] = today
             print("%s  ALPACA PAPER: alles glattgestellt" % now.strftime("%H:%M"))
         save(s)
@@ -314,12 +329,150 @@ def cmd_flat(a):
         print("Keine Alpaca-Keys."); return
     if not (dt.time(15, 0) <= now.time() <= dt.time(16, 0)) and not a.force:
         print("%s NY: nicht im Glattstell-Fenster (15:00-16:00), nichts getan." % now.strftime("%H:%M")); return
-    alpaca("DELETE", "/v2/orders"); alpaca("DELETE", "/v2/positions")
+    flat_orb()
     s["flat_day"] = str(now.date()); save(s)
     print("%s NY: Alpaca-Paper glattgestellt." % now.strftime("%H:%M"))
 
 def ny_now():
     u = dt.datetime.utcnow(); return u + dt.timedelta(hours=ny_offset(u))
+
+# ---------- ORB-Positionen (nur Watchlist-Aktien, nie die Vola-Regime-Positionen) ----------
+def flat_orb():
+    wl = set(CFG["watchlist"])
+    for o in alpaca("GET", "/v2/orders?status=open&limit=500") or []:
+        if o.get("symbol") in wl:
+            alpaca("DELETE", "/v2/orders/%s" % o["id"])
+    for p in alpaca("GET", "/v2/positions") or []:
+        if p.get("symbol") in wl:
+            alpaca("DELETE", "/v2/positions/%s" % p["symbol"])
+            print("  ORB-Position %s geschlossen" % p["symbol"])
+
+# ---------- Vola-Regime (Swing) ----------
+def daily_closes(sym, rng="2y"):
+    """Dividendenbereinigte Tagesschlusskurse von Yahoo, ohne den laufenden Handelstag."""
+    url = "https://query2.finance.yahoo.com/v8/finance/chart/%s?range=%s&interval=1d" % (sym, rng)
+    err = None
+    for host in ("query2", "query1"):
+        try:
+            req = urllib.request.Request(url.replace("query2", host), headers={"User-Agent": "Mozilla/5.0 paperbot"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                res = json.loads(r.read())["chart"]["result"][0]
+            adj = res["indicators"]["adjclose"][0]["adjclose"]
+            today = str(ny_now().date())
+            out = []
+            for ts, c in zip(res["timestamp"], adj):
+                d = str(ny(ts).date())
+                if c is not None and d < today:
+                    out.append((d, c))
+            return out
+        except Exception as e:
+            err = e
+            time.sleep(3)
+    raise RuntimeError("Yahoo-Tageskurse %s nicht ladbar: %s" % (sym, err))
+
+def vola_signal():
+    """Wie im Strategie-Labor: Vola = Standardabweichung der letzten 20 Log-Renditen x Wurzel(252);
+    ruhig, wenn Vola < k x Durchschnitt der letzten 252 Vola-Werte."""
+    import math
+    c = CFG["swing"]
+    closes = daily_closes(c["signal"])
+    px = [v for _, v in closes]
+    rets = [math.log(px[i] / px[i - 1]) for i in range(1, len(px))]
+    n, m = c["vol_n"], c["avg_n"]
+    vols = []
+    for i in range(n, len(rets) + 1):
+        w = rets[i - n:i]
+        mu = sum(w) / n
+        vols.append(math.sqrt(max(0.0, sum(x * x for x in w) / n - mu * mu)) * math.sqrt(252))
+    if len(vols) < m:
+        raise RuntimeError("zu wenige Kurse fuer das Signal")
+    vol, avg = vols[-1], sum(vols[-m:]) / m
+    ruhig = vol < c["k"] * avg
+    return ruhig, {"datum": closes[-1][0], "vola20": round(vol, 4), "schnitt252": round(avg, 4),
+                   "grenze": round(c["k"] * avg, 4), "ruhig": ruhig}
+
+def wait_fill(order, sekunden=90):
+    if not order or "id" not in order:
+        return None
+    for _ in range(sekunden // 3):
+        o = alpaca("GET", "/v2/orders/%s" % order["id"]) or {}
+        if o.get("status") == "filled":
+            return o
+        if o.get("status") in ("canceled", "expired", "rejected"):
+            print("  Order %s %s: %s" % (o.get("symbol"), o.get("side"), o.get("status")))
+            return None
+        time.sleep(3)
+    print("  Order %s noch nicht ausgefuehrt (Status %s)" % (order.get("symbol"), order.get("status")))
+    return None
+
+def market_order(sym, side, qty=None, notional=None):
+    body = {"symbol": sym, "side": side, "type": "market", "time_in_force": "day"}
+    if qty is not None:
+        body["qty"] = str(qty)
+    else:
+        body["notional"] = "%.2f" % notional
+    return alpaca("POST", "/v2/orders", body)
+
+def swing_rebalance(s, dry=False):
+    c = CFG["swing"]
+    ruhig, info = vola_signal()
+    print("Vola-Regime Signal (Schluss %s): Vola20 %.1f %% | Grenze %.1f %% (1,2 x Jahresschnitt %.1f %%) -> %s"
+          % (info["datum"], 100 * info["vola20"], 100 * info["grenze"], 100 * info["schnitt252"],
+             "RUHIG: Nasdaq halten" if ruhig else "UNRUHIG: Anleihen (IEF)"))
+    st = s.setdefault("swing", {})
+    log = s.setdefault("swing_log", [])
+    today = str(ny_now().date())
+    acct = (alpaca("GET", "/v2/account") or {}) if alpaca_on() else {}
+    equity = float(acct.get("equity") or 0)
+    for name, part in c["teile"].items():
+        target = part["ruhig"] if ruhig else c["ausweich"]
+        cur = st.get(name)
+        if cur and cur.get("sym") == target:
+            print("  %s: bleibt in %s (%.4f Stk)" % (name, target, float(cur["qty"])))
+            continue
+        budget_info = ("Erloes aus %s" % cur["sym"]) if cur else ("%.0f %% des Kontos" % (100 * part["anteil"]))
+        if dry or not alpaca_on():
+            print("  %s: wuerde %s -> %s wechseln (%s)" % (name, cur["sym"] if cur else "Cash", target, budget_info))
+            continue
+        proceeds = None
+        if cur and float(cur.get("qty") or 0) > 0:
+            f = wait_fill(market_order(cur["sym"], "sell", qty=cur["qty"]))
+            if not f:
+                print("  %s: Verkauf %s fehlgeschlagen -> kein Kauf" % (name, cur["sym"]))
+                continue
+            proceeds = float(f["filled_qty"]) * float(f["filled_avg_price"])
+        budget = proceeds if proceeds else equity * part["anteil"]
+        f = wait_fill(market_order(target, "buy", notional=round(budget * 0.995, 2)))
+        if not f:
+            st[name] = {"sym": "CASH", "qty": 0, "seit": today,
+                        "start_wert": cur.get("start_wert") if cur else round(budget, 2),
+                        "start": cur.get("start", today) if cur else today}
+            print("  %s: Kauf %s fehlgeschlagen -> vorerst Cash" % (name, target))
+            continue
+        st[name] = {"sym": target, "qty": f["filled_qty"], "preis": float(f["filled_avg_price"]), "seit": today,
+                    "start_wert": cur.get("start_wert") if cur else round(budget, 2),
+                    "start": cur.get("start", today) if cur else today}
+        log.append({"tag": today, "teil": name, "von": cur["sym"] if cur else "Cash", "nach": target,
+                    "qty": f["filled_qty"], "preis": float(f["filled_avg_price"]), "signal": info})
+        print("  %s: %s -> %s, %s Stk zu %.2f" % (name, cur["sym"] if cur else "Cash", target, f["filled_qty"],
+                                                float(f["filled_avg_price"])))
+    s["swing_signal"] = info
+
+def market_open():
+    clk = alpaca("GET", "/v2/clock") or {}
+    return bool(clk.get("is_open"))
+
+def cmd_swing(a):
+    s = load()
+    if not a.dry and not alpaca_on():
+        print("Keine Alpaca-Keys -> nur Anzeige.")
+        a.dry = True
+    if not a.dry and not market_open():
+        print("Boerse geschlossen -> nur Anzeige (Orders erst bei offener Boerse).")
+        a.dry = True
+    swing_rebalance(s, dry=a.dry)
+    if not a.dry:
+        save(s)
 
 def cmd_auto(a):
     """Fuer GitHub Actions: startet zu beliebiger Zeit, entscheidet selbst, wartet selbst.
@@ -329,38 +482,62 @@ def cmd_auto(a):
     if now.weekday() >= 5:
         print("Wochenende."); return
     if now.time() < dt.time(11, 5) and s.get("run_day") != today:
-        if alpaca_on() and now.time() < dt.time(9, 30) and (alpaca("GET", "/v2/positions") or []):
-            print("Alte Positionen vom Vortag -> schliessen."); alpaca("DELETE", "/v2/orders"); alpaca("DELETE", "/v2/positions")
-        a.until, a.once = "11:05", False
-        cmd_run(a)
+        if CFG["swing"]["aktiv"] and alpaca_on():
+            while ny_now().time() < dt.time(9, 31):
+                time.sleep(30)
+            if market_open():
+                swing_rebalance(s)
+            else:
+                print("Boerse heute geschlossen (Feiertag) -> kein Vola-Regime-Check.")
+            save(s)
+        if CFG["orb_aktiv"]:
+            if alpaca_on() and ny_now().time() < dt.time(9, 30):
+                flat_orb()                         # ORB-Reste vom Vortag
+            a.until, a.once = "11:05", False
+            cmd_run(a)
         s = load(); s["run_day"] = today; save(s); return
-    if now.time() < dt.time(16, 0) and s.get("flat_day") != today:
+    if CFG["orb_aktiv"] and now.time() < dt.time(16, 0) and s.get("flat_day") != today:
         while ny_now().time() < dt.time(15, 45):
             time.sleep(60)
         a.force = True; cmd_flat(a); return
-    if s.get("flat_day") != today and alpaca_on() and (alpaca("GET", "/v2/positions") or []):
-        print("Glattstellen verpasst -> Positionen schliessen (fuehrt evtl. erst zur naechsten Eroeffnung aus).")
-        alpaca("DELETE", "/v2/orders"); alpaca("DELETE", "/v2/positions"); s["flat_day"] = today; save(s); return
     print("Heute nichts mehr zu tun.")
 
 def cmd_status(a):
-    report(load())
+    s = load()
+    if CFG["orb_aktiv"] or s.get("trades"):
+        report(s)
     if alpaca_on():
         acct = alpaca("GET", "/v2/account") or {}
         print("\nAlpaca-Paper-Konto: Equity $%s, Cash $%s" % (acct.get("equity"), acct.get("cash")))
-        for p in alpaca("GET", "/v2/positions") or []:
-            print("  %s %s Stk, unreal. P&L $%s" % (p["symbol"], p["qty"], p["unrealized_pl"]))
+        pos = {p["symbol"]: p for p in alpaca("GET", "/v2/positions") or []}
+        for p in pos.values():
+            print("  %s %s Stk, Wert $%s, unreal. P&L $%s" % (p["symbol"], p["qty"], p["market_value"], p["unrealized_pl"]))
+        st = s.get("swing", {})
+        if st:
+            print("\nVola-Regime (je Teil):")
+            for name, v in st.items():
+                p = pos.get(v.get("sym"))
+                wert = float(v["qty"]) * float(p["current_price"]) if p else None
+                if wert and v.get("start_wert"):
+                    print("  %s: %s, Wert $%.2f, seit Start %+.2f %% (Start %s)" % (
+                        name, v["sym"], wert, 100 * (wert / v["start_wert"] - 1), v.get("start")))
+                else:
+                    print("  %s: %s" % (name, v.get("sym")))
+    if s.get("swing_signal"):
+        print("Letztes Signal: %s" % s["swing_signal"])
 
 def main():
-    ap = argparse.ArgumentParser(description="Paper-Trading-Bot (ORB). Handelt nie live.")
+    ap = argparse.ArgumentParser(description="Paper-Trading-Bot (Vola-Regime, nur Alpaca-Paper). Handelt nie live.")
     sp = ap.add_subparsers(dest="cmd", required=True)
     b = sp.add_parser("backtest"); b.add_argument("--skip-today", action="store_true", default=True)
     r = sp.add_parser("run"); r.add_argument("--once", action="store_true")
     r.add_argument("--until", help="beenden um diese NY-Zeit (HH:MM)")
     f = sp.add_parser("flat"); f.add_argument("--force", action="store_true")
+    w = sp.add_parser("swing"); w.add_argument("--dry", action="store_true", help="nur anzeigen, nichts handeln")
     sp.add_parser("status"); sp.add_parser("auto")
     a = ap.parse_args()
-    {"backtest": cmd_backtest, "run": cmd_run, "flat": cmd_flat, "status": cmd_status, "auto": cmd_auto}[a.cmd](a)
+    {"backtest": cmd_backtest, "run": cmd_run, "flat": cmd_flat, "status": cmd_status, "auto": cmd_auto,
+     "swing": cmd_swing}[a.cmd](a)
 
 if __name__ == "__main__":
     main()
