@@ -6,9 +6,10 @@
   "flat_day": "2026-10-26",
   "swing": {
     "vola-1x": {
-      "sym": "CASH",
-      "qty": 0,
-      "seit": "2026-10-27",
+      "sym": "QQQ",
+      "qty": "69.937360148",
+      "preis": 723.98,
+      "seit": "2026-10-28",
       "start_wert": 50000.0,
       "start": "2026-10-27"
     },
@@ -36,14 +37,29 @@
         "grenze": 0.2254,
         "ruhig": true
       }
+    },
+    {
+      "tag": "2026-10-28",
+      "teil": "vola-1x",
+      "von": "CASH",
+      "nach": "QQQ",
+      "qty": "69.937360148",
+      "preis": 723.98,
+      "signal": {
+        "datum": "2026-10-27",
+        "vola20": 0.1904,
+        "schnitt252": 0.1879,
+        "grenze": 0.2255,
+        "ruhig": true
+      }
     }
   ],
   "swing_signal": {
-    "datum": "2026-10-26",
-    "vola20": 0.1841,
+    "datum": "2026-10-27",
+    "vola20": 0.1904,
     "schnitt252": 0.1879,
-    "grenze": 0.2254,
+    "grenze": 0.2255,
     "ruhig": true
   },
-  "run_day": "2026-10-27"
+  "run_day": "2026-10-28"
 }
