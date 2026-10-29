@@ -391,19 +391,70 @@ def vola_signal():
     return ruhig, {"datum": closes[-1][0], "vola20": round(vol, 4), "schnitt252": round(avg, 4),
                    "grenze": round(c["k"] * avg, 4), "ruhig": ruhig}
 
-def wait_fill(order, sekunden=90):
+def wait_fill(order, sekunden=600):
+    """Wartet bis zu 10 Minuten auf die Ausfuehrung. Gibt (Order, abgeschlossen) zurueck.
+    abgeschlossen=False heisst: Order noch offen -> beim naechsten Lauf nachpruefen, NICHT neu kaufen."""
     if not order or "id" not in order:
-        return None
-    for _ in range(sekunden // 3):
-        o = alpaca("GET", "/v2/orders/%s" % order["id"]) or {}
+        return None, True
+    o = order
+    for _ in range(sekunden // 5):
+        o = alpaca("GET", "/v2/orders/%s" % order["id"]) or o
+        st = o.get("status")
+        if st == "filled":
+            return o, True
+        if st in ("canceled", "expired", "rejected", "done_for_day"):
+            print("  Order %s %s: %s" % (o.get("symbol"), o.get("side"), st))
+            return o, True
+        time.sleep(5)
+    print("  Order %s %s nach %d s noch offen (Status %s) -> wird beim naechsten Lauf nachgeprueft"
+          % (o.get("symbol"), o.get("side"), sekunden, o.get("status")))
+    return o, False
+
+def swing_syms():
+    c = CFG["swing"]
+    return {p["ruhig"] for p in c["teile"].values()} | {c["ausweich"]}
+
+def swing_reconcile(s, dry=False):
+    """Gleicht den gespeicherten Stand mit dem echten Alpaca-Konto ab:
+    1) offene Orders aus frueheren Laeufen nachtragen, 2) Ueberschuss (z. B. Doppelkauf) verkaufen,
+    3) fehlende Stuecke im Stand korrigieren."""
+    st = s.setdefault("swing", {})
+    for name, v in st.items():
+        oid = v.get("offene_order")
+        if not oid:
+            continue
+        o = alpaca("GET", "/v2/orders/%s" % oid) or {}
         if o.get("status") == "filled":
-            return o
-        if o.get("status") in ("canceled", "expired", "rejected"):
-            print("  Order %s %s: %s" % (o.get("symbol"), o.get("side"), o.get("status")))
-            return None
-        time.sleep(3)
-    print("  Order %s noch nicht ausgefuehrt (Status %s)" % (order.get("symbol"), order.get("status")))
-    return None
+            if o.get("side") == "buy":
+                v.update(sym=o["symbol"], qty=o["filled_qty"], preis=float(o["filled_avg_price"]))
+            print("  Abgleich: offene Order fuer %s inzwischen ausgefuehrt (%s %s Stk)" % (name, o.get("symbol"), o.get("filled_qty")))
+            v.pop("offene_order", None)
+        elif o.get("status") in ("canceled", "expired", "rejected", "done_for_day"):
+            print("  Abgleich: offene Order fuer %s wurde %s" % (name, o.get("status")))
+            v.pop("offene_order", None)
+        else:
+            print("  Abgleich: Order fuer %s noch offen (%s) -> heute keine weiteren Orders fuer diesen Teil" % (name, o.get("status")))
+    if any(v.get("offene_order") for v in st.values()):
+        return
+    pos = {p["symbol"]: float(p["qty"]) for p in alpaca("GET", "/v2/positions") or []}
+    for sym in sorted(swing_syms()):
+        parts = [v for v in st.values() if v.get("sym") == sym]
+        need = sum(float(v.get("qty") or 0) for v in parts)
+        have = pos.get(sym, 0.0)
+        diff = round(have - need, 9)
+        if diff > 0.001:
+            print("  Abgleich: %.6f %s mehr im Konto als in den Strategien (z. B. Doppelkauf) -> Ueberschuss verkaufen" % (diff, sym))
+            if not dry:
+                o, fertig = wait_fill(market_order(sym, "sell", qty=diff))
+                if o and o.get("status") == "filled":
+                    s.setdefault("swing_log", []).append({"tag": str(ny_now().date()), "teil": "abgleich", "von": sym,
+                                                          "nach": "Cash", "qty": o["filled_qty"],
+                                                          "preis": float(o["filled_avg_price"]), "grund": "Ueberschuss"})
+        elif diff < -0.001 and need > 0:
+            print("  Abgleich: %.6f %s fehlen im Konto -> Stand wird an das Konto angepasst" % (-diff, sym))
+            if not dry:
+                for v in parts:
+                    v["qty"] = "%.9f" % (float(v["qty"]) * have / need)
 
 def market_order(sym, side, qty=None, notional=None):
     body = {"symbol": sym, "side": side, "type": "market", "time_in_force": "day"}
@@ -422,40 +473,56 @@ def swing_rebalance(s, dry=False):
     st = s.setdefault("swing", {})
     log = s.setdefault("swing_log", [])
     today = str(ny_now().date())
-    acct = (alpaca("GET", "/v2/account") or {}) if alpaca_on() else {}
-    equity = float(acct.get("equity") or 0)
+    if alpaca_on():
+        swing_reconcile(s, dry=dry)
     for name, part in c["teile"].items():
         target = part["ruhig"] if ruhig else c["ausweich"]
         cur = st.get(name)
-        if cur and cur.get("sym") == target:
+        if cur and cur.get("offene_order"):
+            print("  %s: wartet noch auf offene Order -> nichts tun" % name)
+            continue
+        if cur and cur.get("sym") == target and float(cur.get("qty") or 0) > 0:
             print("  %s: bleibt in %s (%.4f Stk)" % (name, target, float(cur["qty"])))
             continue
-        budget_info = ("Erloes aus %s" % cur["sym"]) if cur else ("%.0f %% des Kontos" % (100 * part["anteil"]))
+        held = cur and float(cur.get("qty") or 0) > 0
+        budget_info = ("Erloes aus %s" % cur["sym"]) if held else ("%.0f %% des Kontos" % (100 * part["anteil"]))
         if dry or not alpaca_on():
-            print("  %s: wuerde %s -> %s wechseln (%s)" % (name, cur["sym"] if cur else "Cash", target, budget_info))
+            print("  %s: wuerde %s -> %s wechseln (%s)" % (name, cur["sym"] if held else "Cash", target, budget_info))
             continue
         proceeds = None
-        if cur and float(cur.get("qty") or 0) > 0:
-            f = wait_fill(market_order(cur["sym"], "sell", qty=cur["qty"]))
-            if not f:
+        if held:
+            o, fertig = wait_fill(market_order(cur["sym"], "sell", qty=cur["qty"]))
+            if not fertig:
+                cur["offene_order"] = o["id"]
+                continue
+            if not o or o.get("status") != "filled":
                 print("  %s: Verkauf %s fehlgeschlagen -> kein Kauf" % (name, cur["sym"]))
                 continue
-            proceeds = float(f["filled_qty"]) * float(f["filled_avg_price"])
+            proceeds = float(o["filled_qty"]) * float(o["filled_avg_price"])
+            log.append({"tag": today, "teil": name, "von": cur["sym"], "nach": "Cash", "qty": o["filled_qty"],
+                        "preis": float(o["filled_avg_price"]), "signal": info})
+            cur.update(qty="0")
+        acct = alpaca("GET", "/v2/account") or {}
+        equity, cash = float(acct.get("equity") or 0), float(acct.get("cash") or 0)
         budget = proceeds if proceeds else equity * part["anteil"]
-        f = wait_fill(market_order(target, "buy", notional=round(budget * 0.995, 2)))
-        if not f:
-            st[name] = {"sym": "CASH", "qty": 0, "seit": today,
-                        "start_wert": cur.get("start_wert") if cur else round(budget, 2),
-                        "start": cur.get("start", today) if cur else today}
+        budget = min(budget, cash - 50.0)              # nie auf Kredit (Margin) kaufen
+        if budget < 100:
+            print("  %s: zu wenig Cash ($%.2f) -> kein Kauf" % (name, cash))
+            continue
+        base = {"start_wert": cur.get("start_wert") if cur else round(budget, 2),
+                "start": cur.get("start", today) if cur else today}
+        o, fertig = wait_fill(market_order(target, "buy", notional=round(budget * 0.995, 2)))
+        if not fertig:
+            st[name] = dict(base, sym=target, qty="0", seit=today, offene_order=o["id"])
+            continue
+        if not o or o.get("status") != "filled":
+            st[name] = dict(base, sym="CASH", qty="0", seit=today)
             print("  %s: Kauf %s fehlgeschlagen -> vorerst Cash" % (name, target))
             continue
-        st[name] = {"sym": target, "qty": f["filled_qty"], "preis": float(f["filled_avg_price"]), "seit": today,
-                    "start_wert": cur.get("start_wert") if cur else round(budget, 2),
-                    "start": cur.get("start", today) if cur else today}
+        st[name] = dict(base, sym=target, qty=o["filled_qty"], preis=float(o["filled_avg_price"]), seit=today)
         log.append({"tag": today, "teil": name, "von": cur["sym"] if cur else "Cash", "nach": target,
-                    "qty": f["filled_qty"], "preis": float(f["filled_avg_price"]), "signal": info})
-        print("  %s: %s -> %s, %s Stk zu %.2f" % (name, cur["sym"] if cur else "Cash", target, f["filled_qty"],
-                                                float(f["filled_avg_price"])))
+                    "qty": o["filled_qty"], "preis": float(o["filled_avg_price"]), "signal": info})
+        print("  %s: -> %s, %s Stk zu %.2f" % (name, target, o["filled_qty"], float(o["filled_avg_price"])))
     s["swing_signal"] = info
 
 def market_open():

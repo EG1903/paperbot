@@ -7,9 +7,9 @@
   "swing": {
     "vola-1x": {
       "sym": "QQQ",
-      "qty": "69.937360148",
-      "preis": 723.98,
-      "seit": "2026-10-28",
+      "qty": "69.525045034",
+      "preis": 715.569331,
+      "seit": "2026-10-27",
       "start_wert": 50000.0,
       "start": "2026-10-27"
     },
@@ -23,6 +23,15 @@
     }
   },
   "swing_log": [
+    {
+      "tag": "2026-10-27",
+      "teil": "vola-1x",
+      "von": "Cash",
+      "nach": "QQQ",
+      "qty": "69.525045034",
+      "preis": 715.569331,
+      "grund": "nachgetragen (Fill nach 2:20 min)"
+    },
     {
       "tag": "2026-10-27",
       "teil": "vola-2x",
@@ -51,7 +60,8 @@
         "schnitt252": 0.1879,
         "grenze": 0.2255,
         "ruhig": true
-      }
+      },
+      "grund": "Doppelkauf (Fehler: Fill vom 27.10. nicht abgewartet) - Ueberschuss wird verkauft"
     }
   ],
   "swing_signal": {
