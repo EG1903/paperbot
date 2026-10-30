@@ -74,11 +74,11 @@
     }
   ],
   "swing_signal": {
-    "datum": "2026-10-28",
-    "vola20": 0.1916,
-    "schnitt252": 0.1879,
-    "grenze": 0.2255,
+    "datum": "2026-10-29",
+    "vola20": 0.1963,
+    "schnitt252": 0.188,
+    "grenze": 0.2256,
     "ruhig": true
   },
-  "run_day": "2026-10-29"
+  "run_day": "2026-10-30"
 }
