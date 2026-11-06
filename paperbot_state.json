@@ -134,11 +134,11 @@
     }
   ],
   "swing_signal": {
-    "datum": "2026-11-04",
-    "vola20": 0.2266,
-    "schnitt252": 0.1884,
-    "grenze": 0.2261,
+    "datum": "2026-11-05",
+    "vola20": 0.3128,
+    "schnitt252": 0.1888,
+    "grenze": 0.2266,
     "ruhig": false
   },
-  "run_day": "2026-11-05"
+  "run_day": "2026-11-06"
 }
