@@ -1,31 +1,20 @@
 #!/usr/bin/env python3
 """Paper-Trading-Bot (nur Alpaca-PAPER-Konto, nie echtes Geld).
 
-Aktive Strategie: Vola-Regime (aus dem Strategie-Labor, robusteste Strategie mit hoher Rendite):
-  Nasdaq-100 halten, solange die Schwankung der letzten 20 Tage unter dem 1,2-fachen ihres
-  Jahresschnitts liegt, sonst Anleihen (IEF). Signal aus dem Tagesschluss, Order am naechsten
-  Handelstag kurz nach Eroeffnung. Konto je zur Haelfte:
-    vola-1x: QQQ  <-> IEF      (Nasdaq-100 ohne Hebel)
-    vola-2x: QLD  <-> IEF      (Nasdaq-100 mit 2-fachem Hebel)
-    python paperbot.py swing --dry     # Signal + geplante Orders anzeigen, nichts handeln
-    python paperbot.py swing           # jetzt pruefen und bei Bedarf umschichten (nur bei offener Boerse)
+Aktive Strategie: Hedgefonds-Mix aus dem Strategie-Labor (seit 2026-11-09), vier Teile:
+  nasdaq-3x     35 %  ruhig (Vola20 < 1,2 x Jahresschnitt) UND QQQ ueber 200-Tage-Schnitt -> TQQQ, sonst IEF
+  sp500-ibs-3x  25 %  IBS-Ruecksetzer auf den S&P 500 (Schluss im unteren 15 % der Tagesspanne,
+                      raus ueber dem Vortageshoch) -> UPRO, sonst Cash
+  sp500-wr-3x   25 %  Williams-%R(10) < -90 im Aufwaertstrend (ueber 200-Tage-Schnitt), raus bei > -30
+                      -> UPRO, sonst Cash
+  gold-2x       15 %  GLD ueber 200-Tage-Schnitt -> UGL, sonst Cash
+Signale aus dem Tagesschluss (Yahoo, dividendenbereinigt), Orders am naechsten Handelstag um 9:31 New York.
+    python paperbot.py mix --dry       # Signale und geplante Orders anzeigen, nichts handeln
+    python paperbot.py mix             # jetzt pruefen und handeln (nur bei offener Boerse)
+    python paperbot.py status          # Konto, Positionen, Teile
+    python paperbot.py bericht --force # Wochenbericht bot_bericht.md schreiben
 
-Aeltere Strategie (abgeschaltet, orb_aktiv=False): Opening-Range-Breakout im Tageshandel.
-Handelt NUR auf Papier (simuliertes Konto, kein Broker, kein echtes Geld).
-Er prüft laufend ein "Profitabilitäts-Gate". Auch wenn es bestanden ist,
-handelt der Bot NICHT live – er meldet es nur. Live gehen entscheidest du.
-
-    python paperbot.py backtest            # letzte ~60 Tage 5m-Bars simulieren
-    python paperbot.py run                 # live mitlaufen (heute), Papier-Fills
-    python paperbot.py status              # Konto, Statistik, Gate
-    python optimize.py                     # Parameter-Suche mit Train/Test-Split
-
-Strategie (long only):
-  Opening Range = erste 5 Min (9:30-9:35 NY). Einstieg auf dem ersten
-  geschlossenen 5m-Bar, der ÜBER dem Range-Hoch schließt (bis 15:30).
-  Stop = Range-Mitte, Ziel = 2R, flat um 15:55. Risiko 1% des Kontos pro Trade.
-  Stop+Ziel im selben Bar -> Stop zählt (konservativ). Slippage 0.02% je Seite.
-Daten: Yahoo chart JSON (kostenlos, inoffiziell, ggf. verzögert).
+Fruehere Strategien (abgeschaltet): Vola-Regime 1x+2x (27.10.-8.11.2026), Opening-Range-Breakout (Daytrading).
 """
 import warnings; warnings.filterwarnings('ignore', category=DeprecationWarning)
 import argparse, datetime as dt, json, os, sys, time, urllib.request, urllib.error
@@ -48,8 +37,17 @@ CFG = {
     "trend_filter": False,     # nur wenn Range-Hoch > Vortagesschluss
     "max_range_pct": 1.0,      # Range-Breite max. in % vom Preis (1.0 = aus)
     "orb_aktiv": False,        # Daytrading (Opening-Range-Breakout): im Strategie-Labor durchgefallen -> aus
-    "swing": {                 # Vola-Regime: aktiv
-        "aktiv": True, "signal": "QQQ", "k": 1.2, "vol_n": 20, "avg_n": 252, "ausweich": "IEF",
+    "mix": {                   # Hedgefonds-Mix: aktiv seit 2026-11-09
+        "aktiv": True, "start": "2026-11-09",
+        "teile": {
+            "nasdaq-3x":    {"anteil": 0.35, "regel": "vola+trend", "signal": "QQQ", "an": "TQQQ", "aus": "IEF"},
+            "sp500-ibs-3x": {"anteil": 0.25, "regel": "ibs", "signal": "SPY", "an": "UPRO", "aus": "CASH"},
+            "sp500-wr-3x":  {"anteil": 0.25, "regel": "williams", "signal": "SPY", "an": "UPRO", "aus": "CASH"},
+            "gold-2x":      {"anteil": 0.15, "regel": "trend200", "signal": "GLD", "an": "UGL", "aus": "CASH"},
+        },
+    },
+    "swing": {                 # Vola-Regime 1x + 2x: abgeschaltet seit 2026-11-09
+        "aktiv": False, "signal": "QQQ", "k": 1.2, "vol_n": 20, "avg_n": 252, "ausweich": "IEF",
         "teile": {"vola-1x": {"anteil": 0.5, "ruhig": "QQQ"}, "vola-2x": {"anteil": 0.5, "ruhig": "QLD"}},
     },
     # Profitabilitäts-Gate
@@ -541,6 +539,258 @@ def cmd_swing(a):
     if not a.dry:
         save(s)
 
+# ---------- Hedgefonds-Mix ----------
+def daily_ohlc(sym, rng="5y"):
+    """Tageskerzen von Yahoo, dividendenbereinigt wie im Strategie-Labor, ohne den laufenden Handelstag."""
+    url = "https://query2.finance.yahoo.com/v8/finance/chart/%s?range=%s&interval=1d" % (sym, rng)
+    err = None
+    for host in ("query2", "query1"):
+        try:
+            req = urllib.request.Request(url.replace("query2", host), headers={"User-Agent": "Mozilla/5.0 paperbot"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                res = json.loads(r.read())["chart"]["result"][0]
+            q, adj = res["indicators"]["quote"][0], res["indicators"]["adjclose"][0]["adjclose"]
+            today = str(ny_now().date())
+            out = []
+            for i, ts in enumerate(res["timestamp"]):
+                o, h, l, c, a = q["open"][i], q["high"][i], q["low"][i], q["close"][i], adj[i]
+                if c is None or a is None or c <= 0 or a <= 0:
+                    continue
+                d = str(ny(ts).date())
+                if d >= today:
+                    continue
+                o = o if o and o > 0 else c
+                h = max(h if h and h > 0 else c, o, c)
+                l = min(l if l and l > 0 else c, o, c)
+                f = a / c
+                out.append((d, o * f, h * f, l * f, a))
+            return out
+        except Exception as e:
+            err = e
+            time.sleep(3)
+    raise RuntimeError("Yahoo-Tageskerzen %s nicht ladbar: %s" % (sym, err))
+
+def sig_series(regel, bars):
+    """Signal je Tag (1 = investiert), genau wie im Strategie-Labor berechnet."""
+    import math
+    C = [b[4] for b in bars]
+    H = [b[2] for b in bars]
+    Lo = [b[3] for b in bars]
+    n = len(C)
+    S = [0] * n
+
+    def sma(k, t):
+        return sum(C[t - k + 1:t + 1]) / k if t >= k - 1 else None
+    if regel == "vola+trend":
+        rets = [None] + [math.log(C[i] / C[i - 1]) for i in range(1, n)]
+        vol = [None] * n
+        for t in range(20, n):
+            w = rets[t - 19:t + 1]
+            mu = sum(w) / 20
+            vol[t] = math.sqrt(max(0.0, sum(x * x for x in w) / 20 - mu * mu)) * math.sqrt(252)
+        for t in range(20 + 251, n):
+            avg = sum(vol[t - 251:t + 1]) / 252
+            m = sma(200, t)
+            S[t] = 1 if vol[t] < 1.2 * avg and m is not None and C[t] > m else 0
+    elif regel == "trend200":
+        for t in range(199, n):
+            S[t] = 1 if C[t] > sma(200, t) else 0
+    elif regel == "ibs":
+        inpos = False
+        for t in range(1, n):
+            rg = H[t] - Lo[t]
+            ibs = (C[t] - Lo[t]) / rg if rg > 0 else 0.5
+            if inpos:
+                if C[t] > H[t - 1]:
+                    inpos = False
+            elif ibs < 0.15:
+                inpos = True
+            S[t] = 1 if inpos else 0
+    elif regel == "williams":
+        inpos = False
+        for t in range(10, n):
+            hh, ll = max(H[t - 9:t + 1]), min(Lo[t - 9:t + 1])
+            wr = -100.0 * (hh - C[t]) / (hh - ll) if hh > ll else -50.0
+            m = sma(200, t)
+            if inpos:
+                if wr > -30:
+                    inpos = False
+            elif wr < -90 and m is not None and C[t] > m:
+                inpos = True
+            S[t] = 1 if inpos else 0
+    else:
+        raise ValueError(regel)
+    return S
+
+def mix_targets():
+    cache, out = {}, {}
+    for name, t in CFG["mix"]["teile"].items():
+        if t["signal"] not in cache:
+            cache[t["signal"]] = daily_ohlc(t["signal"])
+        bars = cache[t["signal"]]
+        an = bool(sig_series(t["regel"], bars)[-1])
+        out[name] = {"an": an, "sym": t["an"] if an else t["aus"], "datum": bars[-1][0]}
+    return out
+
+def mix_syms():
+    syms = set(swing_syms())                         # Reste der frueheren Vola-Regime-Teile
+    for t in CFG["mix"]["teile"].values():
+        syms |= {t["an"], t["aus"]}
+    syms.discard("CASH")
+    return syms
+
+def mix_reconcile(s, dry=False):
+    """Gleicht die Teile mit dem echten Konto ab: offene Orders nachtragen, Ueberschuss verkaufen
+    (z. B. Reste der alten Strategie oder Doppelkaeufe), fehlende Stuecke im Stand korrigieren."""
+    st = s.setdefault("teile", {})
+    for name, v in st.items():
+        oid = v.get("offene_order")
+        if not oid:
+            continue
+        o = alpaca("GET", "/v2/orders/%s" % oid) or {}
+        if o.get("status") == "filled":
+            if o.get("side") == "buy":
+                v.update(sym=o["symbol"], qty=o["filled_qty"], preis=float(o["filled_avg_price"]))
+            else:
+                v.update(sym="CASH", qty="0")
+            v.pop("offene_order", None)
+            print("  Abgleich: offene Order fuer %s ausgefuehrt" % name)
+        elif o.get("status") in ("canceled", "expired", "rejected", "done_for_day"):
+            v.pop("offene_order", None)
+        else:
+            print("  Abgleich: Order fuer %s noch offen (%s)" % (name, o.get("status")))
+    if any(v.get("offene_order") for v in st.values()):
+        return
+    pos = {p["symbol"]: float(p["qty"]) for p in alpaca("GET", "/v2/positions") or []}
+    for sym in sorted(mix_syms() | set(pos)):
+        if sym not in mix_syms():
+            continue
+        parts = [v for v in st.values() if v.get("sym") == sym]
+        need = sum(float(v.get("qty") or 0) for v in parts)
+        diff = round(pos.get(sym, 0.0) - need, 9)
+        if diff > 0.001:
+            print("  Abgleich: %.6f %s im Konto, die keinem Teil gehoeren -> verkaufen" % (diff, sym))
+            if not dry:
+                o, fertig = wait_fill(market_order(sym, "sell", qty=diff))
+                if o and o.get("status") == "filled":
+                    s.setdefault("mix_log", []).append({"tag": str(ny_now().date()), "teil": "abgleich", "von": sym,
+                                                        "nach": "Cash", "qty": o["filled_qty"],
+                                                        "preis": float(o["filled_avg_price"])})
+        elif diff < -0.001 and need > 0:
+            print("  Abgleich: %.6f %s fehlen im Konto -> Stand wird angepasst" % (-diff, sym))
+            if not dry:
+                have = pos.get(sym, 0.0)
+                for v in parts:
+                    v["qty"] = "%.9f" % (float(v["qty"]) * have / need)
+
+def mix_rebalance(s, dry=False):
+    cfg = CFG["mix"]
+    if "swing" in s and "swing_alt" not in s:          # einmaliger Umzug der alten Strategie
+        s["swing_alt"] = s.pop("swing")
+    st = s.setdefault("teile", {})
+    log = s.setdefault("mix_log", [])
+    today = str(ny_now().date())
+    targets = mix_targets()
+    print("Hedgefonds-Mix, Signale aus dem Schluss vom %s:" % next(iter(targets.values()))["datum"])
+    for name, tg in targets.items():
+        print("  %-13s %-4s -> soll halten: %s" % (name, "AN" if tg["an"] else "aus", tg["sym"]))
+    if alpaca_on() and not st:
+        # Start des Mix: Positionen, die schon im Konto liegen und ein Teil halten soll, werden diesem
+        # Teil zugeordnet (bis zu seinem Zielanteil), statt sie zu verkaufen und neu zu kaufen.
+        pos = {p["symbol"]: p for p in alpaca("GET", "/v2/positions") or []}
+        equity = float((alpaca("GET", "/v2/account") or {}).get("equity") or 0)
+        frei = {sym: float(p["qty"]) for sym, p in pos.items()}
+        for name, tg in targets.items():
+            p = pos.get(tg["sym"])
+            if not p or frei.get(tg["sym"], 0) <= 0:
+                continue
+            qty = min(frei[tg["sym"]], cfg["teile"][name]["anteil"] * equity / float(p["current_price"]))
+            frei[tg["sym"]] -= qty
+            print("  Start: %s uebernimmt %.4f %s aus dem Bestand" % (name, qty, tg["sym"]))
+            st[name] = {"sym": tg["sym"], "qty": "%.9f" % qty, "preis": float(p["current_price"]), "seit": today}
+    if alpaca_on():
+        mix_reconcile(s, dry=dry)
+    # 1) zuerst verkaufen, was nicht mehr gehalten werden soll
+    for name, tg in targets.items():
+        cur = st.get(name) or {"sym": "CASH", "qty": "0"}
+        if cur.get("offene_order"):
+            print("  %s: wartet auf offene Order" % name); continue
+        held = cur["sym"] != "CASH" and float(cur.get("qty") or 0) > 0
+        if not held or cur["sym"] == tg["sym"]:
+            continue
+        if dry or not alpaca_on():
+            print("  %s: wuerde %s verkaufen" % (name, cur["sym"])); continue
+        o, fertig = wait_fill(market_order(cur["sym"], "sell", qty=cur["qty"]))
+        if not fertig:
+            cur["offene_order"] = o["id"]; st[name] = cur; continue
+        if o and o.get("status") == "filled":
+            log.append({"tag": today, "teil": name, "von": cur["sym"], "nach": "Cash", "qty": o["filled_qty"],
+                        "preis": float(o["filled_avg_price"])})
+            print("  %s: %s verkauft (%s Stk zu %.2f)" % (name, cur["sym"], o["filled_qty"], float(o["filled_avg_price"])))
+            st[name] = {"sym": "CASH", "qty": "0", "seit": today}
+    # 2) dann kaufen (Anteil x Kontowert, nie mehr als vorhandenes Cash)
+    acct = (alpaca("GET", "/v2/account") or {}) if alpaca_on() else {}
+    equity = float(acct.get("equity") or 0)
+    for name, tg in targets.items():
+        cur = st.get(name) or {"sym": "CASH", "qty": "0"}
+        if cur.get("offene_order") or tg["sym"] == "CASH":
+            continue
+        if cur["sym"] == tg["sym"] and float(cur.get("qty") or 0) > 0:
+            print("  %s: bleibt in %s" % (name, tg["sym"])); continue
+        if dry or not alpaca_on():
+            print("  %s: wuerde %s kaufen (%.0f %% des Kontos)" % (name, tg["sym"], 100 * cfg["teile"][name]["anteil"])); continue
+        cash = float((alpaca("GET", "/v2/account") or {}).get("cash") or 0)
+        budget = min(cfg["teile"][name]["anteil"] * equity, cash - 50.0)
+        if budget < 100:
+            print("  %s: zu wenig Cash ($%.2f) -> kein Kauf" % (name, cash)); continue
+        o, fertig = wait_fill(market_order(tg["sym"], "buy", notional=round(budget * 0.995, 2)))
+        if not fertig:
+            st[name] = {"sym": tg["sym"], "qty": "0", "seit": today, "offene_order": o["id"]}; continue
+        if not o or o.get("status") != "filled":
+            print("  %s: Kauf %s fehlgeschlagen" % (name, tg["sym"])); continue
+        st[name] = {"sym": tg["sym"], "qty": o["filled_qty"], "preis": float(o["filled_avg_price"]), "seit": today}
+        log.append({"tag": today, "teil": name, "von": "Cash", "nach": tg["sym"], "qty": o["filled_qty"],
+                    "preis": float(o["filled_avg_price"])})
+        print("  %s: %s gekauft (%s Stk zu %.2f)" % (name, tg["sym"], o["filled_qty"], float(o["filled_avg_price"])))
+    # 3) einmal im Monat: Teile, die stark vom Zielanteil abweichen, angleichen
+    monat = today[:7]
+    if not dry and alpaca_on() and s.get("ausgleich_monat") != monat:
+        pos = {p["symbol"]: p for p in alpaca("GET", "/v2/positions") or []}
+        acct = alpaca("GET", "/v2/account") or {}
+        equity = float(acct.get("equity") or 0)
+        for name, cur in st.items():
+            p = pos.get(cur.get("sym"))
+            if not p or cur.get("offene_order") or name not in cfg["teile"]:
+                continue
+            px = float(p["current_price"])
+            wert, ziel = float(cur["qty"]) * px, cfg["teile"][name]["anteil"] * equity
+            if wert > 1.25 * ziel:
+                qty = round((wert - ziel) / px, 6)
+                o, fertig = wait_fill(market_order(cur["sym"], "sell", qty=qty))
+                if o and o.get("status") == "filled":
+                    cur["qty"] = "%.9f" % (float(cur["qty"]) - float(o["filled_qty"]))
+                    print("  Ausgleich %s: %s Stk %s verkauft" % (name, o["filled_qty"], cur["sym"]))
+            elif wert < 0.8 * ziel:
+                cash = float((alpaca("GET", "/v2/account") or {}).get("cash") or 0)
+                nb = min(ziel - wert, cash - 50.0)
+                if nb >= 100:
+                    o, fertig = wait_fill(market_order(cur["sym"], "buy", notional=round(nb, 2)))
+                    if o and o.get("status") == "filled":
+                        cur["qty"] = "%.9f" % (float(cur["qty"]) + float(o["filled_qty"]))
+                        print("  Ausgleich %s: %s Stk %s gekauft" % (name, o["filled_qty"], cur["sym"]))
+        s["ausgleich_monat"] = monat
+    s["mix_signal"] = targets
+
+def cmd_mix(a):
+    s = load()
+    if not a.dry and not alpaca_on():
+        print("Keine Alpaca-Keys -> nur Anzeige."); a.dry = True
+    if not a.dry and not market_open():
+        print("Boerse geschlossen -> nur Anzeige (Orders erst bei offener Boerse)."); a.dry = True
+    mix_rebalance(s, dry=a.dry)
+    if not a.dry:
+        save(s)
+
 def cmd_auto(a):
     """Fuer GitHub Actions: startet zu beliebiger Zeit, entscheidet selbst, wartet selbst.
     Jeder Teil laeuft hoechstens einmal pro Tag (run_day / flat_day im Kontostand)."""
@@ -549,13 +799,16 @@ def cmd_auto(a):
     if now.weekday() >= 5:
         print("Wochenende."); return
     if now.time() < dt.time(11, 5) and s.get("run_day") != today:
-        if CFG["swing"]["aktiv"] and alpaca_on():
+        if (CFG["mix"]["aktiv"] or CFG["swing"]["aktiv"]) and alpaca_on():
             while ny_now().time() < dt.time(9, 31):
                 time.sleep(30)
             if market_open():
-                swing_rebalance(s)
+                if CFG["mix"]["aktiv"]:
+                    mix_rebalance(s)
+                else:
+                    swing_rebalance(s)
             else:
-                print("Boerse heute geschlossen (Feiertag) -> kein Vola-Regime-Check.")
+                print("Boerse heute geschlossen (Feiertag) -> keine Orders.")
             save(s)
         if CFG["orb_aktiv"]:
             if alpaca_on() and ny_now().time() < dt.time(9, 30):
@@ -610,21 +863,28 @@ def cmd_bericht(a):
     ruhig, info = vola_signal()
     s = load()
     L = ["# Bot-Bericht: Woche bis %s" % dt.date.fromisoformat(last).strftime("%d.%m.%Y"), "",
-         "Papiergeld (Alpaca Paper), keine Anlageberatung. Strategie: Vola-Regime auf den Nasdaq-100, "
-         "je 50 %% ohne Hebel (QQQ) und mit 2-fachem Hebel (QLD); bei unruhiger Börse Anleihen (IEF). Start: %s." % START["datum"], "",
+         "Papiergeld (Alpaca Paper), keine Anlageberatung. Start des Papierhandels: %s. "
+         "Strategie seit 09.11.2026: Hedgefonds-Mix aus 4 Teilen (35 %% Nasdaq-100 mit 3-fach-Hebel, nur bei ruhiger Börse "
+         "im Aufwärtstrend, sonst Anleihen; je 25 %% zwei Rücksetzer-Strategien auf den S&P 500 mit 3-fach-Hebel; "
+         "15 %% Gold mit 2-fach-Hebel im Aufwärtstrend). Davor (27.10.-06.11.): Vola-Regime auf den Nasdaq-100 (1x + 2x)." % START["datum"], "",
          "## Kontostand", "", "| | Stand | diese Woche | seit Start |", "|---|---|---|---|",
          "| **Bot (Konto)** | %s | %s %% | %s %% |" % (_usd(eq), _de(ch(eq, prev["equity"]), plus=True), _de(ch(eq, base["equity"]), plus=True)),
          "| S&P 500 halten (SPY) | %s | %s %% | %s %% |" % (_de(spy[last], 2), _de(ch(spy[last], prev["spy"]), plus=True), _de(ch(spy[last], base["spy"]), plus=True)),
          "| Nasdaq-100 halten (QQQ) | %s | %s %% | %s %% |" % (_de(qqq[last], 2), _de(ch(qqq[last], prev["qqq"]), plus=True), _de(ch(qqq[last], base["qqq"]), plus=True)),
-         "", "## Die zwei Teile", "", "| Teil | hält gerade | Wert | seit Start |", "|---|---|---|---|"]
-    for name, v in (s.get("swing") or {}).items():
+         "", "## Die Teile", "", "| Teil | Zielanteil | hält gerade | Wert |", "|---|---|---|---|"]
+    teile = s.get("teile") or {}
+    for name, cfg_t in CFG["mix"]["teile"].items():
+        v = teile.get(name) or {"sym": "CASH", "qty": "0"}
         p = pos.get(v.get("sym"))
         wert = float(v["qty"]) * float(p["current_price"]) if p else 0.0
-        L.append("| %s | %s | %s | %s %% |" % (name, v.get("sym"), _usd(wert), _de(ch(wert, v["start_wert"]), plus=True) if wert else "-"))
-    L += ["", "## Signal für den nächsten Handelstag", "",
-          "Schwankung der letzten 20 Tage: **%s %%**, Grenze: %s %% (1,2 x Jahresschnitt %s %%) -> **%s**." % (
-              _de(100 * info["vola20"]), _de(100 * info["grenze"]), _de(100 * info["schnitt252"]),
-              "ruhig: Nasdaq halten" if ruhig else "unruhig: Anleihen (IEF)"), ""]
+        L.append("| %s | %s %% | %s | %s |" % (name, _de(100 * cfg_t["anteil"], 0), v.get("sym") if v.get("sym") != "CASH" else "Cash",
+                                             _usd(wert) if wert else "-"))
+    L.append("| Cash | | | %s |" % _usd(float(acct.get("cash") or 0)))
+    L += ["", "## Signale für den nächsten Handelstag", "", "| Teil | Signal | soll halten |", "|---|---|---|"]
+    for name, tg in mix_targets().items():
+        L.append("| %s | %s | %s |" % (name, "an" if tg["an"] else "aus", "Cash" if tg["sym"] == "CASH" else tg["sym"]))
+    L += ["", "Nasdaq-Teil: Schwankung der letzten 20 Tage %s %%, Grenze %s %% (1,2 x Jahresschnitt) -> %s." % (
+              _de(100 * info["vola20"]), _de(100 * info["grenze"]), "ruhig" if ruhig else "unruhig"), ""]
     orders = alpaca("GET", "/v2/orders?status=closed&after=%sT23:59:59Z&limit=100&direction=asc" % prev["datum"]) or []
     filled = [o for o in orders if o.get("status") == "filled"]
     L += ["## Trades diese Woche", ""]
@@ -655,6 +915,12 @@ def cmd_status(a):
         pos = {p["symbol"]: p for p in alpaca("GET", "/v2/positions") or []}
         for p in pos.values():
             print("  %s %s Stk, Wert $%s, unreal. P&L $%s" % (p["symbol"], p["qty"], p["market_value"], p["unrealized_pl"]))
+        if s.get("teile"):
+            print("\nHedgefonds-Mix (je Teil):")
+            for name, v in s["teile"].items():
+                p = pos.get(v.get("sym"))
+                wert = float(v["qty"]) * float(p["current_price"]) if p else 0.0
+                print("  %-13s %-5s Wert $%.2f%s" % (name, v.get("sym"), wert, " (offene Order)" if v.get("offene_order") else ""))
         st = s.get("swing", {})
         if st:
             print("\nVola-Regime (je Teil):")
@@ -677,11 +943,12 @@ def main():
     r.add_argument("--until", help="beenden um diese NY-Zeit (HH:MM)")
     f = sp.add_parser("flat"); f.add_argument("--force", action="store_true")
     w = sp.add_parser("swing"); w.add_argument("--dry", action="store_true", help="nur anzeigen, nichts handeln")
+    mx = sp.add_parser("mix"); mx.add_argument("--dry", action="store_true", help="nur anzeigen, nichts handeln")
     br = sp.add_parser("bericht"); br.add_argument("--nur-wochenende", action="store_true"); br.add_argument("--force", action="store_true")
     sp.add_parser("status"); sp.add_parser("auto")
     a = ap.parse_args()
     {"backtest": cmd_backtest, "run": cmd_run, "flat": cmd_flat, "status": cmd_status, "auto": cmd_auto,
-     "swing": cmd_swing, "bericht": cmd_bericht}[a.cmd](a)
+     "swing": cmd_swing, "mix": cmd_mix, "bericht": cmd_bericht}[a.cmd](a)
 
 if __name__ == "__main__":
     main()
