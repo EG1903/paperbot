@@ -1,4 +1,4 @@
-# Briefing 08.11.2026 04:05 Uhr (Berlin) · 22:05 Uhr (New York)
+# Briefing 08.11.2026 04:09 Uhr (Berlin) · 22:09 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -25,7 +25,7 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 | US-Zins 10 Jahre (%) | 4,86 | -0,7 % |
 | US-Dollar-Index | 102,28 | +0,5 % |
 | Euro in Dollar | 1,11 | -0,1 % |
-| Bitcoin | 75742,13 | -5,8 % |
+| Bitcoin | 75744,73 | -5,8 % |
 
 Angst-Struktur: VIX 25.6 gegen 3-Monats-VIX 24.6 -> **angespannt** (kurzfristige Angst höher als langfristige).
 
@@ -61,11 +61,11 @@ Angst-Struktur: VIX 25.6 gegen 3-Monats-VIX 24.6 -> **angespannt** (kurzfristige
 ## Fed und Zinsen in den Nachrichten
 
 - [Will the aftermath of the 'Blue Wave' continue?… Focus on U.S. inflation and CoreWeave earnings - 머니투데이](https://news.google.com/rss/articles/CBMibEFVX3lxTE9CSngwUGtBRVRMM0kxM1plemlYUks2U2ljUjhKUjE3LUVncjJsY3VjYnRZdS1tUUVHT0FsQTI4Unlka0thY2lzYVFNOV9WV1ZFbEZYd2FoaXlqaGNCam53OERtUVdOTXVOTFVrWA?oc=5) · 08.11. 03:34
+- [📊 CPI Tests December Rate Outlook: Markets Watch Inflation Closely! - Binance](https://news.google.com/rss/articles/CBMiZEFVX3lxTE9rbHVGRmxCUDdGcll0Y1pqZDlVTVF5OGhiS3Zkc19hY0VEc3pCYUo0amRjcmphYUNQRUQ2SGJ4bWM5QU5wdXRsekRjcEZHSnRqb01VRFdTbE4wNkZjclFyZjE5Wmc?oc=5) · 08.11. 01:44
 - [Markets Price Fed and ECB Paths More Hawkishly Than Indosuez's Baseline - www.tokenpost.com](https://news.google.com/rss/articles/CBMiWkFVX3lxTE9oVkFfUllxelBUUW1WeVlGcGhndFBfbVJLV3RQb21ES1VsdUVacjVISmo5Ym9KLVJqRUVlOVJLalJDbnBtdEluNU5UbFh5LXZ3WkduQjEtWFZjQQ?oc=5) · 08.11. 00:53
 - [U.S. Inflation, CoreWeave Earnings, Options Expiry Converge: The Variables That Will Decide Whether KOSPI Holds 5,000 - BigGo Finance](https://news.google.com/rss/articles/CBMidkFVX3lxTE82Yl9lUk8tcl9pOTg3akxpaW1BMTk4RGN4ZG55ckI5aXdCckVrNWs2d2c4Y3JNYVZLTnNQdHhNT0JWblk5RDlvS0o1NWhWVjRfdUVYaE9NS2pTRGxORnFuaTRzMHBNdGhRTlEyaDN0dllTeEZ6SGc?oc=5) · 08.11. 00:35
 - [Gold drops as strong US payrolls boost dollar, yields - Business Recorder](https://news.google.com/rss/articles/CBMiVkFVX3lxTE1QTC1sVDBHUnRlMTZ6enBUdmNtVXVRUjhFeGdDaXptc2ZWYWlEMC1UNFh6SWZaQ1RGWWF1T2ZXUE5UV0pHOXZOSUFWbWZza3Bid2RtbXNR0gFWQVVfeXFMTVBMLWxUMEdSdGUxNnp6cFR2Y21VdVFSOEV4Z0Npem1zZlZhaUQwLVQ0WHpJZlpDVEZZYXVPZldQTlRXSkc5dk5JQVZtZnNrcGJ3ZG1tc1E?oc=5) · 07.11. 22:33
 - [US inflation, CoreWeave earnings steer Korea stocks after blue wave - Chosunbiz](https://news.google.com/rss/articles/CBMigAFBVV95cUxOLWdUc1ZfLXFXX1pDWGFSY25tdnhYcTZjSHpxdGxmQk53Y2ppUHc5dU5vaFZfc1lWcnZfY2taQ1J4Q0R2OHpYNGloWmFLbnpIek9tUE1NNGlkZjZZRWVBay1tNjZ4NGVRS0lqRUtkQl9iWXJNVTExTEZqTV84UG00U9IBlAFBVV95cUxPNkNyQWp1YlFiVGhSZ0l2Rm1rVU9QNTdHS0Y1TFBXakV1Q1AzU0JSOGEtaUoxNU5fUE9xRWxWNGJCWDJ3LWxoR0hLLVViUnVESHUxT0NiNUZBblBJVktna3V6QjRsekFLd0NUR0RReTFfUHFjcXRraGY1TG9XdVRmUnd1ZUdVaGRENS1xc0Y1UEdWeWFY?oc=5) · 07.11. 22:00
-- [U.S. Tech Selloff Dents Bets on a December Fed Rate Hike - TOKENPOST](https://news.google.com/rss/articles/CBMiWkFVX3lxTE8zQlFfdHF0RXBxMU5LMGlRVlU0VFZLRld0ZF9vMllEN2lnZTlIVDJfYklyQnBYdWhfV2c5M0RIMVNETzFFdFRXVGhJMDRhZHlfZnJnakxpQmNLQQ?oc=5) · 07.11. 21:25
 
 ## Wirtschaft auf Deutsch (tagesschau)
 
