@@ -539,6 +539,19 @@ def cmd_swing(a):
     if not a.dry:
         save(s)
 
+# ---------- Push-Nachricht (optional) ----------
+def notify(title, body):
+    """Kurze Push-Nachricht ueber ntfy.sh, nur wenn das Secret NTFY_TOPIC gesetzt ist."""
+    topic = os.environ.get("NTFY_TOPIC")
+    if not topic or not body:
+        return
+    req = urllib.request.Request("https://ntfy.sh/" + topic, data=body.encode("utf-8"), method="POST",
+                                 headers={"Title": title.encode("ascii", "ignore").decode(), "Tags": "robot"})
+    try:
+        urllib.request.urlopen(req, timeout=20)
+    except Exception as e:
+        print("  Push fehlgeschlagen: %s" % e)
+
 # ---------- Hedgefonds-Mix ----------
 def daily_ohlc(sym, rng="5y"):
     """Tageskerzen von Yahoo, dividendenbereinigt wie im Strategie-Labor, ohne den laufenden Handelstag."""
@@ -780,6 +793,11 @@ def mix_rebalance(s, dry=False):
                         print("  Ausgleich %s: %s Stk %s gekauft" % (name, o["filled_qty"], cur["sym"]))
         s["ausgleich_monat"] = monat
     s["mix_signal"] = targets
+    heute = [e for e in log if e.get("tag") == today]
+    if heute and not dry:
+        zeilen = ["%s: %s -> %s (%s Stk zu %.2f)" % (e["teil"], e["von"], e["nach"], round(float(e["qty"]), 2), e["preis"])
+                  for e in heute]
+        notify("Paperbot hat gehandelt", "\n".join(zeilen))
 
 def cmd_mix(a):
     s = load()
@@ -904,6 +922,9 @@ def cmd_bericht(a):
     with open(BERICHT, "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
     print("Bericht geschrieben: %s (Woche bis %s)" % (BERICHT, last))
+    notify("Wochenbericht Paperbot", "Woche bis %s\nBot: %s %% (seit Start %s %%)\nS&P 500: %s %%\nNasdaq-100: %s %%" % (
+        last, _de(ch(eq, prev["equity"]), plus=True), _de(ch(eq, base["equity"]), plus=True),
+        _de(ch(spy[last], prev["spy"]), plus=True), _de(ch(qqq[last], prev["qqq"]), plus=True)))
 
 def cmd_status(a):
     s = load()
