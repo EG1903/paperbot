@@ -1,0 +1,39 @@
+name: briefing
+
+on:
+  schedule:
+    - cron: "0 6 * * 1-5"      # ca. 7 Uhr Berlin (Winterzeit), Reserve; zuverlaessiger per cron-job.org
+  workflow_dispatch:
+  push:
+    paths:
+      - "briefing.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: paperbot
+  cancel-in-progress: false
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+      APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Briefing schreiben
+        run: python briefing.py
+      - name: Speichern
+        run: |
+          git config user.name "paperbot"
+          git config user.email "paperbot@users.noreply.github.com"
+          git add briefing.md
+          git diff --cached --quiet || (git commit -m "Briefing $(date -u +%F-%H%M)" && git pull --rebase && git push)
