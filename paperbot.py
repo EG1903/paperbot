@@ -569,6 +569,82 @@ def cmd_auto(a):
         a.force = True; cmd_flat(a); return
     print("Heute nichts mehr zu tun.")
 
+# ---------- Wochenbericht ----------
+BERICHT, WOCHEN = "bot_bericht.md", "bot_wochen.json"
+START = {"datum": "2026-10-27", "basis": "2026-10-26", "equity": 100000.0}   # Start des Papierhandels
+
+def _de(v, nach=1, plus=False):
+    t = ("%+." if plus else "%.") + str(nach) + "f"
+    return (t % v).replace(".", ",")
+
+def _usd(v):
+    return "$" + ("{:,.0f}".format(v)).replace(",", ".")
+
+def _woche_zu_ende(last):
+    """True, wenn der naechste Handelstag nach 'last' in einer neuen Kalenderwoche liegt."""
+    d = dt.date.fromisoformat(last)
+    cal = alpaca("GET", "/v2/calendar?start=%s&end=%s" % (last, (d + dt.timedelta(days=14)).isoformat())) or []
+    nxt = [c["date"] for c in cal if c["date"] > last]
+    return not nxt or dt.date.fromisoformat(nxt[0]).isocalendar()[:2] != d.isocalendar()[:2]
+
+def cmd_bericht(a):
+    if not alpaca_on():
+        print("Keine Alpaca-Keys."); return
+    spy, qqq = dict(daily_closes("SPY", "6mo")), dict(daily_closes("QQQ", "6mo"))
+    last = max(spy)
+    weeks = json.load(open(WOCHEN, encoding="utf-8")) if os.path.exists(WOCHEN) else []
+    if weeks and weeks[-1]["datum"] >= last and not a.force:
+        print("Bericht fuer %s gibt es schon." % last); return
+    if a.nur_wochenende and not a.force and not _woche_zu_ende(last):
+        print("%s ist nicht der letzte Handelstag der Woche - kein Bericht." % last); return
+    acct = alpaca("GET", "/v2/account") or {}
+    eq = float(acct.get("equity") or 0)
+    pos = {p["symbol"]: p for p in alpaca("GET", "/v2/positions") or []}
+    base = {"datum": START["basis"], "equity": START["equity"], "spy": spy[START["basis"]], "qqq": qqq[START["basis"]]}
+    prev = weeks[-1] if weeks else base
+    snap = {"datum": last, "equity": round(eq, 2), "spy": round(spy[last], 4), "qqq": round(qqq[last], 4)}
+    weeks = [w for w in weeks if w["datum"] < last] + [snap]
+    with open(WOCHEN, "w", encoding="utf-8") as f:
+        json.dump(weeks, f, indent=1)
+    ch = lambda new, old: 100 * (new / old - 1)
+    ruhig, info = vola_signal()
+    s = load()
+    L = ["# Bot-Bericht: Woche bis %s" % dt.date.fromisoformat(last).strftime("%d.%m.%Y"), "",
+         "Papiergeld (Alpaca Paper), keine Anlageberatung. Strategie: Vola-Regime auf den Nasdaq-100, "
+         "je 50 %% ohne Hebel (QQQ) und mit 2-fachem Hebel (QLD); bei unruhiger Börse Anleihen (IEF). Start: %s." % START["datum"], "",
+         "## Kontostand", "", "| | Stand | diese Woche | seit Start |", "|---|---|---|---|",
+         "| **Bot (Konto)** | %s | %s %% | %s %% |" % (_usd(eq), _de(ch(eq, prev["equity"]), plus=True), _de(ch(eq, base["equity"]), plus=True)),
+         "| S&P 500 halten (SPY) | %s | %s %% | %s %% |" % (_de(spy[last], 2), _de(ch(spy[last], prev["spy"]), plus=True), _de(ch(spy[last], base["spy"]), plus=True)),
+         "| Nasdaq-100 halten (QQQ) | %s | %s %% | %s %% |" % (_de(qqq[last], 2), _de(ch(qqq[last], prev["qqq"]), plus=True), _de(ch(qqq[last], base["qqq"]), plus=True)),
+         "", "## Die zwei Teile", "", "| Teil | hält gerade | Wert | seit Start |", "|---|---|---|---|"]
+    for name, v in (s.get("swing") or {}).items():
+        p = pos.get(v.get("sym"))
+        wert = float(v["qty"]) * float(p["current_price"]) if p else 0.0
+        L.append("| %s | %s | %s | %s %% |" % (name, v.get("sym"), _usd(wert), _de(ch(wert, v["start_wert"]), plus=True) if wert else "-"))
+    L += ["", "## Signal für den nächsten Handelstag", "",
+          "Schwankung der letzten 20 Tage: **%s %%**, Grenze: %s %% (1,2 x Jahresschnitt %s %%) -> **%s**." % (
+              _de(100 * info["vola20"]), _de(100 * info["grenze"]), _de(100 * info["schnitt252"]),
+              "ruhig: Nasdaq halten" if ruhig else "unruhig: Anleihen (IEF)"), ""]
+    orders = alpaca("GET", "/v2/orders?status=closed&after=%sT23:59:59Z&limit=100&direction=asc" % prev["datum"]) or []
+    filled = [o for o in orders if o.get("status") == "filled"]
+    L += ["## Trades diese Woche", ""]
+    if filled:
+        L += ["| Datum | Aktion | Wert | Stück | Kurs |", "|---|---|---|---|---|"]
+        for o in filled:
+            q, px = float(o["filled_qty"]), float(o["filled_avg_price"])
+            L.append("| %s | %s %s | %s | %s | %s |" % (o["filled_at"][:10], "Kauf" if o["side"] == "buy" else "Verkauf",
+                                                     o["symbol"], _usd(q * px), _de(q, 2), _de(px, 2)))
+    else:
+        L.append("Keine Trades.")
+    L += ["", "## Verlauf (Wochenschluss)", "", "| Woche bis | Bot | S&P 500 | Nasdaq-100 |", "|---|---|---|---|",
+          "| Start (%s) | %s | 0,0 %% | 0,0 %% |" % (START["datum"], _usd(base["equity"]))]
+    for w in weeks:
+        L.append("| %s | %s (%s %%) | %s %% | %s %% |" % (w["datum"], _usd(w["equity"]), _de(ch(w["equity"], base["equity"]), plus=True),
+                                                    _de(ch(w["spy"], base["spy"]), plus=True), _de(ch(w["qqq"], base["qqq"]), plus=True)))
+    with open(BERICHT, "w", encoding="utf-8") as f:
+        f.write("\n".join(L) + "\n")
+    print("Bericht geschrieben: %s (Woche bis %s)" % (BERICHT, last))
+
 def cmd_status(a):
     s = load()
     if CFG["orb_aktiv"] or s.get("trades"):
@@ -601,10 +677,11 @@ def main():
     r.add_argument("--until", help="beenden um diese NY-Zeit (HH:MM)")
     f = sp.add_parser("flat"); f.add_argument("--force", action="store_true")
     w = sp.add_parser("swing"); w.add_argument("--dry", action="store_true", help="nur anzeigen, nichts handeln")
+    br = sp.add_parser("bericht"); br.add_argument("--nur-wochenende", action="store_true"); br.add_argument("--force", action="store_true")
     sp.add_parser("status"); sp.add_parser("auto")
     a = ap.parse_args()
     {"backtest": cmd_backtest, "run": cmd_run, "flat": cmd_flat, "status": cmd_status, "auto": cmd_auto,
-     "swing": cmd_swing}[a.cmd](a)
+     "swing": cmd_swing, "bericht": cmd_bericht}[a.cmd](a)
 
 if __name__ == "__main__":
     main()

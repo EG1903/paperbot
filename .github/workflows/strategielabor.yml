@@ -36,6 +36,12 @@ jobs:
           else
             python strategielabor.py --refresh
           fi
+      - name: Wochenbericht des Paperbots (nur nach dem letzten Handelstag der Woche)
+        continue-on-error: true
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: python paperbot.py bericht --nur-wochenende
       - name: Excel als Download bereitstellen
         if: hashFiles('Strategie-Labor.xlsx') != ''
         uses: actions/upload-artifact@v4
@@ -47,7 +53,7 @@ jobs:
         run: |
           git config user.name "paperbot"
           git config user.email "paperbot@users.noreply.github.com"
-          for f in lab_live.md lab_report.md lab_stand.json lab_events.json lab_papiertest.json; do
+          for f in lab_live.md lab_report.md lab_stand.json lab_events.json lab_papiertest.json bot_bericht.md bot_wochen.json; do
             [ -f "$f" ] && git add "$f"
           done
-          git diff --cached --quiet || (git commit -m "Papier-Test: Stand $(date -u +%F)" && git pull --rebase && git push)
+          git diff --cached --quiet || (git commit -m "Papier-Test und Bot-Bericht: Stand $(date -u +%F)" && git pull --rebase && git push)
