@@ -1,4 +1,4 @@
-# Briefing 08.11.2026 03:55 Uhr (Berlin) · 21:55 Uhr (New York)
+# Briefing 08.11.2026 04:05 Uhr (Berlin) · 22:05 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -25,7 +25,7 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 | US-Zins 10 Jahre (%) | 4,86 | -0,7 % |
 | US-Dollar-Index | 102,28 | +0,5 % |
 | Euro in Dollar | 1,11 | -0,1 % |
-| Bitcoin | 75610,17 | -6,0 % |
+| Bitcoin | 75742,13 | -5,8 % |
 
 Angst-Struktur: VIX 25.6 gegen 3-Monats-VIX 24.6 -> **angespannt** (kurzfristige Angst höher als langfristige).
 
@@ -42,12 +42,12 @@ Angst-Struktur: VIX 25.6 gegen 3-Monats-VIX 24.6 -> **angespannt** (kurzfristige
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
+- [Iran Strait Of Hormuz Tensions Escalate As Explosions Rock Qeshm Island, 2 Oil Tankers Reportedly Damaged By - Free Press Journal](https://news.google.com/rss/articles/CBMi5gFBVV95cUxNWlJ1SmJ0U29DejU1TGVtS1BQcVg0Q0dFR0h1MXZhdW9CMFk3djJ5Ry1OeFFZc0pLcTNPazdTcmN2a2Nmbno5TjY2Zm91c0VrMmhIMHBIZ0FsM3cxSTJqZnZoMGRBT0p3WW4tWU8zUmdsUlJKTTFYNHRpOXN3NllldG40ekpic3FkVHNENUtacDVHQTVXbFpQQVktMFVjN3pybHRmQnhfZVpIOTBPeVhLcG5qRDF5Y2piR08zR3hpa3F3UlpNbjhHSlBHZ3Q5bWF6QzB3dl9vc1UxdWRzSGN0MDVFeWxsQdIB6wFBVV95cUxOcFlRT3hONi1zaEE1aUdEckt1TWREN2NzN1Q1VlozSXFvV096OTNpMk1OSl9iQktqOVJUSGZHeFpSWTYzUXFGb3I1djlkcnJHN0dPSWhGZzJwOVA1TTNCUUdNNGxsdlpOOF9aaExpQWs1UUVsLXJiRVdRaTNraTFmZ3RnbUxKSGVTVExvR0pGM0tfMDNhQkdkRGdfZWhLdVNnWWFCUDNTNFRjVUdCcjBFUDJFUkJMRnpZVVQyUTRnOExZLXRfOFB3SS1kUS1lU0dsYThlMnktU1prbkFPSjhraFB0M3I4UHl2dkVz?oc=5) · 08.11. 03:57
 - [Explosions rock Iran's Qeshm Island, Jask; two oil tankers hit mines in Strait of Hormuz - Moneycontrol.com](https://news.google.com/rss/articles/CBMi2wFBVV95cUxNWW5lcFJtQy1GUXl3TndHY1phX25HVG1rLXhsYWQ3eW1weVU3RUgydW5JQlhXcmNoZlotdDVGRmRGWktBd19aaVlMY3VmRFZRYV8yVFhwdUtMX1MwZmpmRFpWSzZWdEtHSUhGWUJPZG84LU93RTM0dlFGRE1WZUY0VDY4c2FRUXRJT3c5WThQZWIwV1huc0p5VEFMWGVicDhFNXMyUEkxQ1pjSmlPZWlOZndnb19EM1R2STdPdmtQV2k5cFVhZnFpb093LVdmLVh5Tjd1Y2FpQktvM0nSAeABQVVfeXFMTmY0WHRPSGplSUZJbzZwTEZGcDFPdGFBaGdxTlR1bU9nQjlwb05oaTlyQkIxcGlKdUhkQkRhZVRFd3dva1hyT1dkNVVXb3lsYUdqU29Pajg2ejJvUG01YXBQb3V6Z0FmWEwzUlVJem8zU0VfYXF4dVM3czFsbmxNWi1PUTJYQl9GTGtvZnRVbWhxX3hGVnhGTzFzZXVBaVpBUjRFN2E2QWc3S3dhNElNaDA2UkhPaHRfeFB3VnY0MFdkMG1VRlJsd0FQOGpfWlVzWnJHUGUwR2RoV19OVENHd0s?oc=5) · 08.11. 02:26
 - [Explosions in Iran’s Qeshm, Houthis say targeted Saudi oil sites - The New Arab](https://news.google.com/rss/articles/CBMikgFBVV95cUxNWXlaQlJlNFdJVmtxUE1jVzdMUDFnZDNJZHVtLUl0WUJkRHU2TXpvQXo5bU1Ic2QxSEhjS2IwUXptQUxfenBzSmlFaUk1b0hRbHZXejNOeGZCelVoRWNwSk1ZdkRXdHNRdGZyRnY0QWJhMFlBOGl5NVRZZ2d3aWVrbGFnZ3RDQ2hsR1NjdEFXc3dDdw?oc=5) · 08.11. 01:50
 - [Iran exempts Iraq from restrictions across the Strait of Hormuz as oil exports increase. - Vietnam.vn](https://news.google.com/rss/articles/CBMiqgFBVV95cUxQLWc5amZwcTlWVmpiMXNMZzR3d3lLdFpPak03Umt1VmFqQmkwUE9IQzF2TFgyVmZ5YkpoZzZLT0tDM1JhOUozQjdnb3YtSGkxczJQTk5rY2hUeklNWWxDOXMtV3Z4aEhFbjdfajBxOWd5aDZwZzd5NHhBVHl1MEVrV3FVbkd3dmJ3VkdNZlBtV1hZa0owalE5aDBoWVI2Q0gteW93N1pRb1poUQ?oc=5) · 08.11. 01:28
 - ⚠️ [2026 Iran war | Oil, Explained, United States, Israel, Strait of Hormuz, Map, & Conflict - Britannica](https://news.google.com/rss/articles/CBMiWkFVX3lxTE5nTzlhOGZTS180cWNtVG91c2VWRVJFYlk0cW5Ba1RHUEFOSEtldU15QktQT0EzRVY1ZVdZZ0VTRHVWTVhyN1IzeU1wbmlDMUhrQ3Roc1YxcmdMUQ?oc=5) · 08.11. 01:19
 - [US Forces Disable Ship Seeking To Break Iran Blockade - Radio Free Europe/Radio Liberty](https://news.google.com/rss/articles/CBMiekFVX3lxTE9OeTc1VE5lcEx0QzNhVlh6TnBVZUhfdi1MR0xZQnJOLWo2U3dHb09ucVhPNXctSTFXNTF6R3EwZEJXSl96SF9zS2FPUWFwcHpHeFVMaGtUckZiaGIydHc1SFMwT3U1R1h5WnMtY2RGUkdtYm1jV2VUMWFB?oc=5) · 08.11. 01:03
-- [AI Slump Revives Asia’s Forgotten Trades From China to India - Bloomberg.com](https://news.google.com/rss/articles/CBMisAFBVV95cUxQOHlmbjBTLXAyMXRaUFkyaXNncWYtdVB2X1puSzZiQmk3eHA2RzBLWTNmcE9KMzdQeGZ5T3lKclFuNTFzU3ItQWI3eTNYSGY4U0RtbnBXbm9jMUpmRjNCeDhpRUI1aWh6MklqTzdPR2w5OHhCQTZXMldXSjlLMEMyMHZwaDZodTlJOU4xbTFhcHJsTHg1bU1uaGNaR0FscDg5QWxmMUp5YTBCQUZNWGs0VQ?oc=5) · 08.11. 01:00
 
 ## Zölle und Handel
 
