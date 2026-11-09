@@ -4,24 +4,6 @@
   "open": {},
   "mode": "live-paper",
   "flat_day": "2026-10-26",
-  "swing": {
-    "vola-1x": {
-      "start_wert": 50000.0,
-      "start": "2026-10-27",
-      "sym": "IEF",
-      "qty": "509.626637554",
-      "preis": 91.589286,
-      "seit": "2026-11-05"
-    },
-    "vola-2x": {
-      "start_wert": 50000.0,
-      "start": "2026-10-27",
-      "sym": "IEF",
-      "qty": "479.910291389",
-      "preis": 91.621124,
-      "seit": "2026-11-05"
-    }
-  },
   "swing_log": [
     {
       "tag": "2026-10-27",
@@ -140,5 +122,92 @@
     "grenze": 0.2266,
     "ruhig": false
   },
-  "run_day": "2026-11-06"
+  "run_day": "2026-11-09",
+  "swing_alt": {
+    "vola-1x": {
+      "start_wert": 50000.0,
+      "start": "2026-10-27",
+      "sym": "IEF",
+      "qty": "509.626637554",
+      "preis": 91.589286,
+      "seit": "2026-11-05"
+    },
+    "vola-2x": {
+      "start_wert": 50000.0,
+      "start": "2026-10-27",
+      "sym": "IEF",
+      "qty": "479.910291389",
+      "preis": 91.621124,
+      "seit": "2026-11-05"
+    }
+  },
+  "teile": {
+    "nasdaq-3x": {
+      "sym": "IEF",
+      "qty": "348.253459306",
+      "preis": 92.0199,
+      "seit": "2026-11-09"
+    },
+    "sp500-ibs-3x": {
+      "sym": "UPRO",
+      "qty": "170.506781566",
+      "preis": 133.45,
+      "seit": "2026-11-09"
+    },
+    "sp500-wr-3x": {
+      "sym": "UPRO",
+      "qty": "170.519559352",
+      "preis": 133.44,
+      "seit": "2026-11-09"
+    }
+  },
+  "mix_log": [
+    {
+      "tag": "2026-11-09",
+      "teil": "abgleich",
+      "von": "IEF",
+      "nach": "Cash",
+      "qty": "641.283469637",
+      "preis": 91.927992
+    },
+    {
+      "tag": "2026-11-09",
+      "teil": "sp500-ibs-3x",
+      "von": "Cash",
+      "nach": "UPRO",
+      "qty": "170.506781566",
+      "preis": 133.45
+    },
+    {
+      "tag": "2026-11-09",
+      "teil": "sp500-wr-3x",
+      "von": "Cash",
+      "nach": "UPRO",
+      "qty": "170.519559352",
+      "preis": 133.44
+    }
+  ],
+  "ausgleich_monat": "2026-11",
+  "mix_signal": {
+    "nasdaq-3x": {
+      "an": false,
+      "sym": "IEF",
+      "datum": "2026-11-06"
+    },
+    "sp500-ibs-3x": {
+      "an": true,
+      "sym": "UPRO",
+      "datum": "2026-11-06"
+    },
+    "sp500-wr-3x": {
+      "an": true,
+      "sym": "UPRO",
+      "datum": "2026-11-06"
+    },
+    "gold-2x": {
+      "an": false,
+      "sym": "CASH",
+      "datum": "2026-11-06"
+    }
+  }
 }
