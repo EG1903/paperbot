@@ -1,4 +1,4 @@
-# Briefing 10.11.2026 15:14 Uhr (Berlin) · 09:14 Uhr (New York)
+# Briefing 10.11.2026 15:15 Uhr (Berlin) · 09:15 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -15,19 +15,19 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 7526,00 | +1,9 % |
-| Nasdaq-100 (Future) | 27713,00 | +3,6 % |
-| DAX | 26511,43 | +2,5 % |
-| VIX (Angst-Index) | 21,34 | +28,5 % |
-| Gold | 4064,90 | -1,2 % |
+| S&P 500 (Future) | 7527,75 | +2,0 % |
+| Nasdaq-100 (Future) | 27718,50 | +3,6 % |
+| DAX | 26511,17 | +2,5 % |
+| VIX (Angst-Index) | 21,39 | +28,8 % |
+| Gold | 4063,00 | -1,2 % |
 | Öl Brent | 89,65 | -8,8 % |
-| Öl WTI | 84,67 | -6,5 % |
+| Öl WTI | 84,70 | -6,4 % |
 | US-Zins 10 Jahre (%) | 4,95 | +1,2 % |
 | US-Dollar-Index | 102,03 | +0,5 % |
 | Euro in Dollar | 1,12 | -0,1 % |
-| Bitcoin | 73872,63 | -2,5 % |
+| Bitcoin | 73860,85 | -2,5 % |
 
-Angst-Struktur: VIX 21.3 gegen 3-Monats-VIX 20.9 -> **angespannt** (kurzfristige Angst höher als langfristige).
+Angst-Struktur: VIX 21.4 gegen 3-Monats-VIX 20.9 -> **angespannt** (kurzfristige Angst höher als langfristige).
 
 ## Fed: Mitteilungen und Reden
 
@@ -60,12 +60,12 @@ Angst-Struktur: VIX 21.3 gegen 3-Monats-VIX 20.9 -> **angespannt** (kurzfristige
 
 ## Fed und Zinsen in den Nachrichten
 
-- [Dollar Holds Firm in Early Asian Trade as Markets Await US Inflation Data - Fana News -](https://news.google.com/rss/articles/CBMisAFBVV95cUxOc0x2WEh1T1gzakE1TjZoby1wZXZTTG4weUU2bDhtVjdjQUYyZFZhUmxGVlVYREZrQ2ZqMkRONTkwWEZmUFQ3ZlloZUYzRXIzTjZLZmxFZ0FqdkZiYVhSNnhIZU1TYlVpdHh2aVhfRWJBOXBCZXhlaWpyYlRTc0xONU1XTk5fTW9VMjFVVUNpeW5JWFJDV19teU5TOWd4eU1ESVVQakNBUnhPNFBhczhrOQ?oc=5) · 10.11. 13:29
 - [US inflation ‘journey is far from over’ | Market Talk - Reuters](https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1zcWJXaW41cV8yNmRtRnp2Y01NOEI3bWV6azAxZkRBeEk5cnFpdzF0Qk1VMy1CanFjYWJ2NURJNWFQNG9VbVdFZmptMjJ0Q3hrVmpQMEd6SEFkWERFNEdtR1pDdjFRYTg?oc=5) · 10.11. 13:06
 - [Will US Consumer Price Index data reinforce expectations for a December Fed rate hike? - FXStreet](https://news.google.com/rss/articles/CBMiwgFBVV95cUxOYTBKeGg0a0F6c2JpLVlBTU5mZjBzeDR3VHZDTnZvV3BZVlRJQnJhWjNIYjhqS1VKTXFESGdDU1FoOGxUa25QOFJHQ0YwS1RnS3R2ME44NjNvWExHN1FyZGNnVUttX3RBRXFqRUhkTzgzeFFpaFFQYlNranA1OVJyNkNnLTN2NDBrbWlQd1J3VHNITkRaRGN4V2NWRlBST1ZpZkg3dXhFNG9Wako1MFZ5UWkyUF9kMzZQMERvUzRxR2R3Zw?oc=5) · 10.11. 13:00
 - [LONDON MARKET MIDDAY: FTSE 100 rises ahead of US inflation data - London South East](https://news.google.com/rss/articles/CBMirwFBVV95cUxONnZBNl9CX2ljNkVoUXNHb0FmQlFWTlc3T0I0TkpaQ0V0SnNMQXgwd3AwRzB6TnVyaWpReVRfUktPei1lNzRvMW9SNllVd0FWTWtadUF1MklqbmhRMi05SjRrSWxtQmlZXzhoc3FYSHZrUVpNVDJYUDhsWHVaME1BZzdJWGhnVzNhY1B3VEktQzR1VEQzWWkzWTVzQldHNkFwNHNVR2JncWJXNVBXS0hV?oc=5) · 10.11. 12:58
 - [World shares rise after technology shares advance on Wall Street ahead of U.S. inflation data - BNN Bloomberg](https://news.google.com/rss/articles/CBMi4wFBVV95cUxONW1QUFN0dmxxRy1sZTBVcndMMkw1c1Bwd3hrOWZOS1hhV1N0ODZyemJhMHVPR2hqMjdmaEY0YXEzU0xVekU0OUNtSEYxRWkwcDV2ODJUdjc3SGtzTE03bFA5VlBERFNjc3JoNm95M0ltaE12R0hvWGd4RnF5THg5MlR3cGdMZ0tFd1BfNlZwQkZvZWVQRGhHbEs5WW1iT3lwT1VKUjVpQnZtY0FJRk5QaV9OZW1zQ1pPWl9XS2pGcXpTZDhRS1p0QjdfZ2M0UTByeGRDN3l4Y3NvRXR2S1dYcVdSMA?oc=5) · 10.11. 12:32
 - [Bitcoin (BTC) price slips as ETF outflows mount ahead of U.S. CPI data: Crypto Markets Today - CoinDesk](https://news.google.com/rss/articles/CBMiqAFBVV95cUxOYUNGeTZzR0JTUjFjc3FxVENCUUpCTDM1Z19fX0tFejdLMno0aFN1SS04SEh0bG9IN3F0cWpBMUpYTEYwWDNjUG56c2NLclNncTFjYmRIMGg5M3QxcTd2Y2U5Y3p2UmJoNnJyOUZ1cXRtQTc0SFdTU2RSZG92a1dyRDJHY3h3WXR3c0xFNWNqaW02ejVOYkg5VllvUmo1dUVvS2xNNUxtYjI?oc=5) · 10.11. 12:24
+- [Bitcoin (BTC) price falls as Fed rate-hike bets build ahead of U.S. CPI report - CoinDesk](https://news.google.com/rss/articles/CBMiwAFBVV95cUxPNzc4R3R1MGRYNW9BMkFIWlN4YjlEdHdDSnlJMjdnMlB0NmFxLTJCWXBaQ1R3ZS1WZEJrOFh2Q3hFcGRhZUJpNTZaZ3Nxb21Sa3VyWnY3MHEzaG9KMkNsd05XMTdDQjJUMi1sS3NjdXN5M3VpTmJsVWxLN2FKMkhiQ19TYkg0SFBsM284YkNuQ05EUG5PWGlIaG5RM1FnbTVGMms1ZFd6YmhmOTJqX0x3NkxkQVRTV0k0QWR1SlF5RlY?oc=5) · 10.11. 11:48
 
 ## Wirtschaft auf Deutsch (tagesschau)
 
