@@ -1,4 +1,4 @@
-# Briefing 11.11.2026 14:29 Uhr (Berlin) · 08:29 Uhr (New York)
+# Briefing 11.11.2026 15:16 Uhr (Berlin) · 09:16 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -13,19 +13,19 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 7617,25 | +2,9 % |
-| Nasdaq-100 (Future) | 28387,50 | +4,8 % |
-| DAX | 26532,81 | +0,4 % |
-| VIX (Angst-Index) | 18,47 | -34,5 % |
-| Gold | 4053,50 | -0,5 % |
-| Öl Brent | 92,71 | -5,7 % |
-| Öl WTI | 87,02 | -4,2 % |
-| US-Zins 10 Jahre (%) | 4,98 | +3,0 % |
-| US-Dollar-Index | 102,63 | +0,3 % |
-| Euro in Dollar | 1,11 | -1,0 % |
-| Bitcoin | 73791,76 | -2,6 % |
+| S&P 500 (Future) | 7616,25 | +2,9 % |
+| Nasdaq-100 (Future) | 28356,75 | +4,7 % |
+| DAX | 26566,10 | +0,5 % |
+| VIX (Angst-Index) | 18,27 | -35,2 % |
+| Gold | 4038,90 | -0,9 % |
+| Öl Brent | 92,85 | -5,6 % |
+| Öl WTI | 87,26 | -3,9 % |
+| US-Zins 10 Jahre (%) | 5,00 | +3,3 % |
+| US-Dollar-Index | 102,84 | +0,5 % |
+| Euro in Dollar | 1,11 | -1,2 % |
+| Bitcoin | 73632,93 | -2,8 % |
 
-Angst-Struktur: VIX 18.5 gegen 3-Monats-VIX 20.6 -> normal (ruhig).
+Angst-Struktur: VIX 18.3 gegen 3-Monats-VIX 20.6 -> normal (ruhig).
 
 ## Fed: Mitteilungen und Reden
 
@@ -44,42 +44,42 @@ Angst-Struktur: VIX 18.5 gegen 3-Monats-VIX 20.6 -> normal (ruhig).
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
-- [Nvidia Selloff Puts China Exposed US Chip Stocks Back In Focus - Yahoo Finance](https://news.google.com/rss/articles/CBMinwFBVV95cUxOMnVkcGNhMVlYRlphSlp0dEhnWmc2NHVXdWVhVDFBNGtxSW9uV19sc0s4ZFI5Y09ma2xic1hrdkVxUEN2WWhYbWd1VTRXYmZxUmVOLWh0RXF3Vzk1WUt6UllaRjNBNWNGVVg5RUFMWTBUVTRqRTgxQkdwYmp0NlBOYW9iaVNLV3pjcVp1UFh5X2xsbHozN0hpU3JaelZFdWc?oc=5) · 11.11. 14:09
-- ⚠️ [Saudi Arabia leads further jump in OPEC+ oil output despite war - marketscreener.com](https://news.google.com/rss/articles/CBMitgFBVV95cUxNMmxlaUx4N1VES3phLWlwTlpIQnVxaW1yaExkVzkzSW9aRDNYb05TN0VxV2hVTTZKNk8yTml1VDhNQjUxNlItMmlEeHRWcHlyc2loN09xb2xpTmE2S0dHMkR0emk3TDV1YWdzbFNnUmwydW1KQW80ZTFPa0JKNXBSSnNQdTR1Q3dLak43YlpkY0tGSjJwalkzV0wyZDhzbS04R3ZLVjZGWXVmYTQwTzVidVdSa0dZZw?oc=5) · 11.11. 14:01
-- [Russia's oil output up 41,000 bpd in October from September, OPEC data shows - marketscreener.com](https://news.google.com/rss/articles/CBMixwFBVV95cUxOTE1sY1QzS2xaOVNSNVkydU8wLWxVcmpvMVlSWjlaRXFjSERWR2ZkNUpyaWxORWtzZ2FRZlpjM0FkelZVeXd0YkJxNFZmaThUekl4b3VEekMxUFQzeFlBOE5UR0QzOVdBeW1VMWJzSXdwY3ctbXIwanE3MXRnMGtJRHlGLTJma0cwQjQtQmpPWXhXeVFNeHo4cHF3N19nVm9qQ01vbUI3blZaV3lxQnNpTUFzQUpzTUlxUUNwTTNxTkVZYnI1Znlz?oc=5) · 11.11. 14:01
-- ⚠️ [Italy may reduce missile supplies to Ukraine for air defense due to limited stocks - media - Українські Національні Новини (УНН)](https://news.google.com/rss/articles/CBMisAFBVV95cUxQUU5HRTlWeVV3cG1aQ25UUHFBTWxmNkdRMGZ4MEFLQjZyRnNDcVhuNFpmMjVLcDREb2dHZ2J0cUs1UWFfSGxESzd4YzFFNTNDOWNTVlBPVlBDM2NjZjRUem1yb3E0SnhNQmN3Q29iZEdTWm5zbE94cThFWGphajFpaWZublV4U0FGb3Exc29QLTByLXJ6dUJUMk50eUhKSWFtZWNxVDR6TWlFQnZoSXFsS9IBrwFBVV95cUxPUjdtYllnZHVEcWs4NTVaX0pmSjlFWE5IRWJJOEdPamFkMVNuN2VrcmpOeTZuNDdQcjFOVkR2c0xkVXRQU2JQRjgtYVZXOGt2cU5OT2loSHRhZlhPQ2FrVThEV2JCU2E2c2tEd2dZVFRrdzdNV1VlcVpweEM3TGxtci05UE5fNDlXQ2hNRnpnVDk5aUtkTGZ5YjlGTWJCNWU5X09BOVJRNDlJaVJaVnhN?oc=5) · 11.11. 13:49
-- [Current price of oil as of November 11, 2026 - Fortune](https://news.google.com/rss/articles/CBMiYkFVX3lxTFB5azdwdTFySFNNNk8zcWRlWUgybnZGX0NsN2hadVppWlFlSVpzQjZtaXpEaXhCaXM4NFZzUGY4VnF2dFJYTmVrUmx2VVo1cHFXUTNDYnVFVzk5TFdrTnFFNTRn?oc=5) · 11.11. 13:47
-- [Iraq probes oil smuggling claims against Iran-backed factions in Jurf Al-Sakhr - The New Arab](https://news.google.com/rss/articles/CBMilAFBVV95cUxPTUVrWUJjeUNNQWVVZ3M5QUF0MzREVWkxNkFjSHZVNlpVQzh6UEhhbExUTlZxRDV5cUhwaXFBZWZXUDZSMFNwc3J2Sl8wMXRrN2hCUU5NX2hBcnMyVjRsbHdzWktZbVp3YVR0ZVpBa1NZX3lrN2djd0ZiNDhGcHdKbF9tQlJsN1M3eHBpRnpvRG45R1Bk?oc=5) · 11.11. 13:00
+- [Oil prices rebound as Iran tensions cloud prospects for peace deal (CO1:COM:Commodity) - Seeking Alpha](https://news.google.com/rss/articles/CBMipwFBVV95cUxPTFpYNXp1Q0VZZnk0dTJjclp3aHNXUTJLN3BZZ3JjWGhWb0VZUEtfUXFCRVRvc1MzeDl0dTJvdWRZY1hWMjVVNzFHZGM5U2ljd0lXTjNua1pkd2FTR0l2TGIzQk5WMWJfU3huT1NjVTQ0c0d1UmpYMjJuWEllMXBONDBqYkl4a205TndSdEw2OW10dEVMaDFmam96WWp5bU9MNHJOVlJISQ?oc=5) · 11.11. 15:03
+- [Tech Gains Boost Stocks as Bonds Slide on Fed Bets: Markets Wrap - Bloomberg.com](https://news.google.com/rss/articles/CBMilAFBVV95cUxQNFpBLVFiSmhuZGxNdjZ4WUE1eEZZVzlpcElqQ3FpX2hfRVVkaVdncm5Ic3J4TFdMVTVPODFqV1dYWTJORmx5c3lTMHg1ZUtiZml2ZUVOZm1WQnlCa2lKcUt3M0tjQUsyVVNxQlVySk5TbHRqZHczYVFDTnU0OGZjMjBBWUFqZ2JpNFNhb05nX01EU3dX?oc=5) · 11.11. 14:32
+- ⚠️ [Ukrainian Drone Attack Sparks Fire at Russia's Key Baltic Oil Export Hub - Crude Oil Prices Today | OilPrice.com](https://news.google.com/rss/articles/CBMixgFBVV95cUxNWGkyXzk2S2ROZHJETlhVSUlSV25vZGk4ZTQ4WUwxejdoaXUtR25CRmhsSlVfRExhdGtWb3JCdGU4cGlyQkRZSVFGWjJLQk5ZR1E0d3VHdGszUm92Qmp6T2xmNFRORXBsMllhdGk4aVZqazFBUHhHOEI3NmhJR2U1QUtYMzgwekNGQWx3ZXdpQkNiOFlfekEyaDNnTFVzVnh0eF9XMW9kMHJoRU9iTGNUM0dvN3BoUHppYXFFVUR2LWJjVHlxbUHSAcsBQVVfeXFMT3RxUkxUVlZreGM1bC0tT1h2SWZQRDVpVS1zQmw2a0VzVXNMSGZPR3Fxd3RUOXFhVDBJWEdwemI1aVVDeHhVeFVfekFpWVlteXVXNnhMMnctXy1rUC0xNk1jRjdBaXF4UEFDbnRFa0VWNHBsYTRueXNJdzh2UExVTWNNUVpfQkotVW5TTXZ5R2JsbHFNV3JMNmdfSHR6akVNcFBXMXRvTUhESlpfRmVTc0xWYVZ4R2NkbVhKZUY5LUZpVlU2ZDFiYVVvOFU?oc=5) · 11.11. 14:30
+- [Ukraine Is About to Wreck the Russian Oil Industry - Technology Org](https://news.google.com/rss/articles/CBMikwFBVV95cUxQamN4a29FWWJVQTRfMzJVZ1dFclBhZlpNcVFoQjFIcWNQemVLMVlDWXZQLXZabmN5QkhiQUY5ZWFUV2lPZGZCc2hIaDlFTEpkVUFJMXo2a0d4ZmlramJKQzR6UndsT083V0xSU29od2YtRTQwQlMyekJySFJObFVuc0x5b0xWWXRMTjhSZ2JPdlQ2U0k?oc=5) · 11.11. 14:27
+- [Iran says 2 more oil tankers catch fire after striking mines in Hormuz - Türkiye Today](https://news.google.com/rss/articles/CBMitAFBVV95cUxOeUgzZXFKcXdUZUhmaHhOSW1XNng0WEp2QzhzT2JRX3NZV1QzY3UwNGxJM2M4Y2hDZ0pwRmc5SmlSS290WXM1NDQyMUJsdE1vLWh3WDdkR0dzRktHWlZVWnZNU3ZoakY3SVBGWUhZWTVWSV9zSEJhOW10dGR6SmlSLUdIOXNEWjNwa3B4UUc5YUJZX0tvVm03VHk0UmFjNnhvWGZHaG5xSHdick9PTlhaNzFMenI?oc=5) · 11.11. 14:27
+- [OPEC crude production rises by nearly 2 million bpd in October - Anadolu Ajansı](https://news.google.com/rss/articles/CBMipwFBVV95cUxNSEJ6dHBjOWZVX1pCSDRGM0hNMkdPVUJWVkFQcUxmZHZRMGJXOEktRWJqM2ZvOGVvN3lWaWVubXpLekJKZl9qOW9ya0xwTHpaOTNXaXd5X3RvRW1HU0gtVy1tVGZQS1V3Q3VXZ191TnZYaUt5MDdsV0xQeG53SjFGN3dNblBoU0xGMDdZSXFCZHJPaHZFS1lWLU9oOVBpemY0d0VhM29Gd9IBrwFBVV95cUxOb1p4SkhjR0g0eHJlX24xd1VEck50SURxNjZwWmd0R1JwTE9iS0FEOXpRMldqNjVnUzVhT01sVWRvRkRtNWNxM1RicGFMUTVSdEJhdW5WNlZ0WWZiREZ2bFItNTV2RFUwT1dDRDduZnhCVlZvd2x6YkR4T0I4OWFsVU0xRlh2TjBZODktMGFQRUE2R2NBdmJmVnZwbzZvS0o4Z2dxUlJ4dTExZHVjMzY4?oc=5) · 11.11. 14:23
 
 ## Zölle und Handel
 
-- [As higher prices seep into broader economy, Fed officials consider faster hikes - The Washington Post](https://news.google.com/rss/articles/CBMi0AFBVV95cUxNaXVYMVN4eno4WG9IQnlHbzdpY3k2RXlBeW1BTjd3MlNFNTNublFmLU9maFBTVzd0WjkzUE9WZXdJdks3Z3p4b3ZkZ2lNVHY5el8teTNubEwtZm9BUU9NZDlMVDgtUnR2UjVQTlF4QmtkX21nYS1GcmRtS3luTFAxTnRuaFlmY0NIck1XNnRhY0c2SUZmZGt4NHlyaUlQbnZ2WDNRc2RvNGN3TUprak5EYktWZW1ocjlLNFJjWGNWaGlUTGFMWjdLQW5UYXdKNjM5?oc=5) · 11.11. 14:19
-- ⚠️ [Is Lennox (NYSE:LII) Cutting Guidance on Tariffs? - Kalkine Media](https://news.google.com/rss/articles/CBMikAFBVV95cUxOMGZvNmxJMFFBYjliN0hzV3NJWVM5dUFGZE05bHE1OV9MRVY3Vmt3Qnppcm5sQUZvTjJvRTgwczRhdWZHZmdGU3hDWlNJQ2xxUnI3OXlseG9MY2FkYnMxY1NNN2VUdTJUcXJKc0FNWDE5eWFiYTVTMEV2N2MzbjIwdFdUbTkxSVE5R3lOakQ0M1k?oc=5) · 11.11. 14:12
+- [As Higher Prices Seep Into Broader Economy, Fed Officials Consider Faster Hikes - U.S. News & World Report](https://news.google.com/rss/articles/CBMi0AFBVV95cUxNbWJscko1cF9sSWdzdjRwY2FjeEtGOURPWDV5VkJvMVZKZ1JiaG8xbk9rVU45blV1bk16ZmNWRzBWbU5NWV92T2FibTF6RWNTSi11SHc1WW1MMFRUR0pIOUZGa0pKNGZIQTBxbll4cDVlb1IxU2hvQVBFTzJRWTVrNW1OVUVNTDVyVHpOSWNQdVk4UVBUeGtlWnNzd0ZUMmFFcEFjcFplTDBoUlJVU1Zrb3A0VVp3LUFuYTc0MmZJM3ZtbldzajdyNU50cFdmTGhY?oc=5) · 11.11. 14:02
 - ⚠️ [Voters Hated Tariffs. Here Are the Receipts - RealClearMarkets](https://news.google.com/rss/articles/CBMioAFBVV95cUxOOXhta29lTWxiYTdqdldUSnJ3TXRhYzFFMmZYSWNNajJUUlJya2Z5OHRKbmRTWUtVMkYyQ1JRWnRFZUs2bzQwUWRvdVJRUHFYSDNBblFNWTE1cWtmZUNWdE94QkRwNEdjMEZBT2owUlZmUi0xOHlJM2pCb19zUjhRajROQTdFRmNlRVo2N1lsdDFrVFRNT05KTWdNMU1PbkpU?oc=5) · 11.11. 10:20
 - [China’s tech export boom is hiding a weakening economy - Asia Times](https://news.google.com/rss/articles/CBMijAFBVV95cUxQX1pPOGtQRVhqZmRZOXQycTk1SDZyblZScHphNlVXMjFqUU9SRWdpWE85Vm9RcHZxak5EaEp2Z0NNWEtXdWFYQTR3ZHBxOVFvcE40TF9lQ2l4S1VyVmpHQmZwdHhVamJ6QUVlemdBNldNeWdwd1JhejZTTVQ0VV9UX05wR0M3U1ZXU2NBRg?oc=5) · 11.11. 10:08
-- ⚠️ [Customs holds Pernod, Diageo Scotch shipments in dispute over 150% tariff - Business Standard](https://news.google.com/rss/articles/CBMi1AFBVV95cUxPQTBReEdQZGg2N2FSbXRKX2ZVWTA3LXRrRWFEdzk0elQ5LUdHZ3NseHlCSTExZlBmaEJ5dWlNSk45blkzQW42NTFsUEJkREZEYWpySVN5azNNaUZmQldKbUg5X2ZLNFdqNllLaFd2N05HcXdGLWVocDYySG1CbkpNb0E0YUtpcGxUSVNoYk41ZlBkdEFoVF9JSWxsRXFnaEVSYlQzWlR4NUhOdnNjOElHdmRDWlY4eFlVUktSWmNHQlhpYkxJWW1vWXJNRzNRTTdVdnZvUdIB2gFBVV95cUxQUFZjc0ZvSm5xVElKYXlBTXRHZTI3TTlDc3A4R2Vob1RxeHg3X25QZ3BRMDhZYXBMSm52SmxDYW9teFZFMlpkRk1uTnMxWWJCeWVMMElXMUhINl8xZzYtb05YWGZGMGRUVnhJb2sxdllFMDZxV1RlYnFFeVI1b3ByUUZtVDV0T3M2ZERPUmVPT2c4bE1CNlg4V3lpczdrM0hCWTZyX3E0QlZ3Qk1SeEZYazNkeDMzQy1UMHdEQTZqQ0FuTGVON0xPd1Q2MXRWWktyRWJaMWNURFpLdw?oc=5) · 11.11. 08:17
 - ⚠️ [Indian garment manufacturers reduce reliance on US after tariffs — Dawn - UA.NEWS](https://news.google.com/rss/articles/CBMiqgFBVV95cUxPSjJGczB0N1dZNktwUjRoWHptZlFDd0lRNmJJbFJoMktCTkZWcXNVZUhScUZjQXh6M0lySklLQjZZRFZJU2dydWYzZGNSd1R4WVVRT19YSkFXeDU2Qkx3UE5rdzF5aE42cjExYzI5TE5wVWtsMG5ldlhwRGdJdWFkNjZSVkV5cjQ4NDc4R3JZa1d3V0NWYldSX0xUQzVQTzZQalI1Wi11SlZiQQ?oc=5) · 11.11. 08:14
+- [India-US Trade Deal: US officials visited India on November 2-3 for BTA talks; both sides push for early conclusion of first tranche - ET Now sources - ET Now](https://news.google.com/rss/articles/CBMixwFBVV95cUxQNGNqYXBZMzlrSzZyWWFxTHdzMFU1bHQtTWZkOXVWNm1qWGt1bElhZDdCOEVtaEFJS3I3cmpkX2RGdFJpS25KV1lGelcyVW10aHQ2SHhxNXI5MUV6OFNXbURUY0lfc3ZSUWJLbnlQZHBXNWw5UW9SaFI4ZWRpRUFwMUp5ZnB6bHJqUVM3LWZENEluMVVIRUN2WXhFVnNwX1lpUDdkUExycjhlbVN5cUd0NzFzS0pQUXFUa0Z1SUtUanRuMHVuVjRR0gHMAUFVX3lxTE5UR3R1Vm50Ml9DUWVoRHBaWGFydE5hUnkxM3JXLUZzckdCM3pUR3pvZjBPcFVmb29MZUlwNTJPdEVBZC1pRkdmVUdDV0ZydVlINlIzMVZvSmJFSm1MSUZwdjRycWtXakVyRTlHSG5iX2RudFQzNHdiSGlyZU1kT1UwWnVVZy0xNG04WTFlRmtWR0NnMVZyOGJMNkh1STMzVnpGMWJVb2JuT3JDSERiUlBOOFVvZFlmNk55TUFoOXVPVC00ekFTY1pPN0hseQ?oc=5) · 11.11. 05:19
+- [What Commodity Markets Can Expect From the Trump-Xi Summit - EnergyNow.com](https://news.google.com/rss/articles/CBMikwFBVV95cUxQOW5xNmtTeHRnMHZVOGJoYndVUUJYd2tEbTFNSDdSRVNuZkJFUWp3RDFvb2dSblZvZGxTeFJZV3BLVENjQ3VqMWZtYzRnUDJnSlh5OFA3UkhqNktsN0FqNk5SQWJaSnNkaUwzUUxpZFdBUUdrUFVHQVFLTEp1MFhxaTNsNnlpX0h3UFFNWTZncHZwTVk?oc=5) · 11.11. 00:34
 
 ## Fed und Zinsen in den Nachrichten
 
+- [US Inflation Is a Reminder to Expect Volatility - Bloomberg.com](https://news.google.com/rss/articles/CBMiwgFBVV95cUxOMlJjcGVpNUFjdlhKYzJnODZqa05QQnBKRUxmb296QkVFVmhCX2c1VFR2NklnRnJjYTlvMFN3TFF5RDBCWGhKU1BSTzNNNGlybGxIQnVPY3pycHhZRDhBU0k2SThZVlhqTWVWZm1UNTUwdC02enVidDExMm81QVpHaUpiZ2didWF2d1IxdEJGbkdYUzVRY1ZWcFc4bU5yTVB6bXlWZjZzelBadE5ZaHIyM3RiUnUzLVRlLWpYalZkV3hTZw?oc=5) · 11.11. 15:06
+- [Canadian Stock Market Today: TSX Futures Edge Up As Hot US Inflation Fuels Hike Bets - Yahoo Finance](https://news.google.com/rss/articles/CBMinAFBVV95cUxQYi1mRXBNcDk1bXZ4QUlUd2ptT0RVU1RKeld2eGtwaG1FSDd6ajM5SmxRYXRERWRlaEg1YTllSE44eEd0TENHOHd4ZWNMbldhRjVsY2ZnRHRpd3JSTDV6cndNQlk0Q0J3VWNybHVqQkQ4YmwyYkNHNGRNb3R5VGgwdWZhSFhaREVTaWgyT2ZEaWVLbFFHV2owMUp2UGo?oc=5) · 11.11. 14:10
 - [Bitcoin slips below $74,000, Ethereum falls to $2,053 as US inflation, rising Treasury yields and ETF outf - The Economic Times](https://news.google.com/rss/articles/CBMivgJBVV95cUxNajBiTWFKcy1zWWtYNXNxWHJzQVhsTTJaOTlKN3l6ZXktLVcteWViNllVdHYtMUtfX1E4WU94SmNOZjRmemxaVWJPZ2VVUnFBOXZsWnc5OG1uMk54TmxLUVVFcmhENTBZWW5PLWMxR2NBV3g1Unk1SkJXTVdGN0NCTHQyMEtCMlRfcUtWbXktTlc0ZnlqVFFpV3R3UWoxempZTEJxUG5hbWlMQmQwUE1BSmpEM1VUS214VmwzYWlMMjNvOWVNODI3R0VqRExrZkY2Q2RTX0xKVlFtYkM5elppaVphR3dIQzRjRm4zSHlBaXY2M0lzSVFoQVFyeVAteFRHb3lMWmtFTmxQdi1NUnN4c01kVlR3WmcyQjJhM280bFpfZkhWbE9DcThHLXpBS2FFUlZrc29lQTFTbG5RZEHSAcMCQVVfeXFMUEFQT1Y1eS1mdEpTQklPUlJGTGtJdklyVTVqNmZISFN3RnVRUnlWT0d2dWpVZ2xubzgzNUNBUi1tOWlQYlU0OEVndTlOUVhZc3dTRnlPTHB6b3JkMXQ4cnU3OWFmVHZ5Yld0MVhkMXVvVVplTmFEWHdRUjF6MS10Z2tzNU1YM1VxdDJYaFJNWW52dzl6NmJ0UkRHYXJmTUdsWTVnMldVb2xQQlF1UlpVdVRwMFNhRXRaaWI2MVVkaV9Bc0xITXhMNXVZcE4wT0RWODU2aHR4MkR6SURETGJELWlVS3Nvd0xuU0U3eERHTmNtX01WdjgwZkRjdmFfbnhldXhuQmtBRmVlMU51V0NlTEFVVzBjaHpxWWM0dkhmcG5YaUJtR004Q2Uzak1ZVF9vQWdUbnU1S2s1cFVVWk4xSkxacWs?oc=5) · 11.11. 13:13
 - [Euro zone yields fall as market calms after hot US inflation data - marketscreener.com](https://news.google.com/rss/articles/CBMiugFBVV95cUxOYkt0RFhmcktleFZqYV96WXpRUW5xdUVoYjFyRnpfUWd1clAyckVnZEFSX2lRNk0tc3pwTnpnWUlESWV2Mmd5STh4dEl6MlhEMm5za0o2bVBXbm1XNzZlRXhLdks0TWlUaUlFUDVNQnJTZTJTZHpxbXJ0alRzLW1sVDdUZS00a3RPNkcwMW8yZ0o0cDZWQmNuS2F6TjRidF9RNmlCZkxtR0tad2xRUVBuU2NhT2pRX1Y5LUE?oc=5) · 11.11. 12:52
 - [Yen Slumps as Fed Rate-Hike Bets Boost Dollar - WSJ](https://news.google.com/rss/articles/CBMipAFBVV95cUxQM3EzbUZLMzVNX1JTTVVjTVYwOVhoR0JQMXlRWjh3WjA3OGlfRkhvek43Qk90UW1jeWVDOWZMa2djT0JlSnhoRUh3SXBtbWpRQ1Q5SkNJbnVhZHR5X2NsWTFLT0w4TG4tOEdXQlBVdG91RGp1aWFtNkxJN3NZYktEN1dRWWU3LWQ3MTJ3SjNKejBkc1Zsb3JTV3Myd2t5SnZEeHRaZQ?oc=5) · 11.11. 12:44
 - [COMMENTARY: Morning Bid: Jumbo Fed hike hits radar - Reuters](https://news.google.com/rss/articles/CBMilwFBVV95cUxOTTlFNjVidGtEa2NTMGcyZ0VaUnhIQ003dnFtaHFKZG80bVlpdk91dlZwN0I1VU84ZWF4RXNjY1YyMmE3cHhweUhsNmxkeVluOF9nR3BMcy1Ec2dHckN4aEJlT3kweGd3WEdFZmlhRzJqODlTY28xb1VtUVE1LXhlM0lzcU1RQUtZX3RWS0dVVVlFTEpmZ3hn?oc=5) · 11.11. 12:42
-- [Markets Are Bracing For Another Fed Rate Hike In December – But Could It Be Twice As Big As Expected? - Yahoo Finance](https://news.google.com/rss/articles/CBMingFBVV95cUxPVUNYd3FlUy1HakVMUFI0MEVyZ0JrbVVqcXAxQTVEZTNzRGNqaGJTc0laX1QxS3VKTVRQd3k0bFRhWHVyZmkzaGxFVG9ORTJMRFpiRk9GYk9NUGtNU21DeVRneHozYzZGaDFXcXlpdHFrSzdOeENyY25qZ0JLeF8zazNXaWdRTXp0bU5vTEFxZ2t4MVh4Ul9KMjNmZXlfQQ?oc=5) · 11.11. 12:39
-- [India VIX Climbs to 17.55 as Markets See Profit-Booking - HDFC Sky](https://news.google.com/rss/articles/CBMixgFBVV95cUxOb3o3UmtydmNRMUZuckxGWjlVaWszRlNBLU5ta21jRVh1NmhMZGhuU3hPeWw0SHlyZ0JVMXFFc2xZc0tSNWxVa1dVWFVIdnc1Q0VhOTRscEdWZGd2TkhDaWgtcXp2c3ZBXzEwaFhEcDJjbS1paFpCeHFjVUktNC1qSWZDU09pZHdyM1RZc3BqWThscGVvNVdRZWIwODc5Z1BabmpURWNXRWZRdmVfaklwVnZDa182VzZqMGxaZENQZXdCM1hOckE?oc=5) · 11.11. 11:40
 
 ## Wirtschaft auf Deutsch (tagesschau)
 
+- [Wirtschaftsweise korrigieren Wachstumsprognose deutlich nach oben](https://www.tagesschau.de/wirtschaft/konjunktur/wirtschaftsweise-jahresgutachten-2026-100.html) · 11.11. 14:30
 - [Digital Fairness Act - EU will digitalen Verbraucherschutz stärken](https://www.tagesschau.de/wirtschaft/verbraucher/eu-digital-fairness-act-100.html) · 11.11. 13:40
 - [Marktbericht: Der DAX-Rally geht die Puste aus](https://www.tagesschau.de/wirtschaft/finanzen/dax-rally-geht-puste-aus-100.html) · 11.11. 13:40
 - [Bundeskartellamt kritisiert Gebührenpolitik von PayPal](https://www.tagesschau.de/wirtschaft/verbraucher/paypal-bundeskartellamt-gebuehren-100.html) · 11.11. 13:34
 - [Wie trotz Blockade der Straße von Hormus Öl aus der Region fließt](https://www.tagesschau.de/wirtschaft/energie/iran-krieg-oel-golfstaaten-100.html) · 11.11. 13:21
-- ["Tankrabatt" drückt Inflation im Oktober](https://www.tagesschau.de/wirtschaft/konjunktur/inflation-tankrabatt-spritpreise-oktober-100.html) · 11.11. 12:00
 
 ## Was der Paperbot heute vorhat
 
-Konto: $92.560 (Papiergeld).
+Konto: $92.528 (Papiergeld).
 
 | Teil | Signal | soll halten |
 |---|---|---|
