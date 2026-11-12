@@ -1,4 +1,4 @@
-# Briefing 12.11.2026 15:15 Uhr (Berlin) · 09:15 Uhr (New York)
+# Briefing 12.11.2026 15:33 Uhr (Berlin) · 09:33 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -13,19 +13,19 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 7595,50 | +0,3 % |
-| Nasdaq-100 (Future) | 28128,75 | +0,4 % |
-| DAX | 26769,89 | +1,7 % |
-| VIX (Angst-Index) | 18,69 | -27,1 % |
-| Gold | 3897,50 | -5,3 % |
-| Öl Brent | 93,29 | +0,8 % |
-| Öl WTI | 86,59 | -0,3 % |
-| US-Zins 10 Jahre (%) | 5,03 | +3,6 % |
-| US-Dollar-Index | 102,92 | +1,2 % |
+| S&P 500 (Future) | 7583,25 | +0,1 % |
+| Nasdaq-100 (Future) | 28060,75 | +0,2 % |
+| DAX | 26778,21 | +1,7 % |
+| VIX (Angst-Index) | 18,89 | -26,3 % |
+| Gold | 3906,40 | -5,1 % |
+| Öl Brent | 93,46 | +1,0 % |
+| Öl WTI | 86,56 | -0,3 % |
+| US-Zins 10 Jahre (%) | 5,02 | +3,4 % |
+| US-Dollar-Index | 102,87 | +1,2 % |
 | Euro in Dollar | 1,11 | -1,2 % |
-| Bitcoin | 72362,21 | -3,0 % |
+| Bitcoin | 71915,25 | -3,6 % |
 
-Angst-Struktur: VIX 18.7 gegen 3-Monats-VIX 19.2 -> normal (ruhig).
+Angst-Struktur: VIX 18.9 gegen 3-Monats-VIX 19.2 -> normal (ruhig).
 
 ## Fed: Mitteilungen und Reden
 
@@ -44,12 +44,12 @@ Angst-Struktur: VIX 18.7 gegen 3-Monats-VIX 19.2 -> normal (ruhig).
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
-- [China, Turkey and Ethiopia Launch Initiative To Strengthen Global Carbon Credit Markets - The Media Line](https://news.google.com/rss/articles/CBMivwFBVV95cUxOUEp0RnlKUVpvcnhOWWlma05IRWR2WDBBUllERGpWclFaUjJxM0N0UUtvbXZzdzZmTGFyNG45SGY4UUVKUnlVQlFvay1ocHZkbDdkcWhFSk5rWFVXaE9ZdTZPU0o2QUd1dnlXVlBNemNsSVo2LWNnYzFKRUpxQ0xZeWpvVWpEc21OemdkX3Zma0JxUUs2dGlHZGN3NTNwSTg5ZHJYaDkzMllFbjZiOGVjbVdZejFMUGZoWjlQMU5jSQ?oc=5) · 12.11. 15:09
+- [China, Turkey and Ethiopia Launch Initiative To Strengthen Global Carbon Credit Markets - The Media Line](https://news.google.com/rss/articles/CBMivwFBVV95cUxOUEp0RnlKUVpvcnhOWWlma05IRWR2WDBBUllERGpWclFaUjJxM0N0UUtvbXZzdzZmTGFyNG45SGY4UUVKUnlVQlFvay1ocHZkbDdkcWhFSk5rWFVXaE9ZdTZPU0o2QUd1dnlXVlBNemNsSVo2LWNnYzFKRUpxQ0xZeWpvVWpEc21OemdkX3Zma0JxUUs2dGlHZGN3NTNwSTg5ZHJYaDkzMllFbjZiOGVjbVdZejFMUGZoWjlQMU5jSQ?oc=5) · 12.11. 15:08
 - ⚠️ [UK sanctions Russia's Slavneft in latest move against oil producers - Reuters](https://news.google.com/rss/articles/CBMitgFBVV95cUxPcFM0cE41cGZrNzlMNjVpS25GaTZmNURHUHFDeXVocjd4NFI5OVU5N2dzS3NwdWdiTG54QkFlVGgzVTFBSUlpVGZhLXVqTnlUUllCSnVuN2M3VmJnTXhUTEx3YzYwQVhfb3FGX01leTRpdFM4azV5ZEtEVnpXb1NpT3NEbzROb2FoUjlvZnlPWU1wNnl3WUtYRUtLNnQ5TFd4TmRTV0taRmUyOFV5M2N3VndRSHVOQQ?oc=5) · 12.11. 15:00
 - ⚠️ [UK announces new sanctions on Russia's top 10 oil producers - Naharnet](https://news.google.com/rss/articles/CBMipAFBVV95cUxNLVpCeHVqcmM2SUdEVGE0MTZCeFM4V3lmR243X2p2MHRybE5DNU9pV3lENF90MW1OdWt3UjAwTG54Wk03NHBlT0V2QXJqM3gtU3hBQ0h0RElfR3VJQTVzaF9ZREJkbDdQSE9ONDlsM2RWOGpXbkhicFRqbnFxY0c3UGZSYUllSmdyY0g1dGZTR1d3R3BxUlJhLXZPVTR0MFhPOFNOMw?oc=5) · 12.11. 15:00
-- [Oil prices reverse course after Trump said U.S. doesn't need Iran deal - Quartz](https://news.google.com/rss/articles/CBMib0FVX3lxTFBCTnJuT1NrX09nUUp2dWFfQmZBVG43R1lHOVlyLWgyWXpMeG5wWWJIVUNoVDhVTnFFNVRUdnpNWm5UTWJGRk5YU204QTlINVN0Y0ZLT2VtQmpVWk9YYnJ4RVg4cVhhMVN1UkQ3S3k5VQ?oc=5) · 12.11. 14:48
 - ⚠️ [Britain sanctions Russia's Slavneft, says it now targets top 10 oil producers - marketscreener.com](https://news.google.com/rss/articles/CBMiyAFBVV95cUxPUkFzQkduT3N3My1GOVhkaXVKX19vTzg3ZG8xSHE1bkQ1Q0FQNmgzbGdiV3RHUGxhNWtkNDVCNk9Ua0FSRTJnbFZjVld6TXB4NVhKZVZCblRHS2x1NWdwQUdvYldxd19pelZfOHc0RU1SamU4b3lUMDI1dENKOUhpd1FlRTNZOTl3Q3ZqeUYyajBvZmZzRm5VT1lacHd4dU02TTdVSHV4eUtKc0tvVWNTbGp6YzdFazk4aV9jUWVwQTJ2WEIxN2dHRw?oc=5) · 12.11. 14:47
 - ⚠️ [Ukraine set to be focus of EPC summit as UK sanctions Russia's top ten oil producers - GOV.UK](https://news.google.com/rss/articles/CBMiugFBVV95cUxOc0RZTS1sNkhOenRxVGhaU1NmVm56YUttbkR3SEwzRFhiMmdnZ0x6bDhsSFJNdjhlcEVUOV84cEstd2VsN0FBZkp1bXJpSXRtakRzdTBSMnJFTExnRkc5Wjd6REV1VGpmQlNXcHpxOWtJSGlzQlpPWjh3eGQ1bUJoeWxvbVhsaXFjdDRpY1dZYk1EbzlVTEwwOTJCNlg4c0Nfc1RJM3l2RHZVaUoxRjB3T3Y3NVR4LWMyN2c?oc=5) · 12.11. 14:44
+- [Stocks Slide on Nvidia Troubles, Oil Edges Lower: Markets Wrap - Bloomberg.com](https://news.google.com/rss/articles/CBMilAFBVV95cUxPYmF2Z05ObnRwSVdvWGJrWC1XZlIzVXlYMTV3eVRwQWlScGY3TGpuamVOTEpremJZQnhJU3hkOWl2ck4xNFdzQWM1VTh2OEVBQ3FCTzNiYThfOTlzSHpqX0hHeWQ3dzZTcnRsVzYtMzFWeElmZVdVWUdQcnhIbEp1SS1lejVoM2Y1OGdScGpLbzJPVWhk?oc=5) · 12.11. 14:36
 
 ## Zölle und Handel
 
@@ -79,7 +79,7 @@ Angst-Struktur: VIX 18.7 gegen 3-Monats-VIX 19.2 -> normal (ruhig).
 
 ## Was der Paperbot heute vorhat
 
-Konto: $92.243 (Papiergeld).
+Konto: $92.288 (Papiergeld).
 
 | Teil | Signal | soll halten |
 |---|---|---|
