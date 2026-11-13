@@ -1,4 +1,4 @@
-# Briefing 13.11.2026 21:40 Uhr (Berlin) · 15:40 Uhr (New York)
+# Briefing 13.11.2026 22:23 Uhr (Berlin) · 16:23 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -13,22 +13,23 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 7571,25 | -0,0 % |
-| Nasdaq-100 (Future) | 27996,00 | -0,1 % |
+| S&P 500 (Future) | 7567,75 | -0,1 % |
+| Nasdaq-100 (Future) | 27954,00 | -0,2 % |
 | DAX | 26749,95 | +3,6 % |
-| VIX (Angst-Index) | 19,03 | -4,5 % |
-| Gold | 3881,70 | -5,7 % |
-| Öl Brent | 96,06 | +3,8 % |
-| Öl WTI | 88,87 | +2,3 % |
+| VIX (Angst-Index) | 19,39 | -2,7 % |
+| Gold | 3876,10 | -5,8 % |
+| Öl Brent | 96,23 | +4,0 % |
+| Öl WTI | 88,97 | +2,4 % |
 | US-Zins 10 Jahre (%) | 5,15 | +6,0 % |
 | US-Dollar-Index | 103,41 | +1,7 % |
 | Euro in Dollar | 1,10 | -1,1 % |
-| Bitcoin | 68827,31 | -8,5 % |
+| Bitcoin | 68238,99 | -9,3 % |
 
-Angst-Struktur: VIX 19.0 gegen 3-Monats-VIX 20.5 -> normal (ruhig).
+Angst-Struktur: VIX 19.4 gegen 3-Monats-VIX 20.7 -> normal (ruhig).
 
 ## Fed: Mitteilungen und Reden
 
+- [Agencies extend comment period for proposed third-party risk management guidance](https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261113a.htm) · 13.11. 22:15
 - [Federal Reserve Board announces pricing, effective January 1, 2027, for payment services the Federal Reserve Banks provide to banks and credit unions, and changes to streamline and adjust their check services](https://www.federalreserve.gov/newsevents/pressreleases/other20261112a.htm) · 12.11. 19:30
 - [Federal Reserve announces revised tentative schedule of Federal Open Market Committee meetings in 2027](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261112a.htm) · 12.11. 18:45
 - [Federal Reserve Board issues enforcement action with former employee of United Community Bank](https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261112a.htm) · 12.11. 17:00
@@ -45,12 +46,12 @@ Angst-Struktur: VIX 19.0 gegen 3-Monats-VIX 20.5 -> normal (ruhig).
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
+- ⚠️ [Iran says 2 oil tankers strike mines, catch fire in Strait of Hormuz - Anadolu Ajansı](https://news.google.com/rss/articles/CBMisgFBVV95cUxPek5FWnVXZThQZzdHcnRxT2JMRjEzVXFkSU9kc3ZPUVpManFaVUoxMXhPdTRFMWp0UTd5Z3kyRmdhZVB6S0IxNHF4RTNLUF9fOUhUclBYOGlCVjJuRzUwRlR2WENXb2NyR1hlVlhEMXd6bHktT0NXUlFpcnQ1cDBYa1l3R3RLcFJNeUxReENpVWRFdTUweXRHZmZSc0RudWkxTFFHQldIZ1BSS3dyODB2dkt3?oc=5) · 13.11. 22:01
+- [Crude Fluctuates as Iran Tensions Persist - Rigzone](https://news.google.com/rss/articles/CBMipgFBVV95cUxQdTNRZWdOQzMwdGZEOFNVQjUxekNWWDdqd3N6OGV2SEZQMEE2bVVtTHFNVGxueW5ZZk9SYXlOeVg2aTZldmdDUy1pMkF5M3pVWHJkcE9YeWM5cW1RMmF2VHgxYlNzSndleUxrRXl0TUUzMHNGLTF0d2MzZzdzcF9ZU0VXeXVwNElKZW9YbVBsNTVuSkNFcVpFZEtrODVyRmI3UzA1TVJB?oc=5) · 13.11. 21:49
+- ⚠️ [Ukraine Intensifies Strikes on Russia’s Oil Industry as Peace Negotiations Enter a Critical Phase - EU Today](https://news.google.com/rss/articles/CBMiggFBVV95cUxNa2h3Vk1rOVl6dU9JMTVYeDlJMnFfYWNBc1BfemlZUUctU3FkRVE0cUVWeWxGNTA2OXp6V1dhWFU4ME1jZUhHMUVGWFdEeVdaSHNuRjhMVXFfRlg1Wm5RQ24zNTJyR01WRzFhcE1vQmU1RVZlLTItV095NFA5cWYxX0tn?oc=5) · 13.11. 21:44
+- [US Stocks Drift Before Inflation Test of Fed Bets: Markets Wrap - Bloomberg.com](https://news.google.com/rss/articles/CBMilAFBVV95cUxPTmVnUHB5bWw0Y052NTU5ZkNsOGdwUXVCWnIwczVnQWJKWmJiaUZta09PNGhNYVZWSENvOFVReWJIVldFcDJNcmlOQ3RyMWhHQThNcmtnU0FIZldHWHJ4NldqbkVrYUlseVNBN0xycmRrUjdFVWRQQll6MzhBUHNOS2NidGtDc01LeWlNd01WNGJxcm5E?oc=5) · 13.11. 21:31
 - [Jensen Huang was a ‘China salesman’ for Nvidia. His exit is weighing on Chinese tech stocks. - MarketWatch](https://news.google.com/rss/articles/CBMiywFBVV95cUxPZERTMEZjeFI5UFlwSnk2dlo1c0xWQ21MX0V0RnB2c3FLcDZBRjg5VGdvQjlyb0FrQjliMm1rZVVVeFE1VUVRZ2NaVml4cWRjZExIYnl4dkFSaWR4MURSTkNXb0N5b1VzT1J5UDVrZGdwa3VfR1BBY2I3cVlVOENBUF9yQlVEUXVTczlMMzJwMlNxVWpWT3VWZXlmWHl3UjBCVjY5Ui03SlpJekRmckZvUXhDSDV1RjZwWWZ6bUo5Uk9XZnhxbTRQTWozMA?oc=5) · 13.11. 21:19
-- [US Stocks Drift Before Inflation Test of Fed Bets: Markets Wrap - Bloomberg.com](https://news.google.com/rss/articles/CBMilAFBVV95cUxPTmVnUHB5bWw0Y052NTU5ZkNsOGdwUXVCWnIwczVnQWJKWmJiaUZta09PNGhNYVZWSENvOFVReWJIVldFcDJNcmlOQ3RyMWhHQThNcmtnU0FIZldHWHJ4NldqbkVrYUlseVNBN0xycmRrUjdFVWRQQll6MzhBUHNOS2NidGtDc01LeWlNd01WNGJxcm5E?oc=5) · 13.11. 20:30
 - ⚠️ [Global oil supply returns to surplus for first time since start of Iran war, says IEA - The Guardian](https://news.google.com/rss/articles/CBMizgFBVV95cUxQNndNZUdKRnhDVGRkRE85YjZfUG1pUFd5NlVkbjBhbWZaTjZqZlRCU3RmMlBzR1ZjMmJpZi1jX2FvT01wbVc0ZDNaYm9YZUFTZm4wX29QQ3NLN0VpVS1CUjRBVm1GeWlHRk8yb1R4QkMySE5HUjdMUEM3OGVXdU5XM3lORndmX1RwRFdEbkZhalpnVmdONXhJYkR6bUpDZ2xfTXB1MlNuWDNFOGtPSFh0NzF0OWFYSjFBdU1hdVNqQnNSbUdMMi1JZW9vV1UwUQ?oc=5) · 13.11. 19:46
-- [FTSE 100 today: Stocks edge up as energy names track oil on U.S.-Iran tension - Investing.com](https://news.google.com/rss/articles/CBMiwAFBVV95cUxQdHAzQXFzTmZZWlp2dS1Od1VUUzhmRUZTODhWclJaQ0tOWkJJR1pGNXVmNHFubnpHSTl6RFllZ0ZESHl0NTctOTM4TTJqbURhV05zQk9iX1J4elRabklUbGE5MmJuRFViSzZsRnNOYU1yNFc1d0NtVkp5YVE1cVM2UGZPRllTQ1hia2JpLUtsWDdMd2Z0RDZlY3d4TGZzVE1oRkVDY3B6cXpjNmNNRmwwYy12ZXJ5RHFfdmIxTGp4Nmg?oc=5) · 13.11. 19:28
-- [Russia's Oil Production Climbs as Global Supply Outpaces Demand - Caspian Post](https://news.google.com/rss/articles/CBMimgFBVV95cUxOQ0hRaUM2WlBSVm14a3NFZ2gyOE9sbFpkOHJoMzJqSTFqTTNodWp4aEFUMkQ0WE9CNjlfVHctRWJoOFJ5VTFMOHp6bDR4TG1DSWtsNkg3RFZ6Rjk5dU90alhKcS1fbDNhYWYyYldYRG9XVVhYOUtxcVI4cF9Ha2N3VVhta3JjdGthbHpub0FBeUpmQzB1cDVMWUVB?oc=5) · 13.11. 19:03
-- [Russia’s LNG, Oil Shipments Via Arctic Route Hit Record - Energy Intelligence](https://news.google.com/rss/articles/CBMickFVX3lxTE1mZWhWcTk4MlNfWkZfV2plODV5S0xUUzRCRkVOeDlkUTJaeHVCZnVrWFB1bTZ6V3hrS3AzZGU5eXE4MDlwakNGRUh1SXpvXzhFM2RuNHFLWExQUTE3c2lpYnd2SWpIT0RUQzVnV0VidmFQUQ?oc=5) · 13.11. 19:03
 
 ## Zölle und Handel
 
@@ -63,12 +64,12 @@ Angst-Struktur: VIX 19.0 gegen 3-Monats-VIX 20.5 -> normal (ruhig).
 
 ## Fed und Zinsen in den Nachrichten
 
+- [Gold faces weekly rout as high US yields fuel Fed rate hike bets - www.tmgm.com](https://news.google.com/rss/articles/CBMiygFBVV95cUxNQ0V6RjhsdTZwRXA4SW9ScTZyUWFveGFsbXJIbE1sS2VFV1F4QW5CUUtvaGMtYXpFQkRLYXRtMjAzVEFyYVh2SGNadUI1LTYyNG51ZHNwWk9aSklBX3RkUlVBajcxMFpWb3NSM25WWnc1TzRDR3BZendvVmhIcVpGMlRnRlU4RjQweXNjdWdfU2hQbEkwSjhBaUJBSzh1dHlRWlI3OElLdHBUZzVmLUJaeUF2MGlteTRGVlRMRjV5S3Y2eTF0eE1lQ09B?oc=5) · 13.11. 22:22
+- [Mexico Rate Cut Fuels Speculation Officials Want a Weaker Peso - Bloomberg.com](https://news.google.com/rss/articles/CBMiswFBVV95cUxNMjBORFI3VVJEVHo3S3l2VDdDdWNCNkg5WHhWc0RpdlRvTURNOGJZX0U0Q0FHdi1jRFotdkNqeEVGYmxQYnlCWmtWVGxvMDNlek83UzhVcEFGeVR6UlhuQ0R0YlJUbUVxbUJjblY4dWJFTWduUnp6Y2M2Rk1nQkZoMkVraUtocUFjajEtTTdMOXNRWGVsNVF0ZW85c3F4S1FrZEFDM2psblhiSEJqeVptSWNkaw?oc=5) · 13.11. 21:43
 - [Bitcoin Hits 12-Week Low as Fed Rate Fears Undo Most of Summer Rally - Cryptonews.net](https://news.google.com/rss/articles/CBMiWEFVX3lxTE9tRFZ5MjlodTNpNFkySmQ2eDFCaFU5V0FUZEVROXl4eS0tUTExY2FhZGk3VzIyLXA5RGFkWHplakk3TkxqRnM3MmlpdEJFcnNZdlBJMXFNZE0?oc=5) · 13.11. 19:47
 - [Silence by Trump’s Fed chief risks rattling markets as ex-insiders sound the alarm: NYT - Raw Story](https://news.google.com/rss/articles/CBMickFVX3lxTE13Vk1xU09GNTFGNnBaWlJfX1RGVkp0TE10OHNHVzdQU3cwWTZWZkw4N2JRRWZCZE1VQ0xkOGxmZ0EtaENLWVJuR3dTb0NZQktidnNZQ1MwemVkcklqTjU2ZkhhWGZpUkNrcTd2NnVSaHNCUdIBhAFBVV95cUxPUzJoS3pEeXdfbzZVUTBOUER1TFpzUWNhMF9EY2dUNHBqbzZpZkpTTFl0TkpGVHg5ZEcyTGxteUZPS2tFTFAyOGlaNUdnYVAxWExibWtKakJoajNZQjVDZ1RxdTg0bXUxYlBPRTgza3RyMmVhTm5ORTdQcS0tVmRfT0ZUaVQ?oc=5) · 13.11. 18:58
 - [Bitcoin Hits 12-Week Low as Fed Rate Fears Undo Most of Summer Rally - Yahoo Finance](https://news.google.com/rss/articles/CBMikwFBVV95cUxPRUVhbWQ5aU1SMExHYTRIeHhhYjZ6Nll0elk5VDQxNzl2czM3aFNFY2ExSXd0VEZlZmh6OE5TYV9Ib1RWOWlNM3k1S1Btb0ZwLXV2Zkt5OE9rbTM3RlFVODlmbjJ1ZURYQkxSNVk2QWVHM1Z2djA3dmV6QnBUTGZOdnNMM3prVGpxZjhwYkh1R2NhMVE?oc=5) · 13.11. 18:22
 - [Logan says Treasury market functioning 'very well,' Fed needs to strengthen support tools - Reuters](https://news.google.com/rss/articles/CBMiygFBVV95cUxPZmZBTTBhYXpVY29JS2dYc0s4MVZzQVN4NUJXX2dRUjUyMVM2OFA4cWNKT0h4bkliZ2tjTkhaRkhSeElYenlOVUVkeGNiWXlYaVQ3QXZ2TTY0WXBXTGppZ2Q0V0VlSVRPZGd4eFJNdVE0WjV4OHk3U0JBcV9BLUdIS1VPZ0xtVUhUd3A4WHB6Nlp0cjE4WjhzNGRlQjhqVElCSVlYcC1WR0N2Ri1keTFSM19PRnFSdlBVV1JteHB1UDJ4Z0FWSi1LeG5n?oc=5) · 13.11. 18:16
-- [EM Stocks Eye First Weekly Gain Since September as Tech Rebounds - Bloomberg.com](https://news.google.com/rss/articles/CBMitgFBVV95cUxOQ3JJeC1SRFpYQi1TT05xcUFFV21BU0paaGU4Sk9jZlg2VFc3VUhWRkY3aTVrVUkzQXhabXhFNS1aajhTb1JoMS0yOHNHYlBDUWl5QVRYT3RCcDkyS2dqZmQ0cnFQZU1ocXdpRXdtSE9UQW1qMHVCMVdia0xvMWZDYXhFRDBRckR0eHBBS21nRWhtbE4xZ0EyOURrRWRyQVMzMWlzN3N1VG9vMnpPVzBNOGdqSGZnQQ?oc=5) · 13.11. 18:09
-- [LIVE NOW: Federal Reserve Bank Boston Holds Conference on US Housing Market (Day 1) - NTD News](https://news.google.com/rss/articles/CBMivgFBVV95cUxOREt1bldfUUNzeTdIenU1LU50NkxoNjk0OUVuOGJ5WDk1WVNPamF0ZHNwaGY0NmpwaXF0N091S1AxUG1FWlctNnlOTGxNODZjRGh0eUtsSk9HTE5FV3Zyd3JNTVJnYkROdENZamloWjZ0TURhd0lYU3VQYWRuTV9TWFV6dTgtU0NoQ201MlBrZldxd3ZFdVYtSWJkZ1BycmdDblJ2NWN0Q294U2UyUk9Ic1lDY3pPcTJVOWFLYzZB?oc=5) · 13.11. 16:33
 
 ## Wirtschaft auf Deutsch (tagesschau)
 
@@ -80,7 +81,7 @@ Angst-Struktur: VIX 19.0 gegen 3-Monats-VIX 20.5 -> normal (ruhig).
 
 ## Was der Paperbot heute vorhat
 
-Konto: $91.774 (Papiergeld).
+Konto: $91.635 (Papiergeld).
 
 | Teil | Signal | soll halten |
 |---|---|---|
