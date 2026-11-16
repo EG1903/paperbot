@@ -1,4 +1,4 @@
-# Briefing 16.11.2026 15:15 Uhr (Berlin) · 09:15 Uhr (New York)
+# Briefing 16.11.2026 15:38 Uhr (Berlin) · 09:38 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -12,19 +12,19 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 7536,75 | -1,4 % |
-| Nasdaq-100 (Future) | 27664,00 | -2,8 % |
-| DAX | 26731,13 | +1,8 % |
-| VIX (Angst-Index) | 20,63 | +6,0 % |
-| Gold | 3867,40 | -3,3 % |
-| Öl Brent | 94,06 | +1,4 % |
-| Öl WTI | 87,37 | +1,0 % |
-| US-Zins 10 Jahre (%) | 5,14 | +3,2 % |
-| US-Dollar-Index | 103,48 | +0,6 % |
-| Euro in Dollar | 1,10 | -1,8 % |
-| Bitcoin | 64356,41 | -9,8 % |
+| S&P 500 (Future) | 7536,25 | -1,4 % |
+| Nasdaq-100 (Future) | 27662,25 | -2,8 % |
+| DAX | 26723,70 | +1,7 % |
+| VIX (Angst-Index) | 20,45 | +5,1 % |
+| Gold | 3867,80 | -3,3 % |
+| Öl Brent | 93,83 | +1,2 % |
+| Öl WTI | 87,09 | +0,6 % |
+| US-Zins 10 Jahre (%) | 5,14 | +3,1 % |
+| US-Dollar-Index | 103,54 | +0,6 % |
+| Euro in Dollar | 1,10 | -1,9 % |
+| Bitcoin | 65436,60 | -8,3 % |
 
-Angst-Struktur: VIX 20.6 gegen 3-Monats-VIX 20.6 -> **angespannt** (kurzfristige Angst höher als langfristige).
+Angst-Struktur: VIX 20.4 gegen 3-Monats-VIX 20.6 -> normal (ruhig).
 
 ## Fed: Mitteilungen und Reden
 
@@ -38,12 +38,12 @@ Angst-Struktur: VIX 20.6 gegen 3-Monats-VIX 20.6 -> **angespannt** (kurzfristige
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
+- [Middle East's largest oil producer finds a lifeline in China, Egypt, India and two other Asian markets to keep crude exports flowing despite falling American purchases - Business Insider Africa](https://news.google.com/rss/articles/CBMi2gFBVV95cUxQRldoOGZGSDQzY2cwNjNuc21zdkRVMnhtdVlLek5EMkxSN2FNZ1NjZ1hyZUVvSDF0bHctaTdLUDAyMWszVVJlVldZSjFReEFLdW1nSElla2g4Z01pOFIyNjFjRFRpalZRdU9sQlgybHVXWm9HSVpoS1liYVVfdDhpWU5OYWp6SFNPb0wtbnNReHVXR0N6blhYWDNhUUcyNUpjSEFMQmFpUmltcWxON08xQ3ppSTk1VHNIR2Jvbm4wSVdjcjNJeTJyTzFra202cVZfNF9Gcm43b2Qzdw?oc=5) · 16.11. 15:00
 - [Rand weakens as US dollar strengthens and Iran conflict keeps markets on edge - thenational.co.za](https://news.google.com/rss/articles/CBMivAFBVV95cUxOYnJHMWwxclUybUdQTmZkVkpZUG9yZEhLQVN1NUJpZHBsOUNQN3FXbUo5QURqMk5nbXc5SXQtNW1LRUgyRWp6bENIU1JQc01IZE4tWDBxQ2QzaGVFdlpyend3TzZRUEx1bGd2anF1VDQ1ejdJd0tHWXNKLTluMFpmY0txSjVJNkJ5dEczV3hWUUZXOThMQWtJZGc2SnQtY3A0clpGMllWQTdGc1JyTGdiYkt5VWxFSExqSVVwRA?oc=5) · 16.11. 15:00
+- [FTSE 100 today: Stocks rise as defence shares lead; oil falls - Investing.com](https://news.google.com/rss/articles/CBMirwFBVV95cUxOTE9NT3FaQ09oaXc1blh5Ti10dXM0bEtLUzBMNmMxRWNPNmd4NjhuYUdjY1hud1VJcE5DUG84TENtckp0RXRyckhSb3dlU0JVWjc5YzdIX3ozTkk2Tml2SWt3SFZDUTVpNjl3dG14ODhwTHZ2S0hwZHpDcU1NVVVYYmNCU1R4Q2xDS2JwVklrd2dRQXFwOVJIUDhqSHBvMXdubzZ2QWFWd1VRS183OGdR?oc=5) · 16.11. 14:59
 - ⚠️ [Ukraine strikes key oil refinery in southern Russia, hitting 3 processing units, General Staff says - The Kyiv Independent](https://news.google.com/rss/articles/CBMixAFBVV95cUxQVGcxcWJ1NGVOdG5hYkJXWkhYc1hET0U4SHR0UFZYeHNack50UWozX3lHR0VBc2hNWDdTSDloTS1Kay1KZFU5TjF2a3JNTzhLRjQ4S0EtYUE5MVRnVkFHUGtIWUVQek5jbU1FdGx4TXpzT3Q2ZHdkTzNCbW5qblYyemZHWFhERUppMlRRUWdERExSNUQ1R0JhY2NsMHpSR3NUcVdXV3VNVFoxZVBxbEEydXRERVZnajFTSjVSc05JWHNxWWQy?oc=5) · 16.11. 14:54
 - ⚠️ [Ukraine launches biggest drone attack on Russia since war began, defence ministry data shows - Reuters](https://news.google.com/rss/articles/CBMixAFBVV95cUxOTmhGNVhidkt3TlpMM3l5UmpTaGYyRnEyZ0pDQnhydG0wWm9sS3VGN0pndWVSODhUbFhYTW5EalBIMEljZEVsNndnbVVNd1dmVzNOMVNHYmtpOEZjVXBaOHNfQ0dzQjlva0QyNEU5OS1vMm50TmhuVEFaZDZ0THpwTDUtX3dpeV9HUEYwOEZaVkhBNzBrZXg1dXljcmVFRC1CT0hqclh2cU9uSklvSTRnSUxXVTlmQmNhNlI1Q1E0S2hSdzF3?oc=5) · 16.11. 14:53
 - ⚠️ [The EU has imposed sanctions on Russian oil refineries, banks, and the payment service YooMoney - UA.NEWS](https://news.google.com/rss/articles/CBMirwFBVV95cUxQN0IybUpHR3FaMHl0SXRmR0lENXlyeWJFTFRjUUwwWko1VkZwRXMxZUxnbE1mYk9zMVdWekJKUkdESW4wTlU1LVNkOGJDWVNfdnpUSkpsbjRCY21WZkJOOVViQWl1SDVHWHBWNl9CV2tmT1JKRVpsbG9IeUVDYVQtdXhkaVVEZkJqeXo1dDBwcjczTHNhZV9aVmZtSDgxeGJoWXpjblZfcGpJdldvTVF3?oc=5) · 16.11. 14:50
-- [Saudi Arabia finds a lifeline in China, Egypt, India and two other Asian markets to keep its crude exports flowing despite falling US oil purchases - Business Insider Africa](https://news.google.com/rss/articles/CBMi1AFBVV95cUxQcFNELW82MG9iaWlEOGxLc1BEOGZQdzdUZWJYanBfZHQ2a0VYNWw3WXhZNFZFVVBoTDRyREZoVDQyNkQ4c2dRTTVuTElidThfdGcwR2Vway1acjhMVTktQ1psWDJxbUJDamdfaHFwNFBSa1hNMjdtWXp6dUpVQlFRVVh4M2FHem1zSDJlNWM4N21scGhWdlAwNURuSzRSYnQ2ZEI2ZFhMY1paQlc3WEtFRTJlZnJwNzdSNXpZejl0Z3NCbzEyeFZvMkdiTTFjZjBHSzEydg?oc=5) · 16.11. 14:47
-- [Oil up on renewed hostilities in the Middle East - Yahoo](https://news.google.com/rss/articles/CBMikwFBVV95cUxNaDNIdlByN3FaYVNGZmdZTEp3ZjRUS3B2bHhaZWl6MjU1dUVjQzZZNmdZRzJQNHpPMmhMZ2s3TEE4UGJxaGRHTmZPUFM2NWdxN3FYd2t4SE11eG92M0Y4bTZYMVJoVFVYUVFfWkExWnUtX2s0TGNvRTM2eEFfZVhpbkVLbTBDZ1FxODBmVDRMcV9nQ1E?oc=5) · 16.11. 14:27
 
 ## Zölle und Handel
 
@@ -56,24 +56,24 @@ Angst-Struktur: VIX 20.6 gegen 3-Monats-VIX 20.6 -> **angespannt** (kurzfristige
 
 ## Fed und Zinsen in den Nachrichten
 
+- [How will Fed rate hikes impact markets? - Investing.com](https://news.google.com/rss/articles/CBMimwFBVV95cUxNYkd3Q0pMb0Jpdm9pNEg2WVRrNjd3WXRYVS1uemRuc0F2SnZTRS0weVhpVXVwRXFsTjV6YWVNckdnUHdrRldUR3F2azB1TU11RHdac25wOWY0NDVxOC1BT3JnMmRxaTJjc0VlRkhGSm5BUnYzVXQ2RkNwcnVFa2FSLWtBU3BfM2lpaHRLZzZJNTZINk1aeHo4UXZZRQ?oc=5) · 16.11. 15:24
+- [NY Fed's Nordstrom flags resilience of foreign exchange markets - Reuters](https://news.google.com/rss/articles/CBMipwFBVV95cUxNNndORlZOcGlkUHlSWHVOQnJUQUMxM0JERDBxM2FUbGlWdmhINzI1SEtiaU1hc1pMRlQ1blFjLS1fQzI2MFZDYTF0bUo5cnlWT2ZJNmNCdkpSekJqR2RFUnpLWEl3UU1CbEhlUlJrbUp3eVRMMGE5el9pVXhDa1lfQVpXclFMRUxnSFp1WllpWWR5Q1ZCQmlldUQtZHJDOVgySEtZYzQtWQ?oc=5) · 16.11. 15:14
 - [Can the British Pound Stem Losses Below 1.3200 as Fed Rate Hike Expectations Lift the US Dollar? - www.tmgm.com](https://news.google.com/rss/articles/CBMi4wFBVV95cUxQVXdlRThmUVR1am9GaUhXWTlBZFFiZl9HUWJWc2RucGphaUtNVkdLQzl4V01Fc1pYU1ktOEhUYWdWSmhqeFhsUnpNLW5CSlFPSDZ0V1JUMVJnc3NEZGpmVWJsSlZ0eU5OVjNUTENwQzh1UWp0SlgzelgzWlgxbEtiMEV3ajlubmhXR2t4N1FjdXJCMVViRG1yZ3VRX1B6eUUwRFFWQTB0Z3R4OXl0RHZZQXJ6c1c3RU43cDN5ajB1RTFaQjc1MzZPbWJqaE1mWGNCbzZiaS1NZVB3dmpBWS00dHpRNA?oc=5) · 16.11. 14:36
 - [Markets prepare for an important week and the Federal Reserve's minutes lead the movements - المتداول العربي](https://news.google.com/rss/articles/CBMi3wFBVV95cUxQazcya0R4M20yb3VNLS03UEc4dkJNWGhEU1BuM3JFZy0yOG9iZF92WHU5ZWxvbXNFUVdad0Nwb1EwVURSM2JocDl6bDVhNEt5aGRJZXBVLWVDT3F2ZFhJOVUxMjYzSzRXTHBGRlgxREpyd3ZJVUctcWZHM3J6ZnZ1RkNRSVlWUjNvMHlERU9xMXRJMmRwTF9JX0p0VUxJUGhkejJLb2JqcUt2R2VGelV3Ymw1aHE4WWJRM1k1UmhNU1F2WHVYaEhfaFdzTjhMbFdNbE5YYXNYZW94aTlRcWVR?oc=5) · 16.11. 14:20
-- [Federal Reserve 2027 Priced Services Fees: Bank Cost Review - JournalArta](https://news.google.com/rss/articles/CBMilgFBVV95cUxOeDBpaUo1Uk9PVUc5U1ktcnhwMDFoWVI1b3Jud1hWMTFpenlvWEdBd3J4RTAtdndXV1ZwNUIzeWRUOW1lcHBZWVAxb1VBTDIwRWF3Um1TZjktZDhOSGRUTUpZYl9JLWFpS0NLRG84ZHkzSUlSLUwtVU85MlJMWk9QbF90TjQ4MlZ0cFJCdnVCTGZ0ZG5UR3c?oc=5) · 16.11. 13:38
-- [Fed's Barr says AI agents could speed up bank runs and push markets into herd trading - MLQ.ai](https://news.google.com/rss/articles/CBMiqAFBVV95cUxOR0Y5dlp4MkI1czVKZ2xJZmFpZXR1THlZSVh4UXFta1YtYWhyWkUtYXdYaWF6NTZsdHNDM3p6N0FDOHFQSnc3U2JjOXpvbFFkVVVDaHpSWkJUekxWLVBJQlFYVDhKcHZIWHFsdHNSR2h6elVRcGxNanlLd3Y4X3FXVTcwdVJRTXNFTDVta0NuaGRlWURiXzR6V0tYM0pJZHBfVE9vWUtBS2U?oc=5) · 16.11. 12:37
+- [Dollar Surges On Increased Fed Rate Hike Bets - RTTNews](https://news.google.com/rss/articles/CBMijwFBVV95cUxPZXJRM01QN0l0Wi12TmhTbXIxcWtEQTFlVVVmSnZYOWRLTjNXbXpLY1VTempKSEVjbHBIVkk3UHc0VHRidF9XX1ZaZXA5RXFJTktNZXhKUU1LemY5aVVHSXR3UGZ1Ql9QaHpvdUI2NlFBVVlZWXhlN1oyYjE2LVVnRXVOV2JOcEI4YzF4VU95TQ?oc=5) · 16.11. 14:12
 - [Nvidia Earnings, Anthropic IPO and Federal Reserve Outlook Among Five Key Market Events This Week - Yahoo Finance](https://news.google.com/rss/articles/CBMipAFBVV95cUxQZWw1cTVJckJKUEE4LTlkZzBHSkVIRnVWaXRsV3FfTmprX3Z1Qk45RE1hS0g0SFkyLXliV0VOUDRtekVjOUdRbGhkU2Zfamg0LXpzTFFnVEVxbldfOXUtVG9DQmY1WnRodWg2QTdvcXd5eVV6OTlzaEptMEY5eDFRODFZWTNBWV91UjJzR1FkeVNfc0Jvcm0yNHZTbXNyOU1iN2Vvdg?oc=5) · 16.11. 12:27
-- ⚠️ [Federal Reserve Governor Michael Barr warns on AI risks to financial system - The Economic Times](https://news.google.com/rss/articles/CBMi7wFBVV95cUxPNFRzdmdmM1ZlQ3VNZ1ZNRVl2T2VwTTR1N0F5cU0wZF9FX055RzNoaC1maGE4QWJiU1cxS3dSblRsWWgyTTB4akdQOVk3ZmRIeW45cjVOLVdObTF1NHE4Mm5URHhockxtYVR6Sjh2bWM3SGVIaUswSUdjOVVfd3VZUE9nd2FWSERJbXl0Tm1ZTXZRemppenZfT0cxcUQtLTlwNEFjZG9LUmxvOVdSQ05LYlo0emZJMkFPN0w4WmdQVFFneFNzU3Zrejk3Nm9VVVprc0s4TGJiQkg5eXQzTU83eU13MGpTaS1PNWVYYk5TVdIB9AFBVV95cUxOQUczSjFFUm5WOThWblhIUTVvMXdvN3FNVXF1d1FYUlhyU3BqdWRmMFBJb04zOHpTU1p5TmxNOGEtZ0NhUlBWTDN4Q0ZBXzZMV28weFc2bFJtanphVzlJLTc5M3NlMFRzWmFtaU9waThGT0JNZnBWRElIcGtTdHBvS3MzaHByVUtUUUN6YWV0X1lkVkF5Vy1sa1lBNGZwZE1BS21wRVB5MVFNbnRRZjR2Mm5TVlktTUhnMFp0N2NuSDdpdWpRY3J2czZfdElhT3lyOGE3YUJ5UnNCeFJYYUk4bm9jV0E5SzY0cUt5bW84S2x3T3Za?oc=5) · 16.11. 11:10
 
 ## Wirtschaft auf Deutsch (tagesschau)
 
+- [Tesla kündigt Milliarden-Investition in Werk in Brandenburg an](https://www.tagesschau.de/inland/regional/brandenburg/tesla-investitionen-brandenburg-100.html) · 16.11. 15:25
+- [Älterer Programmfehler löste Ausfall von Microsoft-Diensten aus](https://www.tagesschau.de/wirtschaft/unternehmen/microsoft-stoerung-fehler-100.html) · 16.11. 15:22
 - [EU gibt UniCredit grünes Licht für Commerzbank-Übernahme](https://www.tagesschau.de/wirtschaft/unternehmen/commerzbank-unicredit-eu-genehmigung-100.html) · 16.11. 12:50
 - [Energieverbrauch der Industrie sinkt wegen hoher Preise](https://www.tagesschau.de/wirtschaft/energie/energieverbrauch-deutsche-industrie-100.html) · 16.11. 12:49
 - [Zinsängste belasten Edelmetalle und Krypto-Währungen](https://www.tagesschau.de/wirtschaft/finanzen/gold-und-bitcoin-fallen-zinssorgen-100.html) · 16.11. 12:22
-- [Offshore-Windparks: Bundesregierung macht millionenschweres Angebot](https://www.tagesschau.de/investigativ/ndr/offshore-bundesregierung-100.html) · 16.11. 12:08
-- [Update Wirtschaft vom 16.11.2026](https://www.tagesschau.de/multimedia/sendung/tagesschau24/boerselive/video-1684508.html) · 16.11. 09:54
 
 ## Was der Paperbot heute vorhat
 
-Konto: $91.542 (Papiergeld).
+Konto: $91.527 (Papiergeld).
 
 | Teil | Signal | soll halten |
 |---|---|---|
