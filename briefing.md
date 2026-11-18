@@ -1,4 +1,4 @@
-# Briefing 17.11.2026 23:50 Uhr (Berlin) · 17:50 Uhr (New York)
+# Briefing 18.11.2026 07:00 Uhr (Berlin) · 01:00 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -12,17 +12,17 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 7366,50 | -3,3 % |
-| Nasdaq-100 (Future) | 27126,00 | -4,4 % |
+| S&P 500 (Future) | 7376,75 | -2,7 % |
+| Nasdaq-100 (Future) | 27236,50 | -2,8 % |
 | DAX | 26045,37 | -1,1 % |
 | VIX (Angst-Index) | 25,46 | +45,6 % |
-| Gold | 3851,90 | -0,9 % |
-| Öl Brent | 93,07 | -2,9 % |
-| Öl WTI | 85,61 | -3,5 % |
+| Gold | 3791,80 | -2,4 % |
+| Öl Brent | 92,56 | -3,4 % |
+| Öl WTI | 84,77 | -4,3 % |
 | US-Zins 10 Jahre (%) | 5,10 | +2,1 % |
-| US-Dollar-Index | 103,56 | +0,4 % |
-| Euro in Dollar | 1,10 | -1,5 % |
-| Bitcoin | 64703,96 | -5,2 % |
+| US-Dollar-Index | 103,67 | +0,2 % |
+| Euro in Dollar | 1,10 | -1,0 % |
+| Bitcoin | 64547,05 | +0,7 % |
 
 Angst-Struktur: VIX 25.5 gegen 3-Monats-VIX 25.0 -> **angespannt** (kurzfristige Angst höher als langfristige).
 
@@ -34,6 +34,7 @@ Angst-Struktur: VIX 25.5 gegen 3-Monats-VIX 25.0 -> **angespannt** (kurzfristige
 
 ## Weißes Haus (Präsident)
 
+- [Presidential Message on American Education Week](https://www.whitehouse.gov/briefings-statements/2026/11/presidential-message-on-american-education-week-ddcb/) · 17.11. 23:56
 - [Quad Leaders’ Summit Joint Press Release](https://www.whitehouse.gov/briefings-statements/2026/11/quad-leaders-summit-joint-press-release/) · 17.11. 16:20
 - [Joint Statement on an Agreement Between the United States of America and the Kingdom of Thailand on Reciprocal Trade](https://www.whitehouse.gov/briefings-statements/2026/11/joint-statement-on-an-agreement-between-the-united-states-of-america-and-the-kingdom-of-thailand-on-reciprocal-trade/) · 17.11. 13:43
 - [Nominations Sent to the Senate](https://www.whitehouse.gov/presidential-actions/2026/11/nominations-sent-to-the-senate-a864/) · 16.11. 21:50
@@ -42,42 +43,42 @@ Angst-Struktur: VIX 25.5 gegen 3-Monats-VIX 25.0 -> **angespannt** (kurzfristige
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
-- [Oil Shipping Soars on Russia's Northern Sea Route - The Maritime Executive](https://news.google.com/rss/articles/CBMikgFBVV95cUxQdGx5Z2N5YTN0UDlKcFlOUFNJMkxsQWpOZkNONUt6OWdnU3Bsc3JaX1M4cVpvcVc3c2RTb2pVNmNIV0U1amJzd01qMWdjWmd3NXhYd3Z0U0NHRktiV0pPUEJ3YjhqWVRtWUJoaDE3dnRJNzlnNzFXSnh2VmlOYmhHYUw1em0tVEFVTU5pU29jVXB3QQ?oc=5) · 17.11. 22:56
-- [Energy briefs—oil prices fall despite Iran’s display of defiance - Oklahoma Energy Today](https://news.google.com/rss/articles/CBMinwFBVV95cUxPWEg2OGNpRXROU3k5bWJTLWs1MzFiazB1MzVsckZNZnlMV01ReXJsZDhmWkxfT0l5cFdWUWstd2V2V1hCM0FtZUZpOGRJcmJmNjhzd1NpVDZVdXVUdURTZWxwdjRxTU9EcmwyRWVqNkk3U2dRX0k4UkkwQlBDMC0xWEg5TTkzUTFfMzh1eW84WmkwZmZSZ3NwNXNBTmVYY0k?oc=5) · 17.11. 22:51
-- [Iran Prepared to Build Oil Refinery In Armenia - Asbarez](https://news.google.com/rss/articles/CBMidkFVX3lxTE83OUQtUWRtU0tMX1YzRTlpNHR6S3RaWmxKLW00SHVRZDMzaFRqd3FEbDNaYjVINnVJd0NQVU82VTVZTjFYUUNXRHVYNjRjeU1YX0dCWHkxbnYwSTFhMjVsa053VzJxYnl2MF9NSTBQVER1alpEYkE?oc=5) · 17.11. 22:40
-- [Oil Prices Edge Up as Middle East Tensions Escalate; Brent Crude Up 0.76% in the $93 Range - 파이낸셜뉴스](https://news.google.com/rss/articles/CBMiWEFVX3lxTE92Y0I5SkRiS09HN2wybTc0WDl1OUtEZ3lXejdoNVVBeG1yWnQ0eHdKZDFKZHBibmNFSzFvb3JFS25zNXVsdXNZdS13OWxJTTZnb1pyblNhbkI?oc=5) · 17.11. 22:36
-- [Russia stocks higher at close of trade; MOEX Russia Index up 1.01% - Investing.com](https://news.google.com/rss/articles/CBMivAFBVV95cUxOQmJwV0JzLVJFSmFsel9jdGZYemRHOFhTX2pLeW5sRXEwSDZiOVcyY1Bjc19OdTZQQmdDRG9ES1hjQzZiQ2x2V3l0UkdwQVZJSzJzYk9nNkNfTVdlQ2NvVVJhRDliUjRtVDZwcWx0NjRiUnMtN1dxcG1XQW9NbWJtYm9zemhzLWtEWENET1NPbXlUcUZPWkJsYmFuMHNOeVRzMFhUWXdqR2tzUFhBa05jMG9sYVhjVjZFOEJXSw?oc=5) · 17.11. 22:23
-- [AI Infrastructure Stocks Outside China Worth Watching Now - Yahoo Finance Australia](https://news.google.com/rss/articles/CBMikAFBVV95cUxNY3V6eGtMLXBkT0pKLWhoTlBCbDJoZlVqbFN6RTNkZkpMdnRTcGotampNa0hxYXZ6Q3NFUFN0QlozX3dnbU9aQWFJX1Uwd0NOR3ZLNklPc2xKYWNRbmZ5aVotTkpSWHp5NGlaTWlrR1pFM3NtYVBiUUc0bEh2U1hvVFNLSWY0bzRqWF9zaGN2d3I?oc=5) · 17.11. 22:18
+- [Oil prices decline on API inventory data, Middle East tensions - Report.az](https://news.google.com/rss/articles/CBMikwFBVV95cUxNbDlFMnVhVHZXXzN5SGtGb0pTQkZzSXNyX3k0V2w5NmtuS3BYM3BNbUdqRkQ2Ty1SLUlvUjZQWHpYYlpHdU1Jb0FvRHNoemdUbVcwQ3VydkJWWUlGb2cxSS1xLTY2NXoycXYyTTNDdlNzcEdpeWd0ZmotV3h1UzRLNzlIMVhvWHlnUWdUYzhhT2VmMFU?oc=5) · 18.11. 06:50
+- ⚠️ [Drones attack Russia's Krasnodar Krai, fire breaks out at oil refinery – videos - Українська правда](https://news.google.com/rss/articles/CBMiZEFVX3lxTE4yTUpQRkc1UktnQjBlRHhIai1MSjkzLV9Nd0gxU1pQZzQzd3RtV0t6czhLdGZEN1BwdFNKRU91RUNxYkVldlpxWFk2ZW80SGZNb2pXcXRFZ0E4MExIdUdheG5zMl_SAXBBVV95cUxOM3I4QmtMY1NlN0MyZzBHY3NqTnNnZzU1eWotMFJoYU5JVmRMcXlEM0cyTW5wS0RFSFRsQ3hmd0VEME05Ukx4dGxaY1A0Z0VfSzJ4MU5GSVVYV3ZtekQtX2M5WkN0azcyd1RVTlhZb3li?oc=5) · 18.11. 06:36
+- [Taiwan shares drag Asia stocks lower as Nvidia-led optimism wanes - The Edge Malaysia](https://news.google.com/rss/articles/CBMiUEFVX3lxTFBaZFk1R0pzLVEzSVo0MV92SDJEbk9UMjZVNS16dGJWdHZKVm91QjlsTEptck5lZG9nRmdXTjFpcE1vTVZLdGhpTWZsdVgtLXYt?oc=5) · 18.11. 06:28
+- [China AI stocks, hyperscalers hit by signs of tougher US tech curbs - TradingView](https://news.google.com/rss/articles/CBMi0gFBVV95cUxNMVZSNnU3Y2lZT3pNcklSMVdQWVRUUXRENURxMm9VaTFFZ1UwQ2FnTV9EMmU5SjFWNWJsb1lSaXZGUENhbkE2cUtxMGlvRWNjZVVhd1BjaE1XT29RdzFteEZObDdoTHcydUVrT3lTM0ROOC1sb3VaamxfVVFhVGVtV09HczNKekRnSFRmbHBoZE94VUtzc0V0VTBfMk14Q2x2cThpdzZic1MzMlQ5WEFpVlh4cjBhZnJJT0FkRmpUZU5UMkFjcUJNSmdJMW10ajAwZlE?oc=5) · 18.11. 06:17
+- [Shorting Chinese stocks second-most crowded trade, survey of fund managers finds - South China Morning Post](https://news.google.com/rss/articles/CBMi2gFBVV95cUxORHFPWm5jTjFUczNtM2pYQ2RSREFVaTNhMGFlWEtjdmFFX2h4T1QtY1lFLXdMS0xFNDN2RFRrYXYwWWQzMVZ2bzBnV0Y1d3FyMmxKLXF0aFI3d3BRNHZJcU8zYXdSTWFGX1pMa1pnMHVMM0wwSVF4SURiWUVheDV6MU5kY081VDBpWFBPTGh3VzgtclNwZkxQM3RKX2dOclMxWlJBNTQ3c3paTW9uZFp5TDlxQ05LWEhHNmtNMGw0U0N2bWFpY1pPMTVVTnRFT05tOHZxUkVtNXY0UQ?oc=5) · 18.11. 06:00
+- [Fugitive emissions from valves - Oil & Gas Middle East](https://news.google.com/rss/articles/CBMidEFVX3lxTE0tNFo3N2ZTX2dwZ3IxXzJDZ1RPZjVnczhZeW9VNEtTS0tHX3dnWnJjUkRvODRxYVlURHNHcEwyVHhXZkFlaTZPY05IYU5tOWx5RFNLWWt3aEd0SDdJYVBuYld4VVFwV2tKY3ZQelBLUEZFcVlW?oc=5) · 18.11. 06:00
 
 ## Zölle und Handel
 
-- ⚠️ [Canada, China agree to ease tariffs as Carney seeks to diversify trade ties - Investing.com Canada](https://news.google.com/rss/articles/CBMiwwFBVV95cUxORkc3aHo4bF9iYU5pN3ZqQW1ScTgyN05pcDdnUGNpUmlVWU9wYW5CSzUzZmJEOUY1ejd0UEJtSXcxVWozQUU3b1lpZDlqaGxPV0RkNncyMkV2RmQ2dmtIZnNWSXFQemUtNG9Zbkh0S0JXMW5VaU1BNVpTZk1VLUJickI0ZE82aW5aRlFGUlFmVWFFZ3pWSVFIQkMtZURZN3VWa3RwOWZydTJzVjRMSmYyM2c5R3NkR1F5VUNXNm5iREE5cmc?oc=5) · 17.11. 22:41
-- ⚠️ [Washington Can Deliver Affordability by Repealing Trump Tariffs - RealClearMarkets](https://news.google.com/rss/articles/CBMivAFBVV95cUxQSGEzX0JseFRablZaWDMyQ3lRd1dHYXhZS2pRcFY0dUtDVl9yVTNwMUFTUy05VXQ3X3VZRW5aQTVLMnZlRUFBbUowaVI4bHNqUy0xYTEwdVBGZFBzNGY1S1NCX1VJNDRlZzZ0aEhvdG5ZY2VfTS1CNWx2aGxCUENnTFFaVmF0QUlCTHRsX0owSmMtLVZQT2wzbWg2N2cyWU9JcTFnYVVZX0tTSy1IN2hvYTV0aDU0SXNISWRtRQ?oc=5) · 17.11. 20:56
-- [Charted: Which Countries Have the Most Concentrated Export Markets? - Visual Capitalist](https://news.google.com/rss/articles/CBMiqwFBVV95cUxONTRCZ0NSNnlxU1BoU1gtTmZ2b2pmYnRQNjNhY19qVW91cm1jQnFMUGVlYlNtbzZqelYtajJCMXQtcTR5TEh2bl9lQndSQnR4amlwcW5YU1VCWlhIemhXZVdUTWV3NXpOWWxsTGpVSFU4UjhXRmJVbE4wbFJtOVFTV013T2gyZlNnR1MydUtQZXliT3RNLXJfV2N4a3dRQWZiUFBVUnlBODJwb1k?oc=5) · 17.11. 17:26
-- [US retail sales and manufacturing suggest strong momentum - ing think](https://news.google.com/rss/articles/CBMikAFBVV95cUxQaXZYUjFjV0pwUFh5eFVVbGptZ253VnBJX3FWTE5mLUY2UEJHaTBTWDQzeDlNdlZDYURaMUE3b1ZrclJJaDQ4ZDRwbm9Cc3owc1JFY05GblFucUoyWUpyaHd2YlN6QmlFdXUya2d4TGk2X0p3UTVHQmlVZDJhQWY5VUpFenNyeGxTcHAtU2x0YlM?oc=5) · 17.11. 16:16
-- [U.S. and Thailand reach ’substantial conclusion’ on bilateral trade deal - Investing.com](https://news.google.com/rss/articles/CBMivAFBVV95cUxOQTRHc3BxZWgxRTZyNmMtUmNORFBSTjZ6V2pRWjdsS3pNamxfak40Q3FGZERGcHdZMzMwZ1B1S3lMWnhuUDB1RWprVmdaWXdyUnRJSHRtdmplakVNVnFiVXlrLVBnZmVoVjI0NGdZX240SzNaX3pTNTIzT3J4Q3lpN2pxMTk3TktoNEh5WDRlSElVbk5vWkowMFBfV2sxdUZOVkMxRHZTNlVmTW1kNlFzNllWXzI0ZEF6QVhKTQ?oc=5) · 17.11. 15:57
-- [Trump Trade Deal Could Leave $3.5 Billion Hole in Canada’s Budget - Newsweek](https://news.google.com/rss/articles/CBMiigFBVV95cUxQRFo5a3RwQjZiVV8yLXBWWHVXMURxZ3M2MWdGX3BjbjNiS1VqOUp6aFA0TzRpaU91VWxyazZvM2hFSGlJZ2tITWZmeldxMm14OUtXc21qMThpWlRKMUxmSW5UNTQyVHlMcDFxcE5jQ2thRUQxSjhfbm10ZDMwdUlpeHY2ZzIweHZTb1E?oc=5) · 17.11. 15:49
+- ⚠️ [Thailand to seek US tariff cut after reaching key terms of trade deal, minister says - NST Online](https://news.google.com/rss/articles/CBMiuwFBVV95cUxQRlJxZXJYVUpRdFpZbEx1alJBQU5FeThtZGtndklUVk1yQzRNUk56ejdlYWpZRkZ1ZjlFSGY4NEVTdEh4Nl94NExDNHVaRzIxU05vZE9ONUMxbkpHd1U2ZjdITnJjaU42dWMxV1ZlR3RlWi00WjBvS0JzZEJjMlUweFY0T3JSc0gzZzVTRlZqRUlFWTBDSTRtYktmS1dYd19pRGhRbUxQQUJUZE83ZGxwcl9zYjVmVDhXQTE40gHAAUFVX3lxTE94TVNrWW5VRkNsMU5EZ2FuRVZGWTl6azdBU3RKM0RGRG51ek1rX1g5dWd2czFJck1rUXJSdFRxaWkwaFhUVTMyTGVZblRpb2Q0aFdKZHBMbkZxR1NydUVlQkF6OE9acGlsUm56bVpVTWtqRHhOV1VIdjU3emxZWlVXX1BjTG9tNEVTaG1LZ1RndFhEYVI3UVVPZGJLRF9CanhfY3B6TUhfX2Q3ZFpGZEdRQklvWlk2MXRjT1hDZXVzUg?oc=5) · 18.11. 05:51
+- ⚠️ [Thai government clarifies US tariffs, says trade deal will not immediately open markets - Khaosod English](https://news.google.com/rss/articles/CBMi1AFBVV95cUxNYUVROEtYemhKeDAwNERieWtnYWI0ODJQZnVjdlZTUmd5bVN1cW96Um1WazRKcy01VklsTkJvY3VBRUs4YU42OEFwMERubEpwRVF0QnYxWnNyR0FqQzJoMFM1YW4tcjk4Ul9hbGY1LWxMc3F5QWhBUEFKMHVUUFlYaTY2TS0xUnFVMHcwZWV3UU1kWnBxZFYxSXpVZ1NTVXVWVmZkb2dEMm5yMTc5dlZISTRYYnlWRnFwSThVLW5wV1lPUFF4eE1JUTlqWkhWOGlLVlZtatIB2gFBVV95cUxOVWJJR0lUSEZ3WHNfWXFGT1RqWDg5ZVJ0UFFzNnRhd1YtWFVKR1hTZktJQWRfUGwyb2pJNFgtTkl5WS1hSENtN05NdEozd3NBejNvRFJwQ0pkZTUyNjFRUmpXcl9UeE9kcjdhaFNkR2xwakJRYmY0cHBlOEQ5S0YxZUtTd3VwMVFfVDdVdTR6VVVUN2V4Wk9zSGZKaFRNdGFOZzNjcXNyVFhJRzdWNThKbE5rcjJJZmpmMDVFX2dLOTBjUUdNbW11TUR0OGh3b3BORmJWQTUxeFQxQQ?oc=5) · 18.11. 03:58
+- [Thailand opening markets wider to US to secure trade deal - The Business Times](https://news.google.com/rss/articles/CBMipwFBVV95cUxPM0pKWDctNkpGd1VZbklWWXVOWGxxLWpCSi1BcVZJZFZlREdRaU5OalU0NTRydVRSRjlWeG9TdFNIZWg4azNDY2h4cW9yQjVZaGNhTUgxaFktWkNGMWloajdmcjhzamdJRHpDd1BEMHR6SlFsYWZaalptYXVvV0hvZjVYS0J3bE5JZU9CelNqTTREWUZCOEVycmJmRkZrZUhqY1FUQnRqWQ?oc=5) · 18.11. 00:38
+- [Thailand and U.S. trade talks near finish after Bangkok concessions - Briefs Finance](https://news.google.com/rss/articles/CBMikgFBVV95cUxNRzFKQnMyMVFkX0tqcDhVaHkxdUNLUUNDaS1YNzN1SzZjam9aR1AxUGhRTENobWFfc0lGRGt2UlVvcl9Wd1VpOHBLRW5fdE5aTVdIelo4QUJvWkE3UmdBR1A0YW8yX2llX3Q5aXg4NXlpaG8wS1lGczBpb3ZvUXp1WWkxMnRwazBTRWxydVJZTzl5Zw?oc=5) · 18.11. 00:02
+- [“It will move money:” Bilateral trade deal taps trillion-dollar renewable energy and green indu... - Renew Economy](https://news.google.com/rss/articles/CBMiywFBVV95cUxQRF9CNGM4V1ZGVDFBUTFZc0tzeVlCcUVVR0llMkhMS01RMkdseXl4dFgwNmxaSkFZdG03RnAwcjBfdk9XTFd2UzhmYUtwVE5IODNwdmJZaVNsZGNweU9MT1hCMktpQUt6OW9NTHpJV2FLN3J5LVpkTkctSG5HR0xmSloyNzl2RnlkWDlaTlFfRksteTItTndKbjYxSDFNdk5id2FhOFNwc3FGTUtFakk0SEZ4MTYzS2JUYk5OUGJiNG5SdTYzc3lrWi1Rd9IB0AFBVV95cUxNdjFoaG9Ca2htTi1LOWV0cmdDMXVzSC15d2ItU0JzSHhaWllQTkpsUkR2Y1BzMXZka2VCOGpYNDJqSGVTY2ZSY0hmTnZwQlJTelMwM2d5d09YeUNXNXNLc25sdFhTMlpiaXdfVjY0NDNqMHhvd3BXTzBzMDVWRlJEVXFkcnh4d3NhYmQyOTNULXZYaGZvbFZ5ck5adFMyTmhWa2I4MFJ4Q2NTa0VBUkZFaDVXYk45SzZPU29CZ0ZBWEZuZ1Z3b1VqODZ0QVFsT2dP?oc=5) · 17.11. 23:34
+- ⚠️ [THE WORLD BRACES as Trump’s Canada Tariff Stand-Off Escalates: McGeever - EnergyNow.com](https://news.google.com/rss/articles/CBMiogFBVV95cUxPRWpzaEpnek5fcFpta0gwTlVaUVVqVW9NQmdKMHhIYXp4dkc3NUt6NEw0bUxaUXhQSjBvWFhiMVR5QTRzWEREYzc5ek4xR2FMZEYzeUpDTlkxQkZJVVVlTTlDa0J3bWtxYktqZ2xjT05ZNEU4dU9mUmFHWFdEakZqcHV6R1dBUDhZdFluSUFVTEd6MGRpTkxjQnU0a3AzUFpXU0E?oc=5) · 17.11. 23:24
 
 ## Fed und Zinsen in den Nachrichten
 
-- [US 10-Year Yield Set for Historic Run Above 5% on Fed Rate Cycle - Bloomberg.com](https://news.google.com/rss/articles/CBMitAFBVV95cUxOOTJ3VWxtanltWDFIdk5Jc2U5eFdaUFp6aG1PVVkwVVNpNVZxRFRvQllPcjYwVGh1OVlpVG9pQ1QyX283NldTUnBMa0NxRllJd1E3UDVacklIdTh0MmxsQnc2LTRfaGFFR092OHZZNnUwNEFGLVBFaFF5M0paNFo5d0t4YUIyUDNOVnV5UVVyRTlJRmN6azkxTmNjR251eU8yaDVmX2tJdGpFNkdIekVRbndoMEo?oc=5) · 17.11. 21:14
-- [Battered retailers and tech stocks tipped for 2027 rate cut rally - AFR](https://news.google.com/rss/articles/CBMiwgFBVV95cUxOWlJuaHZPZDQ1SUFBM3gzM2Zrb05EMGN2S290Sk5MU0hvdVRKOV9JTUx0VHozTDlfd0MtYjM1ZDMxZWt4X1RhNFZNcnBlYjBmNG5Md0Z2aFlrcUt4VlNQSTlCNk14MFJIV3owWU9pOGRYZGpoTUhZSHpJcEtydmxrbVRWQUM2T1JUTlpvaVZVR2F2YVVvdmo3dDAta2hzZFoxaDNTZXAwYkt0WDl5aWdOY1d2TDZFQ3I1bWM1YXY1MTBtZw?oc=5) · 17.11. 19:00
-- [US Stock Futures Fall as Nvidia Earnings and Fed Rate Outlook Weigh on Markets - Analytics Insight](https://news.google.com/rss/articles/CBMiugFBVV95cUxQQVhRR2RTWjI2WDZyLTkyYjlWSzRZZEtLRmdrS3pNN3k2OXhaUGVneE9ncEh6anNLNzhDeER5bnVqT0JFWmxqZHA3aF9QVmFud0FTcFlJbk83YUsxR2lyb3NJMWM1aTViVXNGcEtOTlJxMGtQR1BkZzJWYVJ2TFFQblVsd2NHNkVnMTVrR1YyTEFNRUE2OGFTS2UyeUxocXdYeGY2VlpPd1o0dkpHU3JONktaOVVyM2x4VEHSAccBQVVfeXFMUHB0MkJyTHBGTDIzZ2g4R1JrV0NSbGZzU253UHNSczhOQWhyM1c3MDFVcC1KMFAyZTlkOHFaVkM2WDZJYzUyZzBvQ2tTM2ozM2xLM1BOcF83UHFla0l1dEpvZ2JVa2RqaDhfQk1OMkE2dDMtRGQ4c3h0R2FHMjBaNllKQk1VU1R3Q2xjZkFZd0paT1YzWFRHWHRPeDRaRkRZTDhWM2FITEFYVlhtcHc5aHNnSE1heHQxUWVsU1ZiSWJYNHI0em5JUQ?oc=5) · 17.11. 16:00
-- [Federal Reserve prepares bond-market intervention principles for Treasury stress, Hammack says - Traders Union](https://news.google.com/rss/articles/CBMimgFBVV95cUxNVmJwVVdSNEphTTQ0eUwtT3preGZJSF9ZanpaR3R6dXllXzNiY0s5NnEtUmVLa2RxdFZGa3hDTGZTbGZVc0hMenpPTnpOMWs4TU5tMEs0UDVMUDRYZVdRLS1yRTdaWHlzNkl5OTRfRGpsMEpoOEJjRHhEM1pKa3p3VXVNMzA4c2Z3TlA5MWJOX3o1dlMzMzgxcHhR?oc=5) · 17.11. 15:55
-- [Fed needs to prepare for bond-market intervention during calm times, Hammack says - Reuters](https://news.google.com/rss/articles/CBMiugFBVV95cUxNQUo5ZjhNVXlMSUJ5eUQ1Q05MeXVTM0VEZ2ZEd1E1c1NzS0NlNFdROTZaOS02aE44OXZHWjFuNWR3U0hFMDNZRkp0UlhxN3JCaWpDQ2xIelZ5amJJbDhOQ0pEei03RkFaTFFRbFBFSUFpbWlTYTZCYTcwZmgtRi1LMzM0dzVFNkFubWpkTGlRTmlHbWZ2VTBDaDlWWUVodzlFZk5ndnNRQzhWS3BtdGRUUzJDZmhoLTN5M1E?oc=5) · 17.11. 15:39
-- [Federal Reserve outlines tokenization priorities for U.S. payments system - Traders Union](https://news.google.com/rss/articles/CBMimwFBVV95cUxPSDNWVmVHdDRSb3d4N21WSHE0SWR4MFdQNS1vVGdoR3l1aGY1MW1oMmRMcXZZazExaDF1RWE0UGhVTjRYNzF5cmUtNmNlMTNiX2hzVHA2Mjc5Z0lfWkpYWnMzS2dzS3ZJcHNEaHY3LUs4QVNSbHV3Q0hLU0lkblJyT3BiQl9OUWRtazdIeC1uYXlVTEhZSzdXMFpKbw?oc=5) · 17.11. 15:19
+- [Gold Drops As Mounting Bets On Another Federal Reserve Rate Hike Weigh On Prices By Kedia Advisory - Investing.com India](https://news.google.com/rss/articles/CBMi0AFBVV95cUxOWEhEdWFyR21KS0lmOENCY29RSjl1ZnUwcUVXT0twbmpTdEt1MHEyaE1CR2ZadGRlZWJiSDJoRXM2dHk1OG1XTHFlTHQ1TXVxaUE0c29DN1F2OG5QN1ZIU1pWTUU0LXBYUXlUY2NVaEVraEY1WEJwbUJjVzdOZDNrdnAzdUZLMDJ4NWtDb0FPak1mMWJ4dEtLWFNZV2JTVkp4NTJpMjBpYkhndm9INUZES292UVdualZ6UURGcHhvQUlMQ25FTTZFdlBkX1dKV1Qz?oc=5) · 18.11. 05:01
+- [Dollar Index hits post-April 2025 high as hot US inflation revives Fed hike bets - VT Markets](https://news.google.com/rss/articles/CBMixAFBVV95cUxOUFc1UWtQckg2Zll3bXpPdlVJb1p5WEhtMmNwTjFCTnE1YTFkdGN2TzVMcmNDWUxGVnFiX2xub18wczVybVQ1SFk0THRYekdMclpZX0RzeFF2aUJuaXdGeDVhM1hYM1B2Mm9mUnNDTWlYTVlvSVZIUkxGQkRCMUl6QmJMWHk2cV9MdHM4UjlKN3ppUk5JUzZ1TzR3OTcyVUNwcXN0cDdqSktxbXEyaEk5d2ltYjJBQk5aS3QyUU9femRNbXRU?oc=5) · 17.11. 22:42
+- [Bitcoin Stalls Near $64,800 After Weekend Slide as Fed Rate-Hike Fears Weigh on Crypto - BigGo Finance](https://news.google.com/rss/articles/CBMidkFVX3lxTE5RdzZjTkhpcjJKV0tWZ2MzV0ZYSll4WXVKVXh0YWhBSXNNNHVhNGtteTJ0a3A2aW90MXFhazJzajNEUUJhekotYmJFb2p2anRCX203UDFGV002WWxvdGJYUjB4eUlkN3VBU2U3T0FJeXpseElIX1E?oc=5) · 17.11. 22:05
+- ⚠️ [Cleveland Fed’s Hammack supports gradual rate hikes, warns of larger increases if needed - Crypto Briefing](https://news.google.com/rss/articles/CBMiqwFBVV95cUxPYXpEN0VfYk9QLWxObHMtcW1xZFAtV19wdGhsc1hyMWUyN05yaFItbDJGc2x6enVwNDNQNGhobnViWFh0Z25lWDdLNncta3JJR200Z2dRWWJSakJfRVdTTXFSdDlRMWcydGtwLVVUOW9fT2RmVHZPRndVYnBXVldQM281QlRGSHY1dWdnTVJYblFhT1o1eXItWVItZ1Q0UXhENTFWQk9DMHd5NVk?oc=5) · 17.11. 21:56
+- [US 10-Year Yield Set for Historic Run Above 5% on Fed Cycle - Bloomberg](https://news.google.com/rss/articles/CBMitAFBVV95cUxOOTJ3VWxtanltWDFIdk5Jc2U5eFdaUFp6aG1PVVkwVVNpNVZxRFRvQllPcjYwVGh1OVlpVG9pQ1QyX283NldTUnBMa0NxRllJd1E3UDVacklIdTh0MmxsQnc2LTRfaGFFR092OHZZNnUwNEFGLVBFaFF5M0paNFo5d0t4YUIyUDNOVnV5UVVyRTlJRmN6azkxTmNjR251eU8yaDVmX2tJdGpFNkdIekVRbndoMEo?oc=5) · 17.11. 21:14
+- [Black Monday 1987: 5 forces behind the stock market's worst day - qz.com](https://news.google.com/rss/articles/CBMie0FVX3lxTE9kcTY5NTZzemk5SGM4ekZnbFlwOHluZ20xNDd0aXZtekFPZ2RhaE02Wkxrd3RWYkp2TDQ1TUZ5Q1lnSXJEdVpjQW83amJiMFRVSVlyVjR1a29UNTc1a0ZGa0pjQWlJQzNnYkFhVjR6Y0ZVMlhhb1l2Yk4zWQ?oc=5) · 17.11. 20:58
 
 ## Wirtschaft auf Deutsch (tagesschau)
 
+- ["An der Zinsschraube drehen", um die Inflation zu bekämpfen](https://www.tagesschau.de/wirtschaft/finanzen/inflation-interview-bundesbankpraesident-nagel-100.html) · 18.11. 05:02
+- [Neue Quartalszahlen: Nvidia verdoppelt Umsatz und Gewinn](https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-quartalsergebnisse-100.html) · 18.11. 01:59
 - [Wirtschaft vor acht vom 17.11.2026](https://www.tagesschau.de/video/video-1685530.html) · 17.11. 20:01
-- [Jensen Huang kann sich Rückkehr an Nvidia-Spitze vorstellen](https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-huang-rueckkehr-100.html) · 17.11. 19:03
 - [Marktbericht: Kräftige Verluste vor Nvidia-Zahlen](https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-ki-dow-nvidia-100.html) · 17.11. 18:26
 - ⚠️ [Warum eine Konjunkturerholung noch kein Ende der Jobkrise bedeutet](https://www.tagesschau.de/wirtschaft/arbeitsmarkt/industrie-aufschwung-jobabbau-100.html) · 17.11. 17:47
-- [EU wirft Temu mangelnden Einsatz gegen illegale Produkte vor](https://www.tagesschau.de/wirtschaft/verbraucher/eu-temu-illegale-produkte-100.html) · 17.11. 14:24
 
 ## Was der Paperbot heute vorhat
 
-Konto: $90.351 (Papiergeld).
+Konto: $90.152 (Papiergeld).
 
 | Teil | Signal | soll halten |
 |---|---|---|
