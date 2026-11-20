@@ -1,4 +1,4 @@
-# Briefing 20.11.2026 15:15 Uhr (Berlin) · 09:15 Uhr (New York)
+# Briefing 20.11.2026 15:49 Uhr (Berlin) · 09:49 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -12,19 +12,19 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 7146,00 | -3,9 % |
-| Nasdaq-100 (Future) | 26232,00 | -3,9 % |
-| DAX | 24924,98 | -6,8 % |
-| VIX (Angst-Index) | 30,18 | +31,7 % |
-| Gold | 3567,60 | -7,4 % |
-| Öl Brent | 89,00 | -3,7 % |
-| Öl WTI | 82,27 | -4,0 % |
+| S&P 500 (Future) | 7165,50 | -3,7 % |
+| Nasdaq-100 (Future) | 26202,75 | -4,0 % |
+| DAX | 24958,24 | -6,7 % |
+| VIX (Angst-Index) | 29,37 | +28,2 % |
+| Gold | 3578,80 | -7,1 % |
+| Öl Brent | 88,38 | -4,4 % |
+| Öl WTI | 81,62 | -4,8 % |
 | US-Zins 10 Jahre (%) | 4,98 | -2,7 % |
-| US-Dollar-Index | 103,71 | +0,2 % |
-| Euro in Dollar | 1,10 | -0,3 % |
-| Bitcoin | 61868,95 | -4,6 % |
+| US-Dollar-Index | 103,74 | +0,2 % |
+| Euro in Dollar | 1,10 | -0,4 % |
+| Bitcoin | 61492,39 | -5,2 % |
 
-Angst-Struktur: VIX 30.2 gegen 3-Monats-VIX 27.0 -> **angespannt** (kurzfristige Angst höher als langfristige).
+Angst-Struktur: VIX 29.4 gegen 3-Monats-VIX 27.6 -> **angespannt** (kurzfristige Angst höher als langfristige).
 
 ## Fed: Mitteilungen und Reden
 
@@ -43,12 +43,12 @@ Angst-Struktur: VIX 30.2 gegen 3-Monats-VIX 27.0 -> **angespannt** (kurzfristige
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
-- [Iraqi forces deploy to oil pipeline in Kataib Hezbollah stronghold - Middle East Eye](https://news.google.com/rss/articles/CBMiuAFBVV95cUxPS3RRbk1pS1dDMnRFaWN3cDhKTEZSdWxCOGlmeUF3RUpGLXFBWi1xbnF5QWxTNzE4Y0pwVnNNcVRBSUJKM1Q0dDc2S091LUFSNG4wYTZQWVlPSFNaaDhCVXV0QTM4YnFTYW1PRHhzTXBSZ3F3dHl1OEFON1k4SkpNc1pJUHJVYl9sM2JYS0lLeUxGUmo0M054cVp5TXIySjRTOENIMzBROGc4OVlYMHdJYi0wY2lLaThJ?oc=5) · 20.11. 14:30
-- [Global stock markets slump as Anthropic’s record IPO fails to stem AI sell-off - The Guardian](https://news.google.com/rss/articles/CBMiowFBVV95cUxOam9yUlhjeXdQYldnSlpuMlRsWjJsLXFYUGxaM3ZVc21qbTEyUG9Ja2x1aVpZRDU4amVMaTFsZVh0dWlYLXRWV1BJbGtoTkdfUjFkVlhvTnduWGFIY1VKcGNTRWRjTTNlQ1c5Z0FrazRudjFKOFVMYXVhMGNjYmVrMEpFSnpJa09jTHNDX0xrdG95NHl3ckRDc0RLZW9SQXNnSWdF?oc=5) · 20.11. 14:27
-- [Taiwan Stocks Plunge 2,393 Points in a Single Day as Financial Influencer Ba Nini Reveals NT$6.5 Million Loss, Says Her Statements Run 'More Than 5 Pages' of Red Ink - BigGo Finance](https://news.google.com/rss/articles/CBMidkFVX3lxTE4xUm9vYnlDNXd0bkpOTXJOU1NmTWtaR0xSQnpYRmdwbkVTZjhiSGJ6WF9lMW1YN1U5aFE3V3ZTdFlXRnk3UUJIZElwclk4Ym4zUzQ2RlQ5d2ZldVNtQXJmczUyTGZOa3BhSmkxbml6QldZU2JyNnc?oc=5) · 20.11. 14:25
-- [WTI remains under pressure near $84 as Middle East oil supply recovers - Traders Union](https://news.google.com/rss/articles/CBMiigFBVV95cUxQNV9xOUswQmFCaWo4TUZvenhLeFQteHlzNjNKRm13RnNkOXhhTnRna2Y3X0hyWUVfZldqcVFMS2hYcVBWNGlvd0pHZ21uU2RucnR0ZVdCMWlnQTdLQU5HTHp5aXVCSDF4Tm9VX1ZCS0ZGMjZHUHFwVHNobmpORW5ScTdvTmRPVXpCd2c?oc=5) · 20.11. 14:23
-- [Oil set for weekly drop as supply surplus concerns outweigh Middle East risks - Anadolu Ajansı](https://news.google.com/rss/articles/CBMiuwFBVV95cUxNOUNmR3BsTlV5aWdwSFRwOURiWjFpcTItQ0ZDT3FQeEE3UFB4MGVtZE9ncG1FVkNsb21seFVPWFJtUlpHbzZmUUphbHIxbGdxdnBPWXZETVlkQ1JoSXVFM3F1NFBlZXo0alhEd3VBUVNFSmd5U3NrYWhTMS1jM21Ra0xxMTQwQlZ1NW1qYXEwRndFOWVkZ2J3S2d2cjJRMFhFdFFaa3pzMHE4dmhPRjBIcm5vUDhMajJEZHJ30gHDAUFVX3lxTFBjNG8xQWpLLVJXRjJVOGV0RFR1OW9lZEFGM3RwTXNEeEgxWWxkVm1fMlNEVWUyM1R1QVdDUm9EUTJfLXMzeXZHLURGcDllRnRaV2s4ZlJVQzgxeG41amlGNG9ZWmp4RFBqUUpqS0o0N1BiSjlqTHRuZ0FhcmJweVVTalg5bmx2Y0FRTUxGTzA2aG5JR3QtTlN0djJmVE13U0F5VlF0ZS1fWTd0WFF3a3Nvd0FSWHoyVTI0QXZXWWNfRmFWbw?oc=5) · 20.11. 14:20
-- ⚠️ [Sanctioned Tanker Transfers 200,000 Barrels of Iranian Oil Amid U.S. Naval Blockade - IranWire](https://news.google.com/rss/articles/CBMiuAFBVV95cUxNcDJXclZGTzRZZlFySVh1Yi1FQUg5N3o3a2VaQlVkT3dMRV90WGZyMWh5SnM1bmhZWnVuN1JlVWM1Umh0MkJPSE9LdEQzakJzWVlEaDhlWjJNelN1bElfSGNib0hVeGY4dGY0Q1Z6YmR4Ty1FNGJ2bWFxSXl5Z2JoUzA0a25RRi04M01xWGV2YmF5ZkhJaGotNXRGWEltRlJsYWtRV1N0NjFRSWctZnhJSjZsdWNWMGpt?oc=5) · 20.11. 14:06
+- [With Oil Revenue Running Out, Iran Teases Breaking US Blockade - Radio Free Europe/Radio Liberty](https://news.google.com/rss/articles/CBMiekFVX3lxTFBnS0VmRlE3ekV3ZHk0YzY3QjVhVkJJQUd1WWQ2NXVPQmpsN1pqWWg2MVpxajZYQnJIRVNOakJPU0FaUHVJYkVJQ2xScnNrcy15X2ZkLVpsTE42bXdYQ1VrVzJ0X2ZrdDFJalNWbnNJRUJBWEt6amc3V2N30gF8QVVfeXFMTUllRVc4WjBtR0x5QzBEcWE5TDBtQUVnOVRCSDRPUWlfU0ZUdldBd3pFbXZackNOR0xtNmE2el9MRWxmSmtXdkhlNGVJVWlfbDVsczFwem9DMmx2UU1nb0QtZFpwUjN5N0R4Vkh4SjdhY0w4WEIzWmFWcE5Wcg?oc=5) · 20.11. 15:38
+- [Oil prices set for third straight weekly decline on strong Middle East export flows - CNA](https://news.google.com/rss/articles/CBMiwwFBVV95cUxQbmNLaTkxQmh5NWhPZy1yQ2JaTzNDQmtxc3lfRzloekItV1JGNW93MW15XzBxM1Y3UG5uNG8tUkZBNl8xTDVuWEFkQlJTcVN0N0M3NzNGZTlWenF0MjJRVEdhamEwTDIyVnhkemZwdDdGTGRtdE56TlJiel9ZYU5kUFpaQ0o2ZFlqeF9zaU1LOEcwRHpuRElDb0ZSanp1QTk3cmZxMlJ2ekxHRXNCUGgtdW8tRmpzYm5adDl2ZndJR3M1S3c?oc=5) · 20.11. 15:24
+- [Taiwan Stocks Post Worst Week Since 1990 on 16nm Chip Curbs - Taiwan Semiconductor (NYSE:TSM) - Benzinga](https://news.google.com/rss/articles/CBMisAFBVV95cUxQUlVPelRWV2tMYjlhR1Z5bl9BMTc4dDdkWUFleElyeDlFbEQxekItTEh3NHhyVmxQbEx2Y01LXzVMWG9MR094U2hMS2lyUU9tM2Q3YmdLUGZybnZKX0R6M1RRaThSWms0OExFQVpoSHN1TVZMMXFrQ3pMUXdLdU5TWUdaTlFqZ09XQnhfcmoxUW91UkxfaDBYS08yVE9RQXdDbGxrMkFHT1ZWU1hXbjRwcQ?oc=5) · 20.11. 15:23
+- ⚠️ [Rocket Fuel Manufacturers and Oil Terminal: Madyar Discusses Previously Unknown Strikes on Russia - Мілітарний](https://news.google.com/rss/articles/CBMikwFBVV95cUxOV1o5ZE1rM2hJWkZYMGMzcjE4MS1HNG9YS3RDZE5DSUwxektJOU03MXhuVS1XQzU3VjJIQXdVNnpyaXpBOEp4SWVpNlBVSjJmZ2I4RnFLU1Q5Q0l4ZFZ3bXZIdEdmcUlaQm5BS0FiSnhfbU0tSVVkazFVWTJKSVhhVEVEN2dNVnNjUlQ0cDVneGZxR2M?oc=5) · 20.11. 15:22
+- [Russian Stocks Fall After No Breakthrough at Putin-Trump-Xi Summit - The Moscow Times](https://news.google.com/rss/articles/CBMitgFBVV95cUxQSDFPZUNoQnlZdnp2VjhRMFdnSno4OXNOX0hEaXR2SFBZdWJQWFJXLVYweFZPSUhwZm9qTjNseUVrLUVxRzZCRzViRl9LU2ZFTEpPbC01eGFsRWZNdzVWUTI3eldYZnNKdXg2OEZyODdBNnBoNHFZSm5Wd3duS1Z0QmJ1cXpFbUFJQ2J3N3pxTTBSZ3ZudTV1SG1BcGNFWHo1RTRRdDQzcGV6UmhHeHlhNXBIMk9hZw?oc=5) · 20.11. 15:20
+- [Iran readies tankers to run US blockade, threatens Persian Gulf oil if fired on - Iran International](https://news.google.com/rss/articles/CBMiUkFVX3lxTE9ZaWw0bk5fcTFTLWw0RktEcTZraU1OUF9PbHpfZUE5NHQ5TjNqYWlhLXFneWxuZDllNHdMNGVRYy1ka1FwZ1gxZElVeUxqekpVcVE?oc=5) · 20.11. 15:13
 
 ## Zölle und Handel
 
@@ -56,8 +56,8 @@ Angst-Struktur: VIX 30.2 gegen 3-Monats-VIX 27.0 -> **angespannt** (kurzfristige
 - ⚠️ [Marcos: PH-US trade deal covers tariffs, wider access to US food, energy SHENZHEN, China – President Ferdinand R. Marcos Jr. on Friday said the Philippines-US trade discussions cover both the tariff issue and a separate initiative to expand Philippine acce - Facebook](https://news.google.com/rss/articles/CBMi1gFBVV95cUxPSnZGamhHV1N1N0VwRllyaE5kRndKM09NelpBYllvUU5TLVFPZjhQS2JwMUxidEY3cXNNZ2hTM2hBbkJrcTliVXVRTTdEdjUwb1ZZX1lrdVZmUE10LUwxS1Mzdno0TEtveGVlWFlHZC1STG1JT1VXTzdFSXB0YW1uYjg1NzM2N1dhdUM3REJkWU94bnFvNTdobTBzRlY4WC1jQkc3aWxQMVJOZFdPZVZrc19qVnpqaFVla1VhaG4yUGNhYmhlLUZJTlZnOVFwNTVROWxWWWFB?oc=5) · 20.11. 12:45
 - [Thailand must keep US as major trade partner, PM says - Yahoo Finance](https://news.google.com/rss/articles/CBMilwFBVV95cUxPZXZJcVozem9tdWJiQnNtbU9yczJqQXNOWS1aSzdsSndMZmVzdmJ1aFBlclNmSG5jbTBwVGZ6TGpDY0x6SHhCOGctZjFXTV9PVTVyWDdHS2c2Sy0wV3lKQjVGb0U3ZzZsUkZ4M2dKWl85em9jbkZBcUszUktEM0ZhdGtuSC10cllxNVZldlRzSmdxWUFqZ3J3?oc=5) · 20.11. 12:11
 - [Analysis-Trump touts Asia trade deal wins, but US agricultural exports disappoint - Yahoo Finance](https://news.google.com/rss/articles/CBMinAFBVV95cUxNbkVLNGY0QkN5OFRrWnh0SjFGaERwLUNPN1QzcWQ5ZEZxNXJGR3ZaMGhMclhuLXhBY2l3bkZNa3E1TkJVMUdiVURGMmxRbEU3cE5MZnRweUZkRG1oZ0xQY1RlVGVhWm0waWlkakJ2cXBvZVpoOGJiOE5RWVN5MGtKeXJJSERQX0RZZXg1UU8xZ3kwcU5KUmFNMnpwdUs?oc=5) · 20.11. 12:06
-- [Marcos brings investment commitments, free trade deal from China trip - Inquirer.net](https://news.google.com/rss/articles/CBMiqgFBVV95cUxQWnBQeVotd0x0LVEzdkhOc2RTR180alMyMWJReHBDVFFXbkNERGRRNkVCSmN0MkFLQkpWbFhCckNzemgxcHhrcHV5X2ZVa25BRk94R0tUcDBQRGIxaWhHVU52QVhrbzVYV0hWdE9oSVhsQUJ3aHQxTnZmTWRDNThFcThrMEZWYkRzazE4cVZwdU5HUWhSbU5STGdzLTdqSVo0dXFCRUxBcHMyUdIBrwFBVV95cUxQejQ2M3Z6QWs0ODdFdG5KZVpkczZVTjc5T0ZrM19vMkZvbkw3cDB4WWVRRWhYR21ZVEVQbnNRdV9HU1BrR0JCNDZzc2xRZXlHQmFVRTB3MVl1eWt5X2FZWjNMamR3aVNGRk5kOVJpc1hzaDNfbDdTWnJkQm1CQTlYS0R2UHJjY2ZXQWRyLUlVa2NZS0VLUHRsQm1kQW44cmpKY1lNQ2szSmVaTnhjMmlv?oc=5) · 20.11. 11:14
 - ⚠️ [Democrats and Unions Are on a Collision Course Around Tariffs - NOTUS](https://news.google.com/rss/articles/CBMib0FVX3lxTE9SYmtTbHNWVVhzUjR5X0JTdXRTbnEwN1VyVVBxelVNZ3g2TnRtOVFPTWdXWFZleEJlY1VTbVdKeGl5LTR0VmUteDJtN1lrTXc0YTJjbXVVYy1ueGMxZUFrVmFwSko3MXVIcEd1cWMyMA?oc=5) · 20.11. 11:03
+- [PH-Chile trade deal to expand opportunities for local businesses - jiji press](https://news.google.com/rss/articles/CBMiXkFVX3lxTE1SMEFUeHBHWW1lUTdZeUdPc2NFMVNJcTR0dEFmUXFOajZaS2VSdnE5NzZBLXA2RFRkZlUxajNHWFBqZEF5dkdBZEl6QzVzTXBEc1RvTlZuaGRXRFJEUGc?oc=5) · 20.11. 11:00
 
 ## Fed und Zinsen in den Nachrichten
 
@@ -78,7 +78,7 @@ Angst-Struktur: VIX 30.2 gegen 3-Monats-VIX 27.0 -> **angespannt** (kurzfristige
 
 ## Was der Paperbot heute vorhat
 
-Konto: $88.483 (Papiergeld).
+Konto: $88.800 (Papiergeld).
 
 | Teil | Signal | soll halten |
 |---|---|---|
