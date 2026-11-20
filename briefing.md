@@ -1,4 +1,4 @@
-# Briefing 20.11.2026 21:40 Uhr (Berlin) · 15:40 Uhr (New York)
+# Briefing 20.11.2026 23:13 Uhr (Berlin) · 17:13 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -12,22 +12,23 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 6955,50 | -6,5 % |
-| Nasdaq-100 (Future) | 25201,75 | -7,6 % |
+| S&P 500 (Future) | 6966,75 | -6,3 % |
+| Nasdaq-100 (Future) | 25291,00 | -7,3 % |
 | DAX | 24802,78 | -7,3 % |
-| VIX (Angst-Index) | 35,60 | +55,4 % |
-| Gold | 3516,50 | -8,7 % |
-| Öl Brent | 90,04 | -2,6 % |
-| Öl WTI | 83,72 | -2,3 % |
+| VIX (Angst-Index) | 35,89 | +56,7 % |
+| Gold | 3539,00 | -8,1 % |
+| Öl Brent | 89,87 | -2,8 % |
+| Öl WTI | 83,62 | -2,4 % |
 | US-Zins 10 Jahre (%) | 4,91 | -4,1 % |
 | US-Dollar-Index | 103,84 | +0,3 % |
 | Euro in Dollar | 1,10 | -0,5 % |
-| Bitcoin | 58474,88 | -9,8 % |
+| Bitcoin | 58985,44 | -9,1 % |
 
-Angst-Struktur: VIX 35.6 gegen 3-Monats-VIX 30.8 -> **angespannt** (kurzfristige Angst höher als langfristige).
+Angst-Struktur: VIX 35.9 gegen 3-Monats-VIX 30.9 -> **angespannt** (kurzfristige Angst höher als langfristige).
 
 ## Fed: Mitteilungen und Reden
 
+- [Federal Reserve announces College Fed Challenge winners](https://www.federalreserve.gov/newsevents/pressreleases/other20261120b.htm) · 20.11. 22:15
 - [Federal Reserve Board releases results from survey of senior financial officers at banks about their strategies and practices for managing reserve balances](https://www.federalreserve.gov/newsevents/pressreleases/other20261120a.htm) · 20.11. 16:00
 - [Federal Reserve Board issues enforcement action with former employee of First Security Bancorp](https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261119a.htm) · 19.11. 17:00
 - [Minutes of the Federal Open Market Committee, October 27-28, 2026](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm) · 18.11. 20:00
@@ -46,30 +47,30 @@ Angst-Struktur: VIX 35.6 gegen 3-Monats-VIX 30.8 -> **angespannt** (kurzfristige
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
-- ⚠️ [Iran War Oil Premium Evaporates as Global Crude Supplies Surge - gCaptain](https://news.google.com/rss/articles/CBMijAFBVV95cUxQajV6dVh1R2Nmdm1lMzRHc2Q2YVJqb0tRNF9KdWpsSlFCSnR0RzRSQTM2WWd4eS1zaWg1S2tIeUZaUFpiSTlCLVcxLUUtQ3Axb2RwaXpYQnQ5SkNrTmlKSERuWnpkQ3RmZjFNcmVyeU9NX2NSdzFPZ0lzRDZrQmExTVJMdGU5bjNXdFMtdg?oc=5) · 20.11. 20:35
-- [Middle East latest: Saudi-led coalition targets Houthi weapons smuggling at Hodeidah port - The National](https://news.google.com/rss/articles/CBMikgFBVV95cUxPV2s2d2xVNlpZamM1RXpfRURTUFM4eFhHeFBkQVp6TTlLTXZWMjB5WFEwcF8wQ2dqR3U5SDd2VUNKdm1uV2RfV256RHUzUS1ZQWZJdnNlRmJtemxFeUZLR2tLWXhza2EwOVBWUEVPeUJ2VG9aV0R0RjVSWU1wVG8zU3p4RWJQMmhDcjdKOF9XZXBMQQ?oc=5) · 20.11. 20:34
-- [Attention travelers: The price to fly in the U.S. is at an all-time high, and it's only getting worse - The Business Journals](https://news.google.com/rss/articles/CBMirwFBVV95cUxQa3djS3M5UXdKSVhGTzlCM2V3VEFndlI1elVmWlh5VlFyZFA3NFhqOS10clZMd2s2ZkpNdmItTnZZYzFyUTdpNXZmY0JwV2h0WGoyQy1pVlBWNW96MnFGemRnVHJKZDVMVnhRcmNsM2J1SDljdFNpVnBiMEFZVGFXRlRZUjdpbHdjYUJQN2hDT1c5TERJdHZMZnZ2OXFIenA2UWEyZWhRLXVCX05fV2NN?oc=5) · 20.11. 20:32
-- [Attention travelers: The price to fly in the U.S. is at an all-time high, and it's only getting worse - The Business Journals](https://news.google.com/rss/articles/CBMiqwFBVV95cUxNMDkxUXZ3c1VReTN2N3hyYVdIY2xzdE1oNUotY2E5cUpGVEJEVmI3dld1QURILVltZnhEaGJNZTFDSXN0c2V0akFmV1BJZE9OZ0phZnBEYXZ4dmI2MW9nQnJITFpxLWpYZnJsOGZQUExHMkl6Y0JwOEh0TzFOcks5Mmt0OFdiTWdPdFE3XzFRbGhWTTByN05uZHp1eERUanYwUUxqbEVVU1NoeUk?oc=5) · 20.11. 20:32
-- ⚠️ [‘This Is Your Only Choice’: Iran Warns US as Oil Tanker Explodes in Hormuz - Palestine Chronicle](https://news.google.com/rss/articles/CBMiqwFBVV95cUxPXzdjM0tRanR5LU8tazJRUVY0SVM3OW1HZTZTWXI5Y184SUEyMmhHdjRNRElxNC05NW5rMmxya0RFR2VYNUhJc3RWNk9vLThKOVdfR293eW9ZeXhReGJYTVNfc0ItSm9wMEs5R1FNb1NpbU5rVERFNkZvZjljMmgyN2o3cnNKMVJEQUc3X2thQk5BeDIyaHdfNW93b1FQdmxNWjljZjFqZ25ESm8?oc=5) · 20.11. 20:05
-- [China to Overtake US as Top Oil Consumer by Around 2034, Oxford Says - marketscreener.com](https://news.google.com/rss/articles/CBMivAFBVV95cUxOYURuYmxuRVE3TVRRTTZQLWVrdUJjZzN0NE1Rb0pJV2phU1ZnZk1tbUFINWxXdGlseWE1anh2eTNQS1JFRFp1S3Z4UmFmbE43RVNoQm93bnFaa2d3bTBSTnhLeW5uZnhZU2pUR2p0Sk5SZWN1QUljVzFQbWhfWEVKRUlSeTcwOVZmQUpCUlZYYmE4dHA5WDlQZTJtZld6VnlFVmdSYmVBSzVwXzRnOHJtMzdtXzFsNUt4b3B3Qw?oc=5) · 20.11. 19:22
+- ⚠️ [US Treasury sanctions Iranian 'trustees' collecting oil revenues - The New Arab](https://news.google.com/rss/articles/CBMilgFBVV95cUxPUUFlRmtIbWhLaVp2UlVrYkJQZFJpZFVoSkQyMTNGNzl2RkY1RGl3NktvLWFDSThYVUo0TU5rcXdLTTVuOG9tR0xVdXBOOTlsNXZRQ1F4aVlzaFpsTXlBLVZ1Wl9kbnF1YUp6WlpmUEZhTmVNaE5Xa1ZfeTE3aHY3TDBZY1JXdUYzYjVUam5Hd3phZnJqUWfSAZsBQVVfeXFMUG81V1g0VVcyR25zYktJdTdtT29aMHQ1dXc1S1JvR1g3RjBxWm9lc0dyUFJWLVZWN25yb3B5MTFfS0o2bmtRcjNvWElmMXRRYWpXY3RMZnphN0lobHJPLVhLMi14VUp5ajVSMnlHSUtXWkNhRnVJUTRBZ042WnVOdjFSVEtvR0NtaGNLQ0t5NGpmR1pubk0xdVR3cDg?oc=5) · 20.11. 22:57
+- ⚠️ [Ukraine strikes key Druzhba oil pipeline pumping station in Russia's Tatarstan Oblast - The New Voice of Ukraine](https://news.google.com/rss/articles/CBMingFBVV95cUxPY1BKWG1rSmtKRm52bnBCZlNPTTI5QWRhRzdIU3lDbjFZZU5yVE9IMU5DelFIeDBZd3U5WlplTVoyM1VoMDNuOGNSLTJnZk5mdDBrVHc3Tm9yR2RjSUtjYm1VVDBLVzBHRTRWZFZBMTRlWXE5bzNkeHV1Um5iS00zdzNhN2U1ZnR3MGVoNXAzbTRQenMyRV9nWU5XeGswUdIBmgFBVV95cUxNRElmNWJROVpTTjBQckdCYnpYZ1M5eVozMmdCMEg4eEgyRDhESEtBaWI5ZDdRd2hoVEZtVXJMQmVPSkJtdU4wd2VnTFFvdUc5QUMxUktWT2NxczRaT0Ytc21MR1Y0Tk8xeHhZa29NU2ppdXllU2tqcXlFOVFiMXVMSDR6VVJ6aWMzeDJ2Y2Mzc0xndmREYVZ1ckxn?oc=5) · 20.11. 22:53
+- ⚠️ [US sanctions Iranian 'oil trustees' it accuses of evading sanctions - Middle East Eye](https://news.google.com/rss/articles/CBMiuwFBVV95cUxPLXh0c3ZjdnJ5enFmZkJ4aWFib2JmTWNlUTFJbVI1UzVfMkZ3WHZJV3E2ZmJBZmFpaXRiZVkwR1FWelpOVHVBOGwtX25uaDA4eUVMZXlWX1pMZmJPcEpKUFZuRm9BSGQxVlQ2UklqNGFaSk5iTjdfRmc1VDhGeHJQSFUwdDJUcWRCZnJQZ21HUDhRb1BHTXhwY2hiZGQwZkxCbUxMckxNajZzN0YxcXBNZW02bVJ2bHpSbk5z?oc=5) · 20.11. 22:39
+- [Russia stocks lower at close of trade; MOEX Russia Index down 2.69% - Investing.com](https://news.google.com/rss/articles/CBMivgFBVV95cUxOb1EwUkZoX1IzZkhkQUtIemtfNGx1WWVTZEkxbkFmb0t2ai1sdVJZMi1wRm43aGhiNWF1OHIxTjFrakk2ZUgxVDR5d05TUGxScEpQT3pJbURXMGFLWGNJTnJFSjNXUl9Db193WWlyR0pxR21qQzBqUmFYdGpvZHhCd0k1UndDdVg1aTFsZ3pDclhxd0g0NV9tMjZTT0pucnRlTGdTVV9MampvakNYaUxwV3NhUm5kX3ROLUVBM2V3?oc=5) · 20.11. 22:25
+- [AMD slumps 13% as China chip scrutiny continues, tech stocks fall (AMD:NASDAQ) - Seeking Alpha](https://news.google.com/rss/articles/CBMiowFBVV95cUxQYnhOcXVScW9jaG9POVAtX3hKQTNVOXJMR0lXRUc1VjdHTll6cVB2YmltUF8zLTZ2cUxkTEdMZGxOSzdJajlXWVFJVGNkOWhxUnhFalJEd3c2UnNWOWl5WHJVZ3NaTFVzNGY4Vzk0eGdmZi12VjA1T29lejlrSFBwTmduTlR4V2FzQmVlUTNCXzRTYXhXOU5udC01YS1jS1AySmN3?oc=5) · 20.11. 22:15
+- ⚠️ [U.S. Treasury targets Iranian oil network in sanctions move under Operation Economic Outcast - Traders Union](https://news.google.com/rss/articles/CBMijgFBVV95cUxPRWdNTWlsWmxDZFpqUnAtOHV5aXBVeENXSEItRTVhRXlISDgyQnVJQXdPQUhKWUhaOVNFU2w3Z0xDVEhVb0s4cTRoeWkzZGVrQWktS0dOekpScjNKRkJ4U19kcExob2E3Z2pRczhwX1pCMWpvcXktUkxQcXFBUHQzeUZZLVQ4aTV5b2h2REtB?oc=5) · 20.11. 22:07
 
 ## Zölle und Handel
 
-- [India moves to resolve Scotch duty row under UK trade deal - The Economic Times](https://news.google.com/rss/articles/CBMi1gFBVV95cUxQeDZIVjBaNFRjMTBENVFtQXlneHlHeWdzd2dHdXlOcmZDZlZXbDNyZ0E1UXg5ME13cktLbUFXeWVZYm51YzQ4d0ZNT2VjNDJLT3Y3REo3S3Uwa2lJUFg4WXJZSDlYTXhTNzFnV0dJcUJBX2paY2lHSnphSENBWnR0YVVHNkpjYnBzOGVtN2VISl81TFBCNkVaWjE0YmtENW95SXRXT3FmNVVFc0NQajdVajlNWV9DR1JJM0xfYk95aXdrRjlKSlVGazBjdzVodkdGMjFENmtB0gHbAUFVX3lxTE93eWo3Z0tXX25sZXg5eExnM1Y2STBSelFCNW1TTkJYcDJqZFd1WWllU2RSaW04Z0xnQ1p0QURkc21ZSnJGOUFNdld0ZWRIU05tRTZ6WjRCR1AwOWt3bVEzejBxbGpfdVktSE1jSk9hdDZJakRURVBNeUd4NDFtTmdhd2I2VmxWenoxSnJzdHZVbEZCZ3NvR2t0Z1A0Q2ZtVHJuejRGS2lZVzlJT0xEb29OREhOd0hZdUs5cFdRbUFURGQ1eEluRUFSaGpBbWZUeTVoeHV5VE03WU5vVQ?oc=5) · 20.11. 20:27
-- ⚠️ [Ford reopens Canada auto plant, defying Trump tariffs - Yahoo Finance](https://news.google.com/rss/articles/CBMiqAFBVV95cUxQQnZuUllDWWZ4Y2dMUC1IN3IxRUhNZHpTWG5TZDJDUTJjVUYxSjdCOWxIa1Y5dnVXaThuZndpcTUwWUp3Z3lxOTVhTm54djJQV1RlZ2VDZTJwR21YeWlnU2NiUVByWkt4WDJwT0xUV1RzNXJfM3hrSkpiTFd4UlRCZUl6RFlQTFFoYmNVbVN2WEVrM0g4NnpvSkJLSVhDcWlYVUFuNGxNOXA?oc=5) · 20.11. 19:42
-- [Copper Rout Worsens as AI Selloff Wreaks Havoc in Metals Markets - Bloomberg.com](https://news.google.com/rss/articles/CBMitgFBVV95cUxONHFkYW9abjlUcHNuc0xTR2JMOVlORUJqUGg2U0VBX1ROUUw4Tkdob19rQlJib3paR0NoUlZ1a0E2UHdZN3ltTFJSUnlSQ3dWVlVfNTBsaXg3Zm9RcmdRR2lmVmhKY05fNWMzOHVMbWRSLXl4QU9FZmNWVnF0QTF0MU15amhfTVdMOThWbm1sVTJqU3NFb1F4VlM3aV9rUXUyeXBHa2JtbWZxTTRBQnVqcEV1eUxoQQ?oc=5) · 20.11. 19:28
-- ⚠️ [Trump invoked a 96-year-old law to hit US$20B in Canadian goods with 50% tariffs — and there's no expiry date - Money.ca](https://news.google.com/rss/articles/CBMiiwFBVV95cUxOcElyLWNBZ1huUnNtWjFJZWFlY1R2cjYzT1BkMloxbzY2ZFRvWjZkaFAwWWplSDNrTmVoWnAzOTRqdHlGc2NjMmF5Q0hYdDdfa2hYbjFWUnMyMVgzOS1OV1BRLVZLZTJZQ3lJSWdmLTNlS01fV1E4VEZzWTZuLWQ5aUlfbzRlWFhwenlF?oc=5) · 20.11. 19:14
-- [Canada’s economy ‘much weaker’ than many expected, says expert after sluggish retail sales report - BNN Bloomberg](https://news.google.com/rss/articles/CBMi5wFBVV95cUxQb09QYldKd1FsQTdiemhoQU1URGZuek9ycFRQbnJyOFpRYTVaaUN0SU1YajJXXzNvX2xBaTctUTgzUDZ0dTM3RzdvZFVjM0R6R1BBVTc3bDJsWkRVOFlfLXQybG1JWDRPZE9hODNBdzgwVFhsRERSVkh5bXgwNWVVbnBBRVlnbjNDRkdFVzhNSFV1T2huc2E1ejkzM0ZsNWFiRjRKTmMxRTdqVHQwUUZfN1lucnhXY0dqMk9OT1p6SnlRX3ZpSU9qaGx0UDRTaFJJN0xyNUtBS3IySFBVSnk2ZmhDMDdIbU0?oc=5) · 20.11. 19:04
+- ⚠️ [Ford reopens Canada auto plant, defying Trump tariffs - Yahoo Finance](https://news.google.com/rss/articles/CBMimwFBVV95cUxOd3BzblNweTUwU1FUN0FKWnhPb1JtOE1pWjM4WHRUcTZ3YXI2U2tTSXEyRDRWWi1Lc096RTF6WTJKWVFhaEJ0MG1HcTZtcGNhblg3aW1HY0diYy05NVJhSm50VF92TlE5MGp1UmQ0Wmlrd2pZaWdZcERMN0JNN1pkMVk5NXM4ck4teThBckxma0twU3FualJXQkR4SQ?oc=5) · 20.11. 19:42
 - ⚠️ [Bone of contention: A Scotch whisky tariff dispute brews between India, UK - Business Standard](https://news.google.com/rss/articles/CBMi1gFBVV95cUxQOVBJbWZ6ZUp4bV9JZVR0cDV6aEdMelFoMm5jWUtxUFk3d21KZTh5eko4Sy1uaUQwalh5VVZzQ25VdHhjeFNzUEpFUEFyLTlLZHU4VUhnUHlpOVVfd1BGdXRTNENtaEdqNWxwNHVvbmdiNzUwVF9tUlRKOW50U1VtRXN3bWQyZXRrRnJILU5uMk5xZzdnN1dodkNRM2RVa2Z0aTMyZzJWNW9wOFBNWjc1LTlUMy1ucnJMX3lNMzcyOFRrekNWVGdubnpDRzRjTG5GR3RRbkhB0gHbAUFVX3lxTE1lVmdITFdoOUZ3VzZHUDBHUzVhRklkb0tXRG83ZjBsbk10SEx2QS12ZmhKMFFza1NNUGh2aDlEMFZtLXZPT2lUNkV5SVktRzFfOVZnWi1oSVVOdlV6cjNocVFVbEJLclhZZ3BZUWpFS1JhN1N5X2YwbGloLWV0d3F1cWpadjdpUGxNMGFfazVzdTFyeGtCc2NZVjRVLUt3TjNMby1FalVjaTY3czR1ZzFXQVFEak1STFFYQzduRDZDY0dCbGpRWXU2c1ZkdG8tQzE4cDVrSGY1VnpYdw?oc=5) · 20.11. 18:46
+- ⚠️ [ECONOMIC FALLOUT: New U.S. Tariffs Take Effect on Canada - Here’s What You Need to Know - EnergyNow](https://news.google.com/rss/articles/CBMif0FVX3lxTE45eE44am9ORWdwX0dVUUhWbkFrYmQ5b2hDS0JWOWFhVmJUdkNyZFB6MExYRnl4UXRueUZNb1VES19ENGtPZFVtMHNNM2RqWDNQblBwVjBpVTRBUUZrLWJxM25wd3hVRzdWMGs1VVUtdFlUYzFVN1FNLVh5NEtocm8?oc=5) · 20.11. 18:04
+- ⚠️ [Adam Zyglis: Canadian Tariffs - Buffalo News](https://news.google.com/rss/articles/CBMiiAFBVV95cUxOb0FicDlGamZmTG5OUXduTk9IVHNiR3c1XzFNM2x3bmQtQzFkVldDc283UGxTUDAtb1JESkJfWVJYVjN0cDNCWkIxZUlONzVIQXYxUEg4SjVkMWlqaThFQmhUMWRPdzBRNWF3QjN4ek9lbW1lbWJaY2FHV2Jta01wbzg5VzUzV00t?oc=5) · 20.11. 16:57
+- ⚠️ [White House delays tariffs on EU steel - Yeni Safak English](https://news.google.com/rss/articles/CBMihgFBVV95cUxQbl9ubDNkUnNNV3RwU01yQmZhS3o1Q0NrOFdiMGI5ajZ1NWlBckk1NEdDczRVdElRMFRfLW9XNWppbmM2aEJZU3pWUm9fT3BFVzhwamlxR29MZk1uQXFHVWxOM2hIcTZJWG9xVVZoREpQbWc4bkdkaHRGVzhhdU9SeHhIeHNsdw?oc=5) · 20.11. 16:28
+- ⚠️ [As trade war hits auto sector, Ford gets $760M from taxpayers for Ontario plant - Global News](https://news.google.com/rss/articles/CBMihwFBVV95cUxPS2ltcDdibXk3RGFsaDhIS0VhdEFyUGY3ZFFRVWNmRjA5YmQ5YmI2N3BrQWdDRmZyc3pNNHJUNTUxeF9KMlpjOHZJa0J5c1FtamRGZkpMcm5zTE9EdlJKSjBWcXRMOHYtX3NFVGRWeHNIeFEtcHgtYTU5YTc2LXJoeGtSX2tEWnM?oc=5) · 20.11. 15:51
 
 ## Fed und Zinsen in den Nachrichten
 
 - [Gold Down Rs 5200, Silver Rs 4000 As Market Sees More Fed Rate Hikes - Deccan Chronicle](https://news.google.com/rss/articles/CBMitwFBVV95cUxPNGdLOWRhOWZhazBuNkRoU0ZIdFE4SUUxYjhqQmsxeEFKV3g3RGg3MVJvVklLOTlueG9wRUdDM2lGaF95WWdKLXA3RHhyMnRqS3pPVDVEWExMOTNZREJXaGtFUTBtUTdES0gyZG1Jd1NMQWZ6bVdDZXU4d05DM2FCQVp1ck5zMjdJZ2xGanBNVzZzdFRVWFJJOEczeUltOUtsbHhvZTFTSVlNUnBIVTdwOF9RS2htYWPSAbwBQVVfeXFMTVlkSlhLc3g1ZnpiOU9tTmFfZk9TQWRXZnYyY182UzZUZ1ZtVFo0V0RJdGlGT3JIaXJISGpucENZOGR4OGFHVHg3cGItWHhxbnMzWV96dkpZdXJ1dDBhVlI4NFZoTVlKME1oU0w3U3hMQ1I1WmZfSV91TTU3Tjl4WFVnTXM4YWQ5eG9QUUdHYVhEa2NncW1VVmZuMDVDMmI0ekFzWW5EMG8tZFhIdmtlM1RDUV8xVVBubGJCM3A?oc=5) · 20.11. 21:07
-- [December 2026 Fed Rate Hike: What 25 vs 50 bps Means for Bitcoin - Programming Insider](https://news.google.com/rss/articles/CBMimwFBVV95cUxPSnpXejhwX19FeUljZlVFYlVzQUcySHRUdndrUXlYU1psSzJEV1BaRVliVks3TDBhZHpIaWtVVHZXZmpmOTZVYzE3U3RSMFJJNXg5X3JWYXdxZHk2WTF6aHZDandYb2w2cDB1UTIxZnN1RWtQdnlPdW54bW41b1FMTDVacGU5WkJhYzdCd1Z5UUFid3JIc1IyZXFUaw?oc=5) · 20.11. 20:43
 - [Gold Plunges Nearly 9% In Worst Week Since March. Fed Rate Fears And AI Selloff Deepen Losses. - International Business Times](https://news.google.com/rss/articles/CBMigAFBVV95cUxNdGJvRnQ4MTdnYUlZcmVjZzI5V3JuZ3dFaHZtNVNwN214RVhBSzZqdHdaS3k1LWNwY01ZTzRKTkI2Q2FQQVkwZDRmMENSQ19fMGNlMFA2TDJkRlA0V2gxa0RjY0dxMGtNbzE2N2daZ2JBa3hfYTdDY2RwZWZqU0pibQ?oc=5) · 20.11. 18:21
 - [Gold heads for worst week since March as Fed rate hike bets and forced selling weigh - FXStreet](https://news.google.com/rss/articles/CBMiygFBVV95cUxOUHdUSjAxbnhzMHFmUjZheXJxNUZ5SDJzZGVvVGxycXNYRm1SejNWaFdLblI1dFFOdVVpWmZhZ1FJVlI3YVFsNlZ3T0VlTWYyRkNQcTczSjhxeXJ2eHlSQVJBQ3ZRQVdodmdkYUVMekdqakJXSFRiMmY3X29tRHFUSzNEY3VTNGdSZWVmVm1pSk8zUTRqYlBRbE9HMVdWaGJyc0JBX012cHJCc3pSUDFUZ2cxd255Wmhqc3BaVWhHbnZKWjVuaVZkLU93?oc=5) · 20.11. 16:53
 - [Australian Dollar: How are weaker jobs figures fuelling rate-cut speculation? – Commerzbank - www.tmgm.com](https://news.google.com/rss/articles/CBMi2AFBVV95cUxPNGgybklRU0ZiTHFkZ1JDeXpsVGx6QmlRckxWMTkxaGlzX1dWUmFId09tTm96TzNVaGZ5SldNelV2N2RIOTJaNVlwQzg1VGtBcUVDLUFka0UzOEl3emtpY3A4cDhCQWpmY09kYV9fRVdxZndaRXRXbVhuZTZLSHhEb3VwcU96Z2JYa081S1hnT29yZFdieGlUNWxtM1VsVHJscFJWLVh6SzFfcmhxWmJ0WVl1Szd1N2hCQUlPRG9VUnB6WERqRlpHSHdFQW8tb0JPekt6ejMwX2U?oc=5) · 20.11. 16:45
 - [Federal Reserve: December and January hikes priced in by markets – Rabobank - www.tmgm.com](https://news.google.com/rss/articles/CBMi0wFBVV95cUxNbkRkZ0FVR2tzNzI4MzJWaUw3aFdMamZIa0xsVmlWalJ4ZTVnWkM3WE1TNEtqVmVRaU5HZzhzNmxtNTJZR3FEVEotS0RjS19JdTE5TzFOM3RoOEMyM0lhSnAweWpkWmhNVWx2M3ZqcnM1b1QydVVPR1E5dFpYZzk3MWpITlhRemdKSW5aVWdXeldfSGd3SmpDNHZlNWVnS3g5Tmo5ZW1vNFh4TVozN1ZJMUU2X0dSWkVuUjFpdE9GLVZ4WkE2LUN6cS1XeFBEYlhrb1BJ?oc=5) · 20.11. 16:44
+- [Why is the US Dollar Index (DXY) wavering below 104.00 as AI concerns counter Fed rate-hike bets? - www.tmgm.com](https://news.google.com/rss/articles/CBMi4AFBVV95cUxNODd3U3N2Uld2QV9rdTZuTjNlUkFXNUk0X3ZZZjZvYmk3a0I1dnJYVkRMWWotNHlGVU85OFpjTGE2dEZHb3l5TkpxX2NKd25YOTZWejFweUV6clBaZWtEVGpJZEpJMFhLM1ZIQ3JZSjdWaGRBUDlwVzd2eVVHVEd2MmdtT194YkU1OF9UOXViMnVrNjVRQ3A1WU92RkRMajJSYU1kM1g4eDVSbDJabzQtaG1xVTB6Vk9GbDZKa1dBQ21JdF9nbkstNmZDb0V2MFhVYV93dGNKS3c3bEVFbkVIdA?oc=5) · 20.11. 16:44
 
 ## Wirtschaft auf Deutsch (tagesschau)
 
@@ -81,7 +82,7 @@ Angst-Struktur: VIX 35.6 gegen 3-Monats-VIX 30.8 -> **angespannt** (kurzfristige
 
 ## Was der Paperbot heute vorhat
 
-Konto: $84.853 (Papiergeld).
+Konto: $85.347 (Papiergeld).
 
 | Teil | Signal | soll halten |
 |---|---|---|
