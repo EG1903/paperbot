@@ -1,4 +1,4 @@
-# Bot-Bericht: Woche bis 13.11.2026
+# Bot-Bericht: Woche bis 20.11.2026
 
 Papiergeld (Alpaca Paper), keine Anlageberatung. Start des Papierhandels: 2026-10-27. Strategie seit 09.11.2026: Hedgefonds-Mix aus 4 Teilen (35 % Nasdaq-100 mit 3-fach-Hebel, nur bei ruhiger Börse im Aufwärtstrend, sonst Anleihen; je 25 % zwei Rücksetzer-Strategien auf den S&P 500 mit 3-fach-Hebel; 15 % Gold mit 2-fach-Hebel im Aufwärtstrend). Davor (27.10.-06.11.): Vola-Regime auf den Nasdaq-100 (1x + 2x).
 
@@ -6,39 +6,36 @@ Papiergeld (Alpaca Paper), keine Anlageberatung. Start des Papierhandels: 2026-1
 
 | | Stand | diese Woche | seit Start |
 |---|---|---|---|
-| **Bot (Konto)** | $91.926 | +0,6 % | -8,1 % |
-| S&P 500 halten (SPY) | 754,37 | +2,6 % | -1,4 % |
-| Nasdaq-100 halten (QQQ) | 679,89 | +3,6 % | -4,5 % |
+| **Bot (Konto)** | $84.816 | -7,7 % | -15,2 % |
+| S&P 500 halten (SPY) | 689,81 | -8,6 % | -9,9 % |
+| Nasdaq-100 halten (QQQ) | 608,45 | -10,5 % | -14,6 % |
 
 ## Die Teile
 
 | Teil | Zielanteil | hält gerade | Wert |
 |---|---|---|---|
-| nasdaq-3x | 35 % | IEF | $31.357 |
-| sp500-ibs-3x | 25 % | Cash | - |
-| sp500-wr-3x | 25 % | UPRO | $23.617 |
+| nasdaq-3x | 35 % | IEF | $31.917 |
+| sp500-ibs-3x | 25 % | UPRO | $19.988 |
+| sp500-wr-3x | 25 % | UPRO | $17.973 |
 | gold-2x | 15 % | Cash | - |
-| Cash | | | $36.953 |
+| Cash | | | $14.938 |
 
 ## Signale für den nächsten Handelstag
 
 | Teil | Signal | soll halten |
 |---|---|---|
 | nasdaq-3x | aus | IEF |
-| sp500-ibs-3x | aus | Cash |
+| sp500-ibs-3x | an | UPRO |
 | sp500-wr-3x | an | UPRO |
 | gold-2x | aus | Cash |
 
-Nasdaq-Teil: Schwankung der letzten 20 Tage 35,0 %, Grenze 23,1 % (1,2 x Jahresschnitt) -> unruhig.
+Nasdaq-Teil: Schwankung der letzten 20 Tage 39,5 %, Grenze 23,5 % (1,2 x Jahresschnitt) -> unruhig.
 
 ## Trades diese Woche
 
 | Datum | Aktion | Wert | Stück | Kurs |
 |---|---|---|---|---|
-| 2026-11-09 | Verkauf IEF | $58.952 | 641,28 | 91,93 |
-| 2026-11-09 | Kauf UPRO | $22.754 | 170,51 | 133,45 |
-| 2026-11-09 | Kauf UPRO | $22.754 | 170,52 | 133,44 |
-| 2026-11-10 | Verkauf UPRO | $23.007 | 170,51 | 134,93 |
+| 2026-11-20 | Kauf UPRO | $22.015 | 189,64 | 116,09 |
 
 ## Verlauf (Wochenschluss)
 
@@ -48,3 +45,4 @@ Nasdaq-Teil: Schwankung der letzten 20 Tage 35,0 %, Grenze 23,1 % (1,2 x Jahress
 | 2026-10-30 | $93.976 (-6,0 %) | -1,3 % | -3,0 % |
 | 2026-11-06 | $91.402 (-8,6 %) | -3,9 % | -7,9 % |
 | 2026-11-13 | $91.926 (-8,1 %) | -1,4 % | -4,5 % |
+| 2026-11-20 | $84.816 (-15,2 %) | -9,9 % | -14,6 % |
