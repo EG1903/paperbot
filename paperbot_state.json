@@ -122,7 +122,7 @@
     "grenze": 0.2266,
     "ruhig": false
   },
-  "run_day": "2026-11-23",
+  "run_day": "2026-11-24",
   "swing_alt": {
     "vola-1x": {
       "start_wert": 50000.0,
@@ -149,10 +149,9 @@
       "seit": "2026-11-09"
     },
     "sp500-ibs-3x": {
-      "sym": "UPRO",
-      "qty": "189.64086874",
-      "preis": 116.088057,
-      "seit": "2026-11-20"
+      "sym": "CASH",
+      "qty": "0",
+      "seit": "2026-11-24"
     },
     "sp500-wr-3x": {
       "sym": "UPRO",
@@ -201,6 +200,14 @@
       "nach": "UPRO",
       "qty": "189.64086874",
       "preis": 116.088057
+    },
+    {
+      "tag": "2026-11-24",
+      "teil": "sp500-ibs-3x",
+      "von": "UPRO",
+      "nach": "Cash",
+      "qty": "189.64086874",
+      "preis": 115.054391
     }
   ],
   "ausgleich_monat": "2026-11",
@@ -208,22 +215,22 @@
     "nasdaq-3x": {
       "an": false,
       "sym": "IEF",
-      "datum": "2026-11-20"
+      "datum": "2026-11-23"
     },
     "sp500-ibs-3x": {
-      "an": true,
-      "sym": "UPRO",
-      "datum": "2026-11-20"
+      "an": false,
+      "sym": "CASH",
+      "datum": "2026-11-23"
     },
     "sp500-wr-3x": {
       "an": true,
       "sym": "UPRO",
-      "datum": "2026-11-20"
+      "datum": "2026-11-23"
     },
     "gold-2x": {
       "an": false,
       "sym": "CASH",
-      "datum": "2026-11-20"
+      "datum": "2026-11-23"
     }
   }
 }
