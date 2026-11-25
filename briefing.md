@@ -1,4 +1,4 @@
-# Briefing 25.11.2026 21:40 Uhr (Berlin) · 15:40 Uhr (New York)
+# Briefing 26.11.2026 00:34 Uhr (Berlin) · 18:34 Uhr (New York)
 
 Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
@@ -13,19 +13,19 @@ Automatisch erstellt aus öffentlichen Quellen. Keine Anlageberatung.
 
 | Markt | Stand | seit Vortag |
 |---|---|---|
-| S&P 500 (Future) | 7179,50 | +3,5 % |
-| Nasdaq-100 (Future) | 25988,25 | +3,4 % |
+| S&P 500 (Future) | 7201,50 | +3,8 % |
+| Nasdaq-100 (Future) | 26071,25 | +3,8 % |
 | DAX | 24702,13 | -4,0 % |
-| VIX (Angst-Index) | 27,99 | -1,6 % |
-| Gold | 3603,40 | +2,5 % |
-| Öl Brent | 90,58 | -2,1 % |
-| Öl WTI | 83,92 | -0,1 % |
+| VIX (Angst-Index) | 28,29 | -0,5 % |
+| Gold | 3605,60 | +2,6 % |
+| Öl Brent | 90,72 | -2,0 % |
+| Öl WTI | 84,01 | +0,0 % |
 | US-Zins 10 Jahre (%) | 4,85 | -4,0 % |
-| US-Dollar-Index | 103,66 | -0,1 % |
+| US-Dollar-Index | 103,70 | -0,1 % |
 | Euro in Dollar | 1,10 | +0,1 % |
-| Bitcoin | 59811,20 | -0,5 % |
+| Bitcoin | 60171,29 | +0,1 % |
 
-Angst-Struktur: VIX 28.0 gegen 3-Monats-VIX 26.3 -> **angespannt** (kurzfristige Angst höher als langfristige).
+Angst-Struktur: VIX 28.3 gegen 3-Monats-VIX 26.3 -> **angespannt** (kurzfristige Angst höher als langfristige).
 
 ## Fed: Mitteilungen und Reden
 
@@ -36,36 +36,37 @@ Angst-Struktur: VIX 28.0 gegen 3-Monats-VIX 26.3 -> **angespannt** (kurzfristige
 
 ## Weißes Haus (Präsident)
 
+- [Trump Administration Leads Whole-of-Government Effort to Safely Neutralize Obama-Era Explosives Threat in Iowa](https://www.whitehouse.gov/releases/2026/11/trump-administrations-whole-of-government-effort-safely-neutralizes-obama-era-explosives-threat-in-iowa/) · 26.11. 00:10
 - [Thanksgiving Day, 2026](https://www.whitehouse.gov/presidential-actions/2026/11/thanksgiving-day-2026/) · 25.11. 15:30
 - [First Lady Melania Trump Secures Reunification of Nine Additional Children with their Families](https://www.whitehouse.gov/briefings-statements/2026/11/first-lady-melania-trump-secures-reunification-of-nine-additional-children-with-their-families/) · 25.11. 13:01
 - [Gas Prices Plunge Ahead of Thanksgiving — Just as President Trump Predicted](https://www.whitehouse.gov/releases/2026/11/gas-prices-plunge-ahead-of-thanksgiving-just-as-president-trump-predicted/) · 24.11. 18:18
 
 ## Geopolitik (Iran, Israel, Russland, China ...)
 
-- [Applied Materials Falls 6% Despite UBS's $575 Target as China Chip Curbs Hit Equipment Stocks; Lam Research Drops 7%, KLA Edges Lower - 24/7 Wall St.](https://news.google.com/rss/articles/CBMigAJBVV95cUxPdGpLOUYxV29JMndaUTJzTFlranZsdHl0bkJ2YUcxSW5aNWE2SGE2OS1KVm1TVEJ1NVN5Qm4yZkg2S1pqZlpHVGhjODJpdTJlMnJzZkpMYlkwNDhHcFJDbHl6aDJ1VURhcVFlcGVZUHZyakJ3S0ZBbC1leER3cnA3VVVBcE9ObEJMMXpxQlNIVDJWcjg4Q0owWC1tNkhTTjNPZjcyYVFFNkRJWTEzN2FHdTZFWVMtOS01N0N0NDJ6WTBzdlJXVy1IcHBpOWtJdjFIeG1ZWl96ZXV4MDFma2I4dmpKdzZRVTUxWlZRNHhISTM3R3hCa3k5eTBGZWxkTUY1?oc=5) · 25.11. 21:09
-- [Billionaire investor Todd Boehly talks plans to buy Lukoil's oil and gas assets outside Russia - CNBC](https://news.google.com/rss/articles/CBMi0gFBVV95cUxPbV9nSTR6dzBDVVN2VjRhVUFVYW9HbW53VTZUeE9pRkpnV2dXV1pJbG1XR2luQ0VtWTJqQ19kSkZvTGRObERHdklCNzlSZTBET3FxZ0ZKb0twMjdURTc4cXl1SUtKR2Z6RHFnaDF4X3FlRzJoM0xUUDdmVWVSbzVBUWpRNTFFc2ZVcW5fODNMUllLQkZJdWJfZUxjbGh1eWlhaDFXODc3eEo2TjYxdm42Q1hlZTg2cGlBNXFJSmxSV0dOaFZFZmFONEc3NDA5UEVfT1E?oc=5) · 25.11. 20:52
-- [OPEC blames EU for COP31 collapse - BNN Bloomberg](https://news.google.com/rss/articles/CBMijgFBVV95cUxQR0ZHb1BUazdrRVFLRXFCb0xlSENxcjRneTNYMDR3U0tVczV6engxaU9GN0xucEM3MTdGUjNKZ1N1cDhFc2w3ZTVXWXpkOEJVdU1hTC0tbmR1NnNEX1BkemJkbFFHSV9ubHo5LVRDa01wZEtSakhENTJjNzZjT3B2OXhNSXFWMGpFSjJRZVB3?oc=5) · 25.11. 20:30
-- ⚠️ [Putin Says Ukraine Ignored Trump's Plea To Stop Oil Attacks. Kyiv Tells Him To 'Stop Complaining.' - International Business Times](https://news.google.com/rss/articles/CBMikAFBVV95cUxQbXo0c19XYmczbkxiUUNQektZVWpOU2VHRFFfcnpZZlN5aWhkTEhrcXFOQ1hIc09Cc3YzREU3MFJQLXhWZnlsc2tJMlowUVZKNWV5N0NmTDVNM0tYTFVwSTBpRkFzNllsQ1lDUWNtWV95YkswbGN1dEVPcU9ibzlkYUJ2cExwOXJvdElJN2lJbWE?oc=5) · 25.11. 20:12
-- [Iraqi oil smuggled through Kurdistan to Iran and Afghanistan, government report reveals - The National](https://news.google.com/rss/articles/CBMi1gFBVV95cUxNTlpJVF9Cbkp1ZGVoNTYwZEZ5YXVtdWdSMjhTN2dIT2xzaUZma0YyaDlpYTc5SVMwN2hETEctczdYV1lSblNyYUJWam1MMXV2Z3hIdDFHX1o0WENaN3BZSEZ5TGVQMHNFc1lURFdBTHRaWUpyM00tRWNuLVJGc1hBU29zM0pxaVRDTnBjUmFWSV8zRFFZdUFaclJ3UzZWbVVmeTNLOURMMEFEcWF0ZXFjZEc0c3ZTRkNvOHlrdGFDcHdXaHJjOFNUMk9TU3UwY0NxQVJ1X19B?oc=5) · 25.11. 20:12
-- ⚠️ [Trump unveils new tariffs over excess industrial capacity, undeterred by midterms defeat - Reuters](https://news.google.com/rss/articles/CBMivgFBVV95cUxOcjZ1MUw5RG5fdk0tUjNTRFNIRzl5amR0VklFSzdTOUlUS2hxNWk5aV9xcm5VWmQtZGRkdXVKMWZ3Um5qZHluSFp4MGNIdHNETlZPck1RcmJmUC1oZHFtWFdYT29PbkdjUU1IbjQyWE9GRFJZdXFwTVFRMEtDcl81bXpDS3RHSHNka3VSbGlHNmNFV09uMTE1aExBRVkxUldZUmpwX3hYdGduS1BJcW1QRlY4ZjdyYkZyWTI0dVBB?oc=5) · 25.11. 19:55
+- [Iran says "violating" oil tanker caught fire after hitting mines east of Hormuz Strait - 巴士的報](https://news.google.com/rss/articles/CBMi0gFBVV95cUxNMEFYaG5jbG9PYWNsbE1ia2x4ZXhtaUR5WGJyODNHWnRFRWxESkltZFVnTk42aDgxUUNoLVo1RWNESGpWVV9nMkRBODI3eERDZW5qVjNNTVBLeTJOUW5BMXBKbHc0YXlKWVg0eDBkRUthMjRBc2hHTTRzSnpzd2JiTmdQa3JHcjdDYUctY1ZnUWw4c0g1NE1hRDlwZkNVSXAyMGs2RnNNeEpnRXZIYnVGRXRObGJuZkRVNlM4Nmh6anBWYU05SlhpSmpSMkJCOC1YMWc?oc=5) · 26.11. 00:27
+- [AI Bubble Fears Drive Global Market Volatility - 조선일보](https://news.google.com/rss/articles/CBMijgFBVV95cUxOQmVYdXNCa1VlTUx4YjF4VDdoVzJVbmExY1A1a2dBRzYyZGNSRGJnYmI4eXAyakhsRTJzdUhqRDFyZjFEU2p4MHZqU3NaT0F4Mk85NzhzSkpqSXdJWjNwRVRHZzdDaGRET0JPeXBPaUxyaWRJVmMxNlpjanhkSEg1N0JWM01rZE1pTnJ4WDhB?oc=5) · 26.11. 00:26
+- ⚠️ [Trump unveils new tariffs over excess industrial capacity, undeterred by midterms defeat - Reuters](https://news.google.com/rss/articles/CBMivgFBVV95cUxOcjZ1MUw5RG5fdk0tUjNTRFNIRzl5amR0VklFSzdTOUlUS2hxNWk5aV9xcm5VWmQtZGRkdXVKMWZ3Um5qZHluSFp4MGNIdHNETlZPck1RcmJmUC1oZHFtWFdYT29PbkdjUU1IbjQyWE9GRFJZdXFwTVFRMEtDcl81bXpDS3RHSHNka3VSbGlHNmNFV09uMTE1aExBRVkxUldZUmpwX3hYdGduS1BJcW1QRlY4ZjdyYkZyWTI0dVBB?oc=5) · 25.11. 23:47
+- [Russian oil refining drops to 20-year low - The New Voice of Ukraine](https://news.google.com/rss/articles/CBMikwFBVV95cUxNM2VLX0lsTGViX0RSQ3NOS014VHRYUlYtX3ptbTFSYzgtU2o2bC0zelNpR2FMdUxxbWJvaUplVlNoS3k0NFhCT3p1dC04ZFN1Ni1Uam9FTTd5VFE3LWtycFRyenM2OHVaaElTYk1ZLUd5c1FkQkdzQmw4S2ZHV3NVa01jb3JfMy1Rc0Y2a0pwb0ozU0HSAYgBQVVfeXFMUGhqbW1JNEZBcXZfbHpUTGZmQzJ5MnFPUTE5OXNHV0tmUUlpV25vV1VJcW9IWU40R2kteEk1Ymw1Y3hEcXJFd3ViUmh5UDFmdVN1d2ZzS1o4Nnh4c1dfNVBHTVBvdG1GblJBYU56Si12c1NMQ0hBXzlPRjB1RlJQTHprb2NxLWF1TA?oc=5) · 25.11. 23:36
+- ⚠️ [Due to Ukrainian strikes, oil refining in Russia has fallen to its lowest level in more than 20 years, Bloomberg reports - Українські Національні Новини (УНН)](https://news.google.com/rss/articles/CBMi2AFBVV95cUxNdE5lUUJvYlFia3FHcGx3aExzSjJleEkyaG5KQno2aGRHbllNWnUzU1FLdEt1MnM1SjdZXzhyWWJtWlo1N0NQejNCRmEyRU1IUjlzc2tPT3FpamRtVHRMTFNXYVNKTjFpb3hsd2FPUGdLN2hQQ2YweFdaRnNjYzRWMWNYRnoyZ0c2T2ROdzdtdFBsYzU5T1JKNzBGZDdGR3BKQnVQd0c0ZVlBRjFNZDZoVHI1QW15UTJybkFYekZyYTNCdHAtY2luUGpoRVBMellaNUxDSWNyMG7SAdcBQVVfeXFMUGlud00xV0ZwUHBaY1ZCRk9kUGd6ZzZZOFNGVkhqNE92eXZkUkdrcF9XWDI3aXg5cFhTMXZrUUlRb1pUWFhkNDNRTVI4ZVBSMV91MjJHaGZaRXRlQkt3ZGhpVVA1TzB4SmkzZmNiZmNpckZZaFEyS3RfcXE3QWVDaTI1Rm5zdVRZSHVKekRVNFhSUUtqTUZISHRQVTllbndqMDVzUHRBdnpMQ1dFZjAwRmNvbVkwbWpRSlJYYTFCM0YwTTFOZV9wVWhLaFh6YXFUTHZ0c2dIbmM?oc=5) · 25.11. 23:18
+- [Russia stocks higher at close of trade; MOEX Russia Index up 0.92% - Investing.com](https://news.google.com/rss/articles/CBMivAFBVV95cUxQZ2U3WXhaM0pzNWo1eExWNlBEVldhTjloMVY1OWgzc2NOQTBJVDAxNlV3VHpremF1bDVmUHlWVFZUb1hWUV9sT29CWFdRa1U1UHBaVG12R3RPYXlLOWlLeFVTVmh2eTByNUIwTHZaTDlnOVg2cHF6bVk5bHktcnR0M2NsYjlyTFVEYkY5cFJtd2VtUFR2aHR2cWVXaVA4SGllRnJjTTlTeDJnU05WRFF3djZIQ1R1WGI2US0xZw?oc=5) · 25.11. 22:56
 
 ## Zölle und Handel
 
-- ⚠️ [Trump proposes new tariffs on China, Europe and other trade partners - The Washington Post](https://news.google.com/rss/articles/CBMisgFBVV95cUxQRG9IZXZjbjBEQ2tzam5pT0FPZWNFc2hac3ZURjRUaTJITlQwQmt4RElZVGlnM0luQndHeXdRaGRwTUVVbHVqQlcyZC01OC1adzBLT3JWWlNadmw2N01zR3JZT1VwWG1mVVNaSkNUSWExNTlYRWtCejNRUE1KSXk0TFpjaUt5X0Z4LUFLMzB1c3QtRXNpUVc5UzNMeHY4d2paMjVEVGpveFlpM1BvZWRlZzFR?oc=5) · 25.11. 21:25
-- ⚠️ [Wall Street tempers its slide as pullback in AI stocks eases despite hotter inflation, new tariffs - CBC](https://news.google.com/rss/articles/CBMib0FVX3lxTFBkWDJHcDdRNnVDbzc3bVRDU0dGbHFiYmY2dXhnMTZkXzhtOEdLOTdkdDhvWDd3OVRBa3VwUVhaU2IwWXpkS1VTS2RPbjZPcEJFa3hiZ05ucDRjMFRXZ1RNS3ZMSkhjVjVhcW5nNklvUQ?oc=5) · 25.11. 20:54
-- ⚠️ [Wall Street tempers early slide as pullback in AI stocks eases despite hotter inflation, new tariffs - Boston Herald](https://news.google.com/rss/articles/CBMib0FVX3lxTE9jZmpKSkpNODRXeG5QaU4wa2lsMHA4V18zYkkzUzJod29GRE9lektEX2xUc3A3cU1QOV9jeGh2YWR2SHRjcmJESm11SHVNM3VOOUo2OGRwQUdiOUhkejBVb1h4Z3pwUlFzRU9TSWNnYw?oc=5) · 25.11. 20:41
-- ⚠️ [Stocks Slump Again as Investors Fret About A.I., Tariffs and Inflation - The New York Times](https://news.google.com/rss/articles/CBMie0FVX3lxTE02aG9MTzVQV1FPaHZkWUlkbUctTTNOWWxwTHplcDc2akxGWU4xRy1MQndiMUxhU0tEN2Y5WkdRTlIxRU80aUxmbGNJOWVVdE12VjZ1YnM2NU8xN0VoX0ZmNVNrbDlGOEdLV0kzV19fcEJrNDVjUk1KZnhVMA?oc=5) · 25.11. 20:39
-- ⚠️ [Wall Street tempers early slide as pullback in AI stocks eases despite hotter inflation, new tariffs - Herald Bulletin](https://news.google.com/rss/articles/CBMimgJBVV95cUxPd0lPU0JYTGQ2SUVaNmJELXlsXy02b1k3eDI4NWc2ZDhXRUZ3QUZJcmE4RmN2MTJUYk1LWDdqTkcxOUZIRXJETUM1Q0cwZHlSazF4Q3BpSGlUaW5UOUllcXVwX0VuM1lxLVp5UzFMMWhoX0lQV1k3M0NwV2l1R0VqZHhwNS1JSldRdDh5NUZNZkxvS0RyME9EZTVoMVV4QlUxZ1lyaXRvcG9CUjhGY0pQVGNVX2ZIRkw3NzVpY3l4MVktT3FuYlJCS3p6cXBfNTc1Z2w3Zlp6NnF0Q2pqQ0pQcXhreW9odkg4VXRvVmFHTFR4WHFHOFRaUmRLZ2dqbG9OWEhaalZoV1pUS0ZZVWl4bmg2ZjY0MnNldXc?oc=5) · 25.11. 20:03
-- ⚠️ [ASA Warns New Tariffs Pose Additional Threat to Struggling U.S. Farm Economy - Oklahoma Farm Report](https://news.google.com/rss/articles/CBMiX0FVX3lxTE9OTlhCeVVQTFlGNmlHYUJpUVVoaHJ5bk11eEozNUZpSzRISFZBMktxRTI2T0U0MHZkR2lzQUFqa0J3bTRoaXF0a2FaOWZxRWt1bWRhdV9DLTU1allNdlNB?oc=5) · 25.11. 19:56
+- ⚠️ [Trump unveils new tariffs over excess industrial capacity, undeterred by midterms defeat - Reuters](https://news.google.com/rss/articles/CBMivgFBVV95cUxOcjZ1MUw5RG5fdk0tUjNTRFNIRzl5amR0VklFSzdTOUlUS2hxNWk5aV9xcm5VWmQtZGRkdXVKMWZ3Um5qZHluSFp4MGNIdHNETlZPck1RcmJmUC1oZHFtWFdYT29PbkdjUU1IbjQyWE9GRFJZdXFwTVFRMEtDcl81bXpDS3RHSHNka3VSbGlHNmNFV09uMTE1aExBRVkxUldZUmpwX3hYdGduS1BJcW1QRlY4ZjdyYkZyWTI0dVBB?oc=5) · 25.11. 23:47
+- ⚠️ [Australia escapes Trump’s new tariffs on 14 trade partners - SmartCompany](https://news.google.com/rss/articles/CBMinwFBVV95cUxPREtSb1VvbmZ2cFlYWXNDRGlGc1RYMU83VUk1dzBFdmtfNG96aE16VmxrRkkwSHQwUXN2cEtfaHM4VW1RNzE3WXpra1dRWkdHTmYySmFUUnFjaDliVENSUlpIN05QSFZKZl84QVlrRF96NFdXOUNSNWxhREJ0dFAwTE5iQU52TjlMUDZkbHRoa2VyVl9xcTB3YTJCSnM3RzA?oc=5) · 25.11. 23:27
+- ⚠️ [US stocks close mixed amid hotter-than-expected inflation, fresh tariffs - TRT World](https://news.google.com/rss/articles/CBMiWEFVX3lxTE1BNjZIUWNqOTBTTjZPVkRvam5RY3R5b0VlZWxJZ2dKMHVZczVRWWZJRDFNRG80RzFnektoYlhBaXkzbEtLRk52VkltM0dMTnMzcC10ZW51bkc?oc=5) · 25.11. 23:22
+- ⚠️ [World stocks tumble as Trump tariffs rattle markets, AI rally fades - TradingView](https://news.google.com/rss/articles/CBMi0gFBVV95cUxNaFlrVUQyR0YzNlVXOWVidFh3STlEVEUzUDdPYVdMWUZOWGhrbTdDQUtZc3ZfU1VESDNTZVM3cERObThoSjBFcmZLMDZLd2ZyZzV0c29YVWxmVnc2NDJJTWpGdHZKbEh2czJ2Z2h6dGNQcENaLTVIRGNxRE9ZRlpzSXEwZC1jS3NmVDhLYlBnZHhxRFgwOWhDblktRWpWQks1emVGR1ZRV2hOcldlcmxQX0d3ZXZGOUkwbGNkLUxHYVFtaXNXT2x0UzZBWEpGVzJUR0E?oc=5) · 25.11. 23:12
+- [Pullback in AI Stocks Eases - Newser](https://news.google.com/rss/articles/CBMid0FVX3lxTE5Zb2xYdHpGSDBEMzVXLXBHY3U0VE9QY0plb21INHNJTm5wZGJpQU51MG9UV011RWV5X0JTMF92MUQ0OG41d3BmZXB4a3VkZVJlN1RXWHY0RFlfVXhHMnpXSGRMUXJHZEF3Q3h1cWd1R0lKay1fRUV3?oc=5) · 25.11. 23:11
+- [Nasdaq, S&P 500 end down, but well off lows as investors buy bargains - Reuters](https://news.google.com/rss/articles/CBMiugFBVV95cUxNdUdBTGhVT2V5cDcydUZMX2NTdTkxVDBJSHdCMUgwNXBibGhQc28zdktpLXA2dGVUYzRzV3hpMld1U29KempSNUswd2dNYVdITlFxV2NycEkwbnlpZkdPSDNicVRKM3NCU2l0M0hoWU13UTZkbTAtX2JFempxaUtFbjdTZGMxT2lXM2g3dkR4cy1UYnVfZ09kOWpTNGxtUEZZOTRPaXhENlZ6OGt2ZF94d0RCVjdOSldfc0E?oc=5) · 25.11. 23:04
 
 ## Fed und Zinsen in den Nachrichten
 
-- [Mahanadi Coalfields IPO Closes as Markets Await RBI and US Inflation Data - Industry Odisha](https://news.google.com/rss/articles/CBMiswFBVV95cUxPM2lTcG1ZcXpmbVVEZHlia0RUc0RndzA2bllsek5Sd09ET2x1ZU9ZZjdqeGppSGJNUkF2bzh5RDhDcTJTeGgwdkNqbGpIWmtZMnRRNXduMDFvVDQ4N2thbUNKRmtEZ2I2OFFYM2dNZ0JaMjN5RG1DVGVIVmREOUE5NVllNGxkbXJRRkxCa2JTR1FCeTRGckJqakNjSDNxa1BlX2Vvd0RoajNrVWtObEg3MUx2aw?oc=5) · 25.11. 20:00
+- [Mahanadi Coalfields IPO Closes as Markets Await RBI and US Inflation Data - Industry Odisha](https://news.google.com/rss/articles/CBMiswFBVV95cUxPM2lTcG1ZcXpmbVVEZHlia0RUc0RndzA2bllsek5Sd09ET2x1ZU9ZZjdqeGppSGJNUkF2bzh5RDhDcTJTeGgwdkNqbGpIWmtZMnRRNXduMDFvVDQ4N2thbUNKRmtEZ2I2OFFYM2dNZ0JaMjN5RG1DVGVIVmREOUE5NVllNGxkbXJRRkxCa2JTR1FCeTRGckJqakNjSDNxa1BlX2Vvd0RoajNrVWtObEg3MUx2aw?oc=5) · 25.11. 22:00
+- [Fed policymakers at odds over causes of high inflation - Reuters](https://news.google.com/rss/articles/CBMimAFBVV95cUxNZ2Vtdjdia2xUaVF5bWxRSVlPUTZjc1JmWG9Uam1QSHpNcXZuREdQVmRyX2hkNEtMbWhFd1VFb3l6QVJGYkJHZlZXUDJLVlM4cDdDR0RSVTRPMmZaUHAtMlhtSDlQeFF4UGJadUhrQmhlaWlJT1cwSG9IRnF1cC1COEtKdTBsUWVsXzhkYWhUWHNKTjJsUVJuNw?oc=5) · 25.11. 21:50
+- [Gold market extends slide after U.S. inflation data reinforces rate-hike outlook - Traders Union](https://news.google.com/rss/articles/CBMijwFBVV95cUxQS3VwaWtEZ1hWR19qN01iRUlBVmEwVmhmdUJxdkNMS0U5SHVSMy1zU1U1OTRGTFpNd0ZjSmI1ZkRibEItdUpGTWVQVE91c2NwLUhqbW5pS2tUMmZVRVluWWtsWGJXX3laTWtmUDNRZUMwcFRXYzhjd1p3eDV1b3FqTGZhX2RKOWdnMEpJb2hGOA?oc=5) · 25.11. 21:39
 - ⚠️ [Bitcoin Falls Toward $57,000 as US Inflation and Tariff Fears Hit Markets - TechJuice](https://news.google.com/rss/articles/CBMingFBVV95cUxPZl9ZWlktMmU0MnpLTGlxR2JLTnlwYVBUV2hEdmx4ZnBEdG9ERWppUWlCV3lEZDNXd3JudlJzbEVlT2JpdVdZeTA1X0RsRXZLRU83VVloaFg3SnlXWjdDRTVQRzEtSnAyd3I2anNHSXhkZmw5UXVUUHlfTEVFZ0p3WG00aUpnRGN6LTVPZnNSOTJWTGZNNjExVHhqME4yZw?oc=5) · 25.11. 19:59
 - [Gold price falls 3% to more than one-year low after data shows US inflation rose further - Mining.com](https://news.google.com/rss/articles/CBMitgFBVV95cUxNbjI1bXczUVJCV0J4SHlXS1pzckF2aWRnSWxwckY1V2duUzVhM1BZNkJxM2RTdjN1eWJrOGNma19INTJPYjRjcDFDTGp3LTRwYU53UjEzTkU5Z3BvTkgtS09uVVR6RHlPUnByVzVsVW83Qm1RNUI0WFZrVlZOd3lIWWR0Zm9KSVQzSHVlVUdwS0tncTM2UmR5U01PaW9ZeFlTOGxDcEo1ajF2STF3eTVma21KeDFQdw?oc=5) · 25.11. 19:58
-- [Bitcoin briefly slips below $58K as hot PCE inflation fuels Fed rate hike bets - www.tmgm.com](https://news.google.com/rss/articles/CBMi2wFBVV95cUxQcVFqY2lqS2FrNDVobXl6Q2lUSzJyMElocWVZZW0yeVJxdFNCWEFyQVZlQ3VOVnI4U1Q5c2NnWjNrUlVsT2oxeHUwVnItWkhRcHdENUV4MzVxYi1Ec1Z5Z05TSzhKdDF3UTUzb2h5UVBfLWFzcHFIYkpSRkoyUnhfOUdUZDNuSnF4am1QX09tR3hUNEJTcXl1ZGJrQUx5YVI1VDlvYnhMVUxUeTR3a2dMRlZ2U2RUS1lHbDBEcXk1X25XTmJtLWNBNENMVThvREUxSHpPTXc5NHhZSkk?oc=5) · 25.11. 19:11
-- [US inflation rises to 3.8% ahead of December Fed meeting, clouding crypto outlook - TradingView](https://news.google.com/rss/articles/CBMi2wFBVV95cUxOQjEtcnBmSjVWQUtXT3R6VEFvZkp5TVY4cDllVkNNNmY4ZmQ3eU1XVV9Pb3pjazdWQUx6MHFnOHZkcDBZdnR3QjA2SjY5b2hnQklqbU9yWU4yOENpSURKZFhHU3Y0cGtqRkkyX3VQeVZCZFlsY1d2a1RLQW53Skh4QlVwc2wwUEw3YjFXdWwyOGJmRlZZUXRGU20yM2NBekE4ODJNS3ozX3ROOEdnYU9LNC00Q2RfTlpLZUZuWlFmblp0b3hsLXF2TEMwMnhxTmpZZkQzMHQ2dW1jX3M?oc=5) · 25.11. 18:53
-- [US Dollar Rebounds Near 20-Month High as Markets Anticipate December Fed Rate Hike - Curaçao Chronicle](https://news.google.com/rss/articles/CBMixAFBVV95cUxOcGZTZVRuM0JFYnhBbUtINGU3THl3c2p4Nk8ybV92dlFGZTk0a244cDFfOFB1NWpnNV9VRURZSXAwaENqSlpWdThJSkZDM2tTRkthb0ZGcmFtcHY1OEZIMkwyX296TEQyWmdBR0Q1ZkVTVGJNMWRXVDFEbUpHV0Vmc25WV0VEeGM5NWtZMmtoOWQ5cWhBZWpFbl9lcFpGdEhTTlBTekd4aDdNYmxiRkUzeWdPMFNZaHZDZzdSUzczOXBTN2JO?oc=5) · 25.11. 18:24
+- [Bitcoin price drops as US inflation data rattles crypto markets - finway.com.ua](https://news.google.com/rss/articles/CBMibkFVX3lxTE93eXFUUUhsYm1IZHJicHVmYi1FMWY0OVNQVlpHTWFReGZ6V01BUXVpTktEWkx2M003dDBWOWpGbEJCeGRQc2p6N3ExT3hkRXlDdzlVMGFGQnN1cFoyWFV2V2lpVV9oT0VyNzB2S2l3?oc=5) · 25.11. 19:30
 
 ## Wirtschaft auf Deutsch (tagesschau)
 
@@ -77,7 +78,7 @@ Angst-Struktur: VIX 28.0 gegen 3-Monats-VIX 26.3 -> **angespannt** (kurzfristige
 
 ## Was der Paperbot heute vorhat
 
-Konto: $88.570 (Papiergeld).
+Konto: $88.759 (Papiergeld).
 
 | Teil | Signal | soll halten |
 |---|---|---|
