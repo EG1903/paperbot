@@ -122,7 +122,7 @@
     "grenze": 0.2266,
     "ruhig": false
   },
-  "run_day": "2026-11-26",
+  "run_day": "2026-11-27",
   "swing_alt": {
     "vola-1x": {
       "start_wert": 50000.0,
@@ -215,22 +215,22 @@
     "nasdaq-3x": {
       "an": false,
       "sym": "IEF",
-      "datum": "2026-11-24"
+      "datum": "2026-11-25"
     },
     "sp500-ibs-3x": {
       "an": false,
       "sym": "CASH",
-      "datum": "2026-11-24"
+      "datum": "2026-11-25"
     },
     "sp500-wr-3x": {
       "an": true,
       "sym": "UPRO",
-      "datum": "2026-11-24"
+      "datum": "2026-11-25"
     },
     "gold-2x": {
       "an": false,
       "sym": "CASH",
-      "datum": "2026-11-24"
+      "datum": "2026-11-25"
     }
   }
 }
